@@ -1,0 +1,103 @@
+﻿using System;
+
+namespace Elements.Quantity
+{
+    public readonly struct QuantityName : IQuantity<QuantityName>
+    {
+        #region ESSENTIALS
+
+        // this section can be simply left as is, but rename QuantityName
+
+        public readonly double BaseValue;
+
+        double IQuantity.BaseValue => BaseValue;
+
+		public QuantityName(double baseValue = 0) : this()  { BaseValue = baseValue; }
+
+        public bool Equals(QuantityName other) { return BaseValue == other.BaseValue; }
+        public int CompareTo(QuantityName other) { return BaseValue.CompareTo(other.BaseValue); }
+
+        #endregion
+
+        /* *********************************************** */        
+
+        #region QUANTITY NAME DEFINITIONS
+
+		// Provide at least one short and one long name for the quantity
+		// The first entry will be used for formatting, all will be used for parsing
+
+        public string[] GetShortBaseNames() { return new string[] { "" }; }
+        public string[] GetLongBaseNames()
+        { return new string[] { "" }; }
+
+        #endregion
+
+        /* *********************************************** */       
+
+        #region UNITS
+
+		// provide a default unit for the quantity - used when no explicit unit specified
+        public Unit<QuantityName> DefaultUnit { get {  } }
+
+		// define actual units for the quantity (excluding SI units which are automatic)
+		// Parameters:
+
+		public static readonly Unit<QuantityName> SomeUnit = new Unit<QuantityName>(1,
+            new UnitGroup[] { UnitGroup.Common },
+            new string[] { " u" }, new string[] { " units" });
+
+        #endregion
+
+        /* *********************************************** */    
+
+		#region COMPOUND FORMATING TEMPLATES
+
+		// define any commonly used compound formating templates
+
+        public static readonly CompoundFormatInfo<QuantityName> FormatingTemplate =
+            new CompoundFormatInfo<QuantityName>(null, null, CompoundZeroHandling.RemoveAny, false,
+            new CompoundFormatInfo<QuantityName>.Info(SomeUnit),
+            );
+
+        #endregion
+
+        /* *********************************************** */ 
+
+        #region OPERATORS
+
+        public QuantityName New(double baseVal) { return new QuantityName(baseVal); }
+
+        public QuantityName Add(QuantityName q) { return new QuantityName(BaseValue + q.BaseValue); }
+        public QuantityName Subtract(QuantityName q) { return new QuantityName(BaseValue - q.BaseValue); }
+
+        public QuantityName Multiply(double n) { return new QuantityName(BaseValue * n); }
+        public QuantityName Multiply(QuantityName a, Ratio r) { return a * r.BaseValue; }
+        public QuantityName Multiply(Ratio r, QuantityName a) { return a * r.BaseValue; }
+
+        public QuantityName Divide(double n) { return new QuantityName(BaseValue / n); }
+        public Ratio Divide(QuantityName q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        // these should be defined as convenience, but cannot be forced by interface
+        public static QuantityName Parse(string str) { return Unit<QuantityName>.Parse(str); }
+        public static bool TryParse(string str, out QuantityName q) { return Unit<QuantityName>.TryParse(str, out q); }
+
+        public static QuantityName operator +(QuantityName a, QuantityName b) { return a.Add(b); }
+        public static QuantityName operator -(QuantityName a, QuantityName b) { return a.Subtract(b); }
+        public static QuantityName operator *(QuantityName a, double n) { return a.Multiply(n); }
+        public static QuantityName operator /(QuantityName a, double n) { return a.Divide(n); }
+        public static Ratio operator /(QuantityName a, QuantityName b) { return a.Divide(b); }
+        public static QuantityName operator -(QuantityName a) { return a.Multiply(-1); }
+
+        #endregion
+
+        /* *********************************************** */
+
+        #region CONVERSIONS
+
+        // provide various operators to convert between quantities or adjust the quantity
+
+        #endregion
+
+        /* *********************************************** */
+    }
+}
