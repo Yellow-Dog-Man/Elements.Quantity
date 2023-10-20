@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Elements.Quantity
 {
@@ -21,8 +22,9 @@ namespace Elements.Quantity
 
         #region QUANTITY NAME DEFINITIONS
 
-        public string[] GetShortBaseNames() { return new string[] { "B" }; }
-        public string[] GetLongBaseNames() { return new string[] { "bytes", "byte" }; }
+        public string[] GetShortBaseNames() { return new string[] { "b" }; }
+        public string[] GetLongBaseNames() { return new string[] { "bits", "bit" }; }
+
 
         #endregion
 
@@ -45,6 +47,7 @@ namespace Elements.Quantity
                 SI<Storage>.Mega,
                 SI<Storage>.Kilo,
                 Byte,
+                Bit,
             };
         }
 
@@ -73,9 +76,22 @@ namespace Elements.Quantity
 
         #region UNITS
 
-        public Unit<Storage> DefaultUnit { get { return Byte; } }
+        public Unit<Storage> DefaultUnit { get { return Bit; } }
 
-        public static readonly Unit<Storage> Byte = new UnitSI<Storage>(0, "B", "byte");
+        public static readonly Unit<Storage> Bit = new UnitSI<Storage>(0, "b", "bit");
+        public static readonly Unit<Storage> Byte = new Unit<Storage>(8, new UnitGroup[] { UnitGroup.Common }, new string[] { "B" }, new string[] { "byte" });
+        public static readonly Unit<Storage> Kilobyte = new Unit<Storage>(8 * 1000, new UnitGroup[] { UnitGroup.Common }, new string[] { "KB" }, new string[] { "kilobyte" });
+        public static readonly Unit<Storage> Megabyte = new Unit<Storage>(8 * 1000 * 1000, new UnitGroup[] { UnitGroup.Common }, new string[] { "MB" }, new string[] { "megabyte" });
+        public static readonly Unit<Storage> Gigabyte = new Unit<Storage>(8L * 1000 * 1000 * 1000, new UnitGroup[] { UnitGroup.Common }, new string[] { "GB" }, new string[] { "gigabyte" });
+        public static readonly Unit<Storage> Terabyte = new Unit<Storage>(8L * 1000 * 1000 * 1000 * 1000, new UnitGroup[] { UnitGroup.Common }, new string[] { "TB" }, new string[] { "terabyte" });
+        public static readonly Unit<Storage> Petabyte = new Unit<Storage>(8L * 1000 * 1000 * 1000 * 1000 * 1000, new UnitGroup[] { UnitGroup.Common }, new string[] { "PB" }, new string[] { "petabyte" });
+        public static readonly Unit<Storage> Kibibyte = new Unit<Storage>(8 * 1024, new UnitGroup[] { UnitGroup.Common }, new string[] { "KiB" }, new string[] { "kibibyte" });
+        public static readonly Unit<Storage> Mebibyte = new Unit<Storage>(8 * 1024 * 1024, new UnitGroup[] { UnitGroup.Common }, new string[] { "MiB" }, new string[] { "mebibyte" });
+        public static readonly Unit<Storage> Gibibyte = new Unit<Storage>(8L * 1024 * 1024 * 1024, new UnitGroup[] { UnitGroup.Common }, new string[] { "GiB" }, new string[] { "gibibyte" });
+        public static readonly Unit<Storage> Tebibyte = new Unit<Storage>(8L * 1024 * 1024 * 1024 * 1024, new UnitGroup[] { UnitGroup.Common }, new string[] { "TiB" }, new string[] { "tebibyte" });
+        public static readonly Unit<Storage> Pebibyte = new Unit<Storage>(8L * 1024 * 1024 * 1024 * 1024 * 1024, new UnitGroup[] { UnitGroup.Common }, new string[] { "PiB" }, new string[] { "pebibyte" });
+        public static readonly Unit<Storage> Yottabyte = new Unit<Storage>(8L * 1000 * 1000 * 1000 * 1000 * 1000 * 1000 * 1000, new UnitGroup[] { UnitGroup.Common }, new string[] { "YB" }, new string[] { "yottabyte" });
+        public static readonly Unit<Storage> Yobibyte = new Unit<Storage>(8L * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024, new UnitGroup[] { UnitGroup.Common }, new string[] { "YiB" }, new string[] { "yobibyte" });
 
         #endregion
 
