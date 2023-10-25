@@ -5,6 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7DA9B41E-A0F0-4392-8672-966642C94884}</ProjectGuid>
+    <Company>Yellow Dog Man Studios</Company>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Elements.Quantity</RootNamespace>
