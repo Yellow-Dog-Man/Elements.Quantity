@@ -1,9 +1,11 @@
-name: Build App
+name: Build Library
 
 on:
   push:
     paths-ignore:
       - '**/*.md'
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -12,9 +14,11 @@ on:
 
 jobs:
   build:
+    # 2019, has our .NET needs, latest does not
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v4
+    # While this package targets .Net Framework 4.6.2, the dotnet 7 stuff will work.
     - name: Setup .NET 7
       uses: actions/setup-dotnet@v3
       with:

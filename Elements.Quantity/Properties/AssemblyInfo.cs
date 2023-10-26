@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Elements.Quantity")]
 [assembly: AssemblyDescription("Provides strongly typed management of various quantity types, conversions, parsing and formatting")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Yellow Dog Man Studios s.r.o")]
 [assembly: AssemblyProduct("Elements.Quantity")]
-[assembly: AssemblyCopyright("Copyright © 2023")]
+[assembly: AssemblyCopyright("Copyright © Yellow Dog Man Studios s.r.o 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
