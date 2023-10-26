@@ -2,8 +2,6 @@ name: Build App
 
 on:
   push:
-    branches:
-      - "main"
     paths-ignore:
       - '**/*.md'
   pull_request:
@@ -14,13 +12,13 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v4
-    - name: Setup .NET 4.6.2
+    - name: Setup .NET 7
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '4.6.2'
+        dotnet-version: 7.0.x
     - name: Install dependencies
       run: dotnet restore
     - name: Build
