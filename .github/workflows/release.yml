@@ -21,9 +21,9 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore /p:Version=${VERSION}
-    - name: CD into Library
+    - name: cd into Library
       run: cd Elements.Quantity
     - name: Pack
-      run: dotnet pack --output nupkgs --configuration Release /p:Version=${VERSION} 
+      run: dotnet pack --output nupkgs --configuration Release /p:Version=${VERSION} /p:PackageVersion=${VERSION}
     - name: Nuget Publish
       run: dotnet nuget push nupkgs/*.nupkg -k ${{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json
