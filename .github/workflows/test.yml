@@ -12,7 +12,9 @@ jobs:
     runs-on: windows-2019
     steps:
     - name: Get version
+      shell: bash
       run: echo "VERSION=7" >> "$GITHUB_ENV"
     - name: Read version
+      shell: bash
       run: |
         echo Version now: ${VERSION}
