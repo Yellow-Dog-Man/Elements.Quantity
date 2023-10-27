@@ -12,7 +12,12 @@ jobs:
     - uses: actions/checkout@v4
     # While this package targets .Net Framework 4.6.2, the dotnet 7 stuff will work.
     - name: Get version
-      run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      run: |
+        VERSION=${{ github.event.release.tag_name }}
+        echo "VERSION=${VERSION}" >> $GITHUB_ENV
+    - name: Read version
+      run: |
+        echo Version now: ${VERSION}
     - name: Setup .NET 7
       uses: actions/setup-dotnet@v3
       with:
