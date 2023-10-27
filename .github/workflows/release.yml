@@ -21,6 +21,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore /p:Version=${VERSION}
+    - name: CD into Library
+      run: cd Elements.Quantity
     - name: Pack
       run: dotnet pack --output nupkgs --configuration Release /p:Version=${VERSION} 
     - name: Nuget Publish
