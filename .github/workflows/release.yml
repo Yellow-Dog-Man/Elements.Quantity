@@ -23,12 +23,12 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+    - name: cd into Library
+      run: cd Elements.Quantity
     - name: Install dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore /p:Version=${VERSION}
-    - name: cd into Library
-      run: cd Elements.Quantity
     - name: Pack
       run: dotnet pack --output nupkgs --configuration Release /p:Version=${VERSION} /p:PackageVersion=${VERSION}
     - name: Nuget Publish
