@@ -15,7 +15,6 @@
     <PackageProjectURL>https://yellowdogman.com/</PackageProjectURL>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>quantities units conversion</PackageTags>
-    <PackageVersion>0.1.10</PackageVersion>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
