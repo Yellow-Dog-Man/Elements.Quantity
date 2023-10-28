@@ -5,7 +5,7 @@ on:
   release:
     types: [published]
 jobs:
-  build:
+  publish:
     # 2019, has our .NET needs, latest does not
     runs-on: windows-2019
     steps:
