@@ -1,7 +1,7 @@
 # Elements.Quantity
 Handful .NET library for working with various physical quantities, including conversions, formatting and parsing.
 
-![NuGet](https://img.shields.io/nuget/v/YellowDogMan.Elements.Quantity.svg)
+[![NuGet](https://img.shields.io/nuget/v/YellowDogMan.Elements.Quantity.svg)](https://www.nuget.org/packages/YellowDogMan.Elements.Quantity)
 
 ## Building
 This library should be build-able using a standard Visual Studio setup. As there are no dependencies, it is usually quite fast.
