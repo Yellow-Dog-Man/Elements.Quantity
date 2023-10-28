@@ -1,0 +1,28 @@
+name: Whatever
+
+on:
+  push:
+    paths-ignore:
+      - '**/*.md'
+    branches:
+      - main
+jobs:
+  build:
+    # 2019, has our .NET needs, latest does not
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v4
+    # While this package targets .Net Framework 4.6.2, the dotnet 7 stuff will work.
+    - name: Get version
+      run: |
+        echo "VERSION=7" >> $env:GITHUB_ENV
+    - name: Setup .NET 7
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore -p:Version=${{ env.VERSION }}
+    - name: Pack
+      run: dotnet pack Elements.Quantity --output nupkgs --configuration Release -p:Version=${{ env.VERSION }} -p:PackageVersion=${{ env.VERSION }}
