@@ -12,19 +12,19 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-		public QuantityName(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public QuantityName(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(QuantityName other) { return BaseValue == other.BaseValue; }
         public int CompareTo(QuantityName other) { return BaseValue.CompareTo(other.BaseValue); }
 
         #endregion
 
-        /* *********************************************** */        
+        /* *********************************************** */
 
         #region QUANTITY NAME DEFINITIONS
 
-		// Provide at least one short and one long name for the quantity
-		// The first entry will be used for formatting, all will be used for parsing
+        // Provide at least one short and one long name for the quantity
+        // The first entry will be used for formatting, all will be used for parsing
 
         public string[] GetShortBaseNames() { return new string[] { "" }; }
         public string[] GetLongBaseNames()
@@ -32,27 +32,27 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */       
+        /* *********************************************** */
 
         #region UNITS
 
-		// provide a default unit for the quantity - used when no explicit unit specified
+        // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<QuantityName> DefaultUnit { get {  } }
 
-		// define actual units for the quantity (excluding SI units which are automatic)
-		// Parameters:
+        // define actual units for the quantity (excluding SI units which are automatic)
+        // Parameters:
 
-		public static readonly Unit<QuantityName> SomeUnit = new Unit<QuantityName>(1,
+        public static readonly Unit<QuantityName> SomeUnit = new Unit<QuantityName>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " u" }, new string[] { " units" });
 
         #endregion
 
-        /* *********************************************** */    
+        /* *********************************************** */
 
-		#region COMPOUND FORMATING TEMPLATES
+        #region COMPOUND FORMATING TEMPLATES
 
-		// define any commonly used compound formating templates
+        // define any commonly used compound formating templates
 
         public static readonly CompoundFormatInfo<QuantityName> FormatingTemplate =
             new CompoundFormatInfo<QuantityName>(null, null, CompoundZeroHandling.RemoveAny, false,
@@ -61,7 +61,7 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */ 
+        /* *********************************************** */
 
         #region OPERATORS
 

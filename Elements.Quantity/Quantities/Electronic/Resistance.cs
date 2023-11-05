@@ -12,7 +12,7 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-        public Resistance(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public Resistance(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(Resistance other) { return BaseValue == other.BaseValue; }
         public int CompareTo(Resistance other) { return BaseValue.CompareTo(other.BaseValue); }
