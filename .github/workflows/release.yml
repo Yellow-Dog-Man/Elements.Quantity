@@ -8,12 +8,12 @@ jobs:
   publish:
     # 2019, has our .NET needs, latest does not
     runs-on: windows-2019
+    env:
+      VERSION: ${{ github.event.release.tag_name }}
     steps:
     - uses: actions/checkout@v4
     - name: Get version
-      run: |
-        echo "VERSION=${{ github.event.release.tag_name }}" >> $env:GITHUB_ENV
-        echo "Building with ${{ env.VERSION }}"
+      run: echo "Building with ${{ env.VERSION }}"
     - name: Setup .NET 7
       uses: actions/setup-dotnet@v3
       with:
