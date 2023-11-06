@@ -47,7 +47,7 @@ namespace Elements.Quantity
                         string unitName = string.Format(name, basename).Trim();
 
                         // need to check - some combinations result in idential names
-                        if (!list.Contains(unitName)) 
+                        if (!list.Contains(unitName))
                             list.Add(unitName);
                     }
 
@@ -256,5 +256,5 @@ namespace Elements.Quantity
         }
     }
 
-    
+
 }

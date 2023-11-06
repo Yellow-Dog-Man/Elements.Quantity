@@ -27,7 +27,7 @@ namespace Elements.Quantity
             params Info[] formatInfo) : this(defaultSeparator, lastNumberFormat, zeroHandling, useLongNames, discardLastFraction,
                 (IEnumerable<Info>)formatInfo )
         {
-            
+
         }
 
         public CompoundFormatInfo(string defaultSeparator,

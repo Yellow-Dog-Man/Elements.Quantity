@@ -75,7 +75,7 @@ namespace Elements.Quantity
                 + z.FormatAs(unit, formatNum, longName) + "]";
         }
 
-        public string FormatAuto(string formatNum = null, bool longName = false, 
+        public string FormatAuto(string formatNum = null, bool longName = false,
             List<UnitGroup> unitGroups = null)
         {
             return "["
