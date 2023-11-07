@@ -1,4 +1,4 @@
-# Elements.Quantity
+﻿# Elements.Quantity
 Handful .NET library for working with various physical quantities, including conversions, formatting and parsing.
 
 [![NuGet](https://img.shields.io/nuget/v/YellowDogMan.Elements.Quantity.svg)](https://www.nuget.org/packages/YellowDogMan.Elements.Quantity)

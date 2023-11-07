@@ -39,6 +39,6 @@ namespace Elements.Quantity
 
     public interface IQuantitySI<T> : IQuantitySI, IQuantity<T> where T : unmanaged, IQuantity<T>
     {
-        
+
     }
 }

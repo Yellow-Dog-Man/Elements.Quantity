@@ -12,14 +12,14 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-        public Distance(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public Distance(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(Distance other) { return BaseValue == other.BaseValue; }
         public int CompareTo(Distance other) { return BaseValue.CompareTo(other.BaseValue); }
 
         #endregion
 
-        /* *********************************************** */        
+        /* *********************************************** */
 
         #region QUANTITY NAME DEFINITIONS
 
@@ -29,7 +29,7 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */    
+        /* *********************************************** */
 
         #region SI UNIT DEFINITIONS
 
@@ -60,7 +60,7 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */    
+        /* *********************************************** */
 
         #region UNITS
 

@@ -12,19 +12,19 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-        public Angle(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public Angle(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(Angle other) { return BaseValue == other.BaseValue; }
         public int CompareTo(Angle other) { return BaseValue.CompareTo(other.BaseValue); }
 
         #endregion
 
-        /* *********************************************** */        
+        /* *********************************************** */
 
         #region QUANTITY NAME DEFINITIONS
 
-		// Provide at least one short and one long name for the quantity
-		// The first entry will be used for formatting, all will be used for parsing
+        // Provide at least one short and one long name for the quantity
+        // The first entry will be used for formatting, all will be used for parsing
 
         public string[] GetShortBaseNames() { return new string[] { "rad" }; }
         public string[] GetLongBaseNames()
@@ -32,21 +32,21 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */    
-   
+        /* *********************************************** */
+
         #region SI UNIT DEFINITIONS
 
-		// the SI factor will be adjusted for this
+        // the SI factor will be adjusted for this
         public double SIPower { get { return 1; } }
 
-		// these units will be automatically registered in the Common groups
+        // these units will be automatically registered in the Common groups
         public IUnit[] GetCommonSIUnits()
         {
             return new IUnit[] {
             };
         }
 
-		// these SI units will never be used for formatting, unless used explicitly
+        // these SI units will never be used for formatting, unless used explicitly
         public IUnit[] GetExludedSIUnits()
         {
             return new IUnit[] {
@@ -59,17 +59,17 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */   
+        /* *********************************************** */
 
         #region UNITS
 
-		// provide a default unit for the quantity - used when no explicit unit specified
+        // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<Angle> DefaultUnit { get { return Radian; } }
 
-		// define actual units for the quantity (excluding SI units which are automatic)
-		// Parameters:
+        // define actual units for the quantity (excluding SI units which are automatic)
+        // Parameters:
 
-		public static readonly Unit<Angle> Radian = new UnitSI<Angle>(0, "", "");
+        public static readonly Unit<Angle> Radian = new UnitSI<Angle>(0, "", "");
 
         public static readonly Unit<Angle> Degree = new Unit<Angle>(180.0/Math.PI,
             new UnitGroup[] { UnitGroup.Common },
@@ -85,11 +85,11 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */    
+        /* *********************************************** */
 
-		#region COMPOUND FORMATING TEMPLATES
+        #region COMPOUND FORMATING TEMPLATES
 
-		// define any commonly used compound formating templates
+        // define any commonly used compound formating templates
 
         public static readonly CompoundFormatInfo<Angle> DegreeMinSec =
             new CompoundFormatInfo<Angle>("", "0", CompoundZeroHandling.RemoveAny, false, false,

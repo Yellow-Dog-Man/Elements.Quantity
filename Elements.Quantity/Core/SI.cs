@@ -18,7 +18,7 @@
 
         public static readonly UnitSI<T> Deca = new UnitSI<T>(1, "da", "deca");
         public static readonly UnitSI<T> Hecto = new UnitSI<T>(2, "h", "hecto");
-            
+
         public static readonly UnitSI<T> Kilo = new UnitSI<T>(3, "k", "kilo");
         public static readonly UnitSI<T> Mega = new UnitSI<T>(6, "M", "mega");
         public static readonly UnitSI<T> Giga = new UnitSI<T>(9, "G", "giga");

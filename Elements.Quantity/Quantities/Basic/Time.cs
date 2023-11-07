@@ -12,7 +12,7 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-        public Time(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public Time(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(Time other) { return BaseValue == other.BaseValue; }
         public int CompareTo(Time other) { return BaseValue.CompareTo(other.BaseValue); }
