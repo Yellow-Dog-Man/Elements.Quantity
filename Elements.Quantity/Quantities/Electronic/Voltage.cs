@@ -12,7 +12,7 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-        public Voltage(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public Voltage(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(Voltage other) { return BaseValue == other.BaseValue; }
         public int CompareTo(Voltage other) { return BaseValue.CompareTo(other.BaseValue); }

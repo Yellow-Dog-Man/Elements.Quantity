@@ -12,7 +12,7 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-        public Temperature(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public Temperature(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(Temperature other) { return BaseValue == other.BaseValue; }
         public int CompareTo(Temperature other) { return BaseValue.CompareTo(other.BaseValue); }

@@ -1,6 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!-- NUGET META DATA -->
+  <PropertyGroup>
+    <Company>Yellow Dog Man Studios</Company>
+    <Authors>Yellow Dog Man Studios</Authors>
+    <PackageId>YellowDogMan.Elements.Quantity</PackageId>
+    <Description>This library facilitates the manipulation of quantities associated with units, such as temperature, weight, and distance, by offering various utilities for working with them.</Description>
+    <Copyright>Copyright (c) Yellow Dog Man Studios s.r.o. 2023</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Yellow-Dog-Man/Elements.Quantity</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectURL>https://yellowdogman.com/</PackageProjectURL>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>quantities units conversion</PackageTags>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+  </PropertyGroup>
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -11,8 +28,7 @@
     <AssemblyName>Elements.Quantity</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +53,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <!-- Needed to release, not included in build -->
+    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="6.7.0" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\CompoundFormatInfo.cs" />
@@ -64,12 +82,13 @@
     <Compile Include="Quantities\Electronic\Voltage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Quantities\QuantitySITemplate.txt" />
-    <Content Include="Quantities\QuantityTemplate.txt" />
+    <Content Include="Quantities\QuantitySITemplate.txt"  Pack="false" CopyToOutput="false"/>
+    <Content Include="Quantities\QuantityTemplate.txt" Pack="false" CopyToOutput="false"/>
+    <None Include="Images\icon.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+      Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">

@@ -12,19 +12,19 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-		public QuantityName(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public QuantityName(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(QuantityName other) { return BaseValue == other.BaseValue; }
         public int CompareTo(QuantityName other) { return BaseValue.CompareTo(other.BaseValue); }
 
         #endregion
 
-        /* *********************************************** */        
+        /* *********************************************** */
 
         #region QUANTITY NAME DEFINITIONS
 
-		// Provide at least one short and one long name for the quantity
-		// The first entry will be used for formatting, all will be used for parsing
+        // Provide at least one short and one long name for the quantity
+        // The first entry will be used for formatting, all will be used for parsing
 
         public string[] GetShortBaseNames() { return new string[] { "" }; }
         public string[] GetLongBaseNames()
@@ -32,21 +32,21 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */    
+        /* *********************************************** */
 
         #region SI UNIT DEFINITIONS
 
-		// the SI factor will be adjusted for this
+        // the SI factor will be adjusted for this
         public double SIPower { get { return 1; } }
 
-		// these units will be automatically registered in the Common groups
+        // these units will be automatically registered in the Common groups
         public IUnit[] GetCommonSIUnits()
         {
             return new IUnit[] {
             };
         }
 
-		// these SI units will never be used for formatting, unless used explicitly
+        // these SI units will never be used for formatting, unless used explicitly
         public IUnit[] GetExludedSIUnits()
         {
             return new IUnit[] {
@@ -55,29 +55,29 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */    
+        /* *********************************************** */
 
         #region UNITS
 
-		// provide a default unit for the quantity - used when no explicit unit specified
+        // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<QuantityName> DefaultUnit { get {  } }
 
-		// define actual units for the quantity (excluding SI units which are automatic)
-		// Parameters:
+        // define actual units for the quantity (excluding SI units which are automatic)
+        // Parameters:
 
-		public static readonly Unit<QuantityName> BaseUnit = new UnitSI<QuantityName>(0, "", "");
+        public static readonly Unit<QuantityName> BaseUnit = new UnitSI<QuantityName>(0, "", "");
 
-		public static readonly Unit<QuantityName> SomeUnit = new Unit<QuantityName>(1,
+        public static readonly Unit<QuantityName> SomeUnit = new Unit<QuantityName>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " u" }, new string[] { " units" });
 
         #endregion
 
-        /* *********************************************** */  
-		
-		#region COMPOUND FORMATING TEMPLATES
+        /* *********************************************** */
 
-		// define any commonly used compound formating templates
+        #region COMPOUND FORMATING TEMPLATES
+
+        // define any commonly used compound formating templates
 
         public static readonly CompoundFormatInfo<QuantityName> FormatingTemplate =
             new CompoundFormatInfo<QuantityName>(null, null, CompoundZeroHandling.RemoveAny, false,
@@ -86,7 +86,7 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */  
+        /* *********************************************** */
 
         #region OPERATORS
 
@@ -123,6 +123,6 @@ namespace Elements.Quantity
 
         #endregion
 
-        /* *********************************************** */ 
+        /* *********************************************** */
     }
 }

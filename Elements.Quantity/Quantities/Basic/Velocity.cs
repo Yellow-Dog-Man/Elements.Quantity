@@ -12,7 +12,7 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
-        public Velocity(double baseValue = 0) : this()  { BaseValue = baseValue; }
+        public Velocity(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(Velocity other) { return BaseValue == other.BaseValue; }
         public int CompareTo(Velocity other) { return BaseValue.CompareTo(other.BaseValue); }
