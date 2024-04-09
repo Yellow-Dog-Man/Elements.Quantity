@@ -36,7 +36,7 @@ namespace Elements.Quantity
             var shortBaseNames = t.GetShortBaseNames();
             var longBaseNames  = t.GetLongBaseNames();
 
-            // cache them - this function will be called by the lirary initializer
+            // cache them - this function will be called by the library initializer
             shortBaseName = shortBaseNames[0];
             longBaseName = longBaseNames[0];
 
@@ -46,8 +46,8 @@ namespace Elements.Quantity
                     {
                         string unitName = string.Format(name, basename).Trim();
 
-                        // need to check - some combinations result in idential names
-                        if (!list.Contains(unitName))
+                        // need to check - some combinations result in identical names
+                        if (!list.Contains(unitName)) 
                             list.Add(unitName);
                     }
 
@@ -121,7 +121,7 @@ namespace Elements.Quantity
 
             bool noUnit = string.IsNullOrWhiteSpace(unitstr);
 
-            if(!double.TryParse(valstr, numberStyles, formatProvider, out double val))
+            if(!QuantityHelper.TryParse(valstr, numberStyles, formatProvider, out double val))
             {
                 if (throwOnFail)
                     throw new FormatException("Number input string was not in a correct format");
@@ -256,5 +256,5 @@ namespace Elements.Quantity
         }
     }
 
-
+    
 }

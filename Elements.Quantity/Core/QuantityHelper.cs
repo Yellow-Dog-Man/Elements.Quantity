@@ -6,11 +6,22 @@ using System.Reflection;
 
 namespace Elements.Quantity
 {
+    public delegate bool NumberTryParseHandler<T>(string str, NumberStyles numberStyles, IFormatProvider formatProvider, out T value);
+
     public static class QuantityHelper
     {
         // CONFIGURATION
 
         public static CultureInfo Culture = System.Globalization.CultureInfo.InvariantCulture;
+        public static NumberTryParseHandler<double> CustomParser;
+
+        public static bool TryParse(string str, NumberStyles numberStyles, IFormatProvider formatProvider, out double value)
+        {
+            if (CustomParser != null)
+                return CustomParser(str, numberStyles, formatProvider, out value);
+            else
+                return double.TryParse(str, numberStyles, formatProvider, out value);
+        }
 
         // EXTENSION METHODS
 
