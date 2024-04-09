@@ -13,7 +13,6 @@
     <RepositoryUrl>https://github.com/Yellow-Dog-Man/Elements.Quantity</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectURL>https://yellowdogman.com/</PackageProjectURL>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>quantities units conversion</PackageTags>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
   </PropertyGroup>
