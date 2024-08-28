@@ -67,8 +67,10 @@
     <Compile Include="Quantities\Basic\MassTests.cs" />
     <Compile Include="Quantities\Basic\DistanceTests.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+    <PackageReference Include="MSTest.TestAdapter" version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" version="2.2.10" />
+    <PackageReference Include="System.ValueTuple" version="4.5.0" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
