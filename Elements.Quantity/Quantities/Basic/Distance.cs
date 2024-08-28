@@ -25,7 +25,7 @@ namespace Elements.Quantity
 
         public string[] GetShortBaseNames() { return new string[] { "m" }; }
         public string[] GetLongBaseNames()
-        { return new string[] { "meters", "metres", "meter", "metre" }; }
+        { return new string[] { "meters", "meter", "metres", "metre" }; }
 
         #endregion
 
