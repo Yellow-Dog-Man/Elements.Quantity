@@ -16,6 +16,7 @@ public class MassTests
         {
             new (Mass.Gram, "{0} g", "1 gram", "{0} grams"),
             new (Mass.Ton, "{0} t", "1 tonne", "{0} tonnes"),
+            new (Mass.Tonne, "{0} t", "1 tonne", "{0} tonnes"),
             new (Mass.Grain, "{0} gr", "1 grain", "{0} grains"),
             new (Mass.Drachm, "{0} dr", "1 drachm", "{0} drachms"),
             new (Mass.Ounce, "{0} oz", "1 ounce", "{0} ounces"),

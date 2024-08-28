@@ -76,9 +76,12 @@ namespace Elements.Quantity
 
         public static readonly Unit<Mass> Gram = new UnitSI<Mass>(0, "", "");
 
-        public static readonly Unit<Mass> Ton = new Unit<Mass>(1e6,
+        public static readonly Unit<Mass> Tonne = new Unit<Mass>(1e6,
             new UnitGroup[] { UnitGroup.Common, UnitGroup.Metric },
-            new string[] { " t" }, new string[] { " tonnes", " ton" });
+            new string[] { " t" }, new string[] { " tonnes", " tonne" });
+
+        [Obsolete("Use 'Mass.Tonne' instead.")]
+        public static readonly Unit<Mass> Ton = Tonne;
 
         // Imperial
         public static readonly Unit<Mass> Grain = new Unit<Mass>(0.06479891,
@@ -111,7 +114,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Mass> ImperialTon = new Unit<Mass>(1016.0469088 * 1000,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { }, new string[] { " imperial tonnes", " imperial ton" });
+            new string[] { " LT" }, new string[] { " imperial tons", " imperial ton" });
 
         public static readonly Unit<Mass> Slug = new Unit<Mass>(14593.90294,
             new UnitGroup[] { UnitGroup.Imperial },
