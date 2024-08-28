@@ -25,6 +25,7 @@ public class MassTests
             new (Mass.Quarter, "{0} qr", "1 quarter", "{0} quarters"),
             new (Mass.HundredWeight, "{0} cwt", "1 hundredweight", "{0} hundredweights"),
             new (Mass.ImperialTon, "{0} LT", "1 imperial ton", "{0} imperial tons"),
+            new (Mass.ShortTon, "{0} tn", "1 ton", "{0} tons"),
             new (Mass.Slug, "{0} slug", "1 slug", "{0} slugs"),
             new (SI<Mass>.Kilo, "{0} kg", "1 kilogram", "{0} kilograms"),
             new (SI<Mass>.Milli, "{0} mg", "1 milligram", "{0} milligrams"),

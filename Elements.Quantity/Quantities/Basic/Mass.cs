@@ -116,6 +116,10 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " LT" }, new string[] { " imperial tons", " imperial ton" });
 
+        public static readonly Unit<Mass> ShortTon = new Unit<Mass>(907.18 * 1000,
+            new UnitGroup[] { UnitGroup.Imperial },
+            new string[] { " tn" }, new string[] { " tons", " ton", " short tons", " short ton" });
+
         public static readonly Unit<Mass> Slug = new Unit<Mass>(14593.90294,
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " slug" }, new string[] { " slugs", " slug" });
