@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Core\CompoundFormatInfo.cs" />
     <Compile Include="Core\Exceptions.cs" />
+    <Compile Include="Core\Internal\NumberExtension.cs" />
     <Compile Include="Core\QVector3.cs" />
     <Compile Include="Core\SI.cs" />
     <Compile Include="Core\UnitNonLinear.cs" />

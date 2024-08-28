@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-
-using System.Text;
+using System.Linq;
+using Elements.Quantity.Core.Internal;
 
 
 namespace Elements.Quantity
@@ -17,13 +17,17 @@ namespace Elements.Quantity
 
     public class Unit<T> : IUnit where T : unmanaged, IQuantity<T>
     {
+        private const byte DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX = 0;
+        private const byte DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX = 1;
+
         public double Ratio { get; protected set; }
 
-        string[] shortNames;
-        string[] longNames;
+        protected string[] shortNames;
+        protected string[] longNames;
 
-        static string shortBaseName;
-        static string longBaseName;
+        private string defaultShortUnitName;
+        private string defaultLongUnitNamePluralForm;
+        private string defaultLongUnitNameSingularForm;
 
         public Type ValueType => typeof(T);
 
@@ -31,27 +35,67 @@ namespace Elements.Quantity
 
         public ICollection<string> GetUnitNames()
         {
-            var list = new List<string>();
+            var shortNameList = new List<string>();
             var t = default(T);
             var shortBaseNames = t.GetShortBaseNames();
             var longBaseNames  = t.GetLongBaseNames();
 
-            // cache them - this function will be called by the library initializer
-            shortBaseName = shortBaseNames[0];
-            longBaseName = longBaseNames[0];
+            foreach (var name in shortNames)
+            {
+                foreach (var basename in shortBaseNames)
+                {
+                    string unitName = string.Format(name, basename);
+                    var unitNameTrimmed = unitName.Trim();
 
-            for (int i = 0; i < 2; i++)
-                foreach (var name in (i == 0) ? shortNames : longNames)
-                    foreach (var basename in (i == 0) ? shortBaseNames : longBaseNames)
+                    // need to check - some combinations result in identical names
+                    if (shortNameList.Contains(unitNameTrimmed)) { continue; }
+
+                    shortNameList.Add(unitNameTrimmed);
+
+                    if (defaultShortUnitName != null) { continue; }
+                    defaultShortUnitName = unitName;
+                }
+            }
+
+            var longNameList = new List<string>();
+
+            for (var i = 0; i < longNames.Length; i++)
+            {
+                var name = longNames[i];
+                if (string.IsNullOrEmpty(name)) {
+                    continue;
+                }
+
+                for (var j = 0; j < longBaseNames.Length; j++)
+                {
+                    var basename = longBaseNames[j];
+                    string unitName = string.Format(name, basename);
+                    var unitNameTrimmed = unitName.Trim();
+
+                    // need to check - some combinations result in identical names
+                    if (longNameList.Contains(unitNameTrimmed)) { continue; }
+
+                    longNameList.Add(unitNameTrimmed);
+
+                    if (i > DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX || defaultLongUnitNamePluralForm != defaultLongUnitNameSingularForm)
                     {
-                        string unitName = string.Format(name, basename).Trim();
-
-                        // need to check - some combinations result in identical names
-                        if (!list.Contains(unitName)) 
-                            list.Add(unitName);
+                        continue;
                     }
 
-            return list;
+                    if (i == DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX && defaultLongUnitNamePluralForm == null)
+                    {
+                        defaultLongUnitNamePluralForm = unitName;
+                    }
+
+                    if (defaultLongUnitNamePluralForm == null || (Math.Max(i, j) != DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX && defaultLongUnitNameSingularForm != null))
+                    {
+                        continue;
+                    }
+                    defaultLongUnitNameSingularForm = unitName;
+                }
+            }
+
+            return shortNames.Union(longNames).ToArray();
         }
 
         public Unit(double baseRatio, ICollection<UnitGroup> unitGroups,
@@ -231,18 +275,25 @@ namespace Elements.Quantity
             return str.Length;
         }
 
-        public string FormatAs(T q, string formatNum = null, bool longName = false,
+        public string FormatAs(T q, string formatNum = null, bool useLongName = false,
             string overrideName = null)
         {
-            string number;
+            var quantityValue = ConvertTo(q);
+            var numberText = quantityValue.ToString(formatNum);
 
-            if (string.IsNullOrEmpty(formatNum))
-                number = ConvertTo(q).ToString();
-            else
-                number = ConvertTo(q).ToString(formatNum);
+            var unitName = overrideName != null ? overrideName : GetDefaultUnitNameByValue(quantityValue, useLongName);
 
-            return number + (overrideName ?? string.Format(longName ? longNames[0] : shortNames[0],
-                longName ? longBaseName : shortBaseName));
+            return $"{numberText}{unitName}";
+        }
+
+        private string GetDefaultUnitNameByValue(double quantityValue, bool useLongName)
+        {
+            if (useLongName)
+            {
+                return quantityValue.IsSingular() ? defaultLongUnitNameSingularForm : defaultLongUnitNamePluralForm;
+            }
+
+            return defaultShortUnitName;
         }
 
         public static T operator*(Unit<T> unit, double n)
