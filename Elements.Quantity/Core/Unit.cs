@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -17,13 +18,14 @@ namespace Elements.Quantity
 
     public class Unit<T> : IUnit where T : unmanaged, IQuantity<T>
     {
+        private const byte DEFAULT_SHORT_UNIT_NAME_INDEX = 0;
         private const byte DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX = 0;
         private const byte DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX = 1;
 
         public double Ratio { get; protected set; }
 
-        protected string[] shortNames;
-        protected string[] longNames;
+        private string[] _shortNames;
+        private string[] _longNames;
 
         private string defaultShortUnitName;
         private string defaultLongUnitNamePluralForm;
@@ -33,69 +35,34 @@ namespace Elements.Quantity
 
         public int CompareTo(IUnit other) => Ratio.CompareTo(other.Ratio);
 
-        public ICollection<string> GetUnitNames()
+        public ICollection<string> GetUnitNames() => ShortUnitNames.Union(LongUnitNames).ToArray();
+
+        private string[] ShortUnitNames
         {
-            var shortNameList = new List<string>();
-            var t = default(T);
-            var shortBaseNames = t.GetShortBaseNames();
-            var longBaseNames  = t.GetLongBaseNames();
-
-            foreach (var name in shortNames)
+            get => _shortNames;
+            set
             {
-                foreach (var basename in shortBaseNames)
-                {
-                    string unitName = string.Format(name, basename);
-                    var unitNameTrimmed = unitName.Trim();
+                var unitNames = GenerateUnitNames(value, default(T).GetShortBaseNames());
+                defaultShortUnitName = unitNames[DEFAULT_SHORT_UNIT_NAME_INDEX];
 
-                    // need to check - some combinations result in identical names
-                    if (shortNameList.Contains(unitNameTrimmed)) { continue; }
-
-                    shortNameList.Add(unitNameTrimmed);
-
-                    if (defaultShortUnitName != null) { continue; }
-                    defaultShortUnitName = unitName;
-                }
+                _shortNames = unitNames.TrimStrings();
             }
+        }
 
-            var longNameList = new List<string>();
-
-            for (var i = 0; i < longNames.Length; i++)
+        private string[] LongUnitNames
+        {
+            get => _longNames;
+            set
             {
-                var name = longNames[i];
-                if (string.IsNullOrEmpty(name)) {
-                    continue;
-                }
+                var unitNames = GenerateUnitNames(value, default(T).GetLongBaseNames());
 
-                for (var j = 0; j < longBaseNames.Length; j++)
-                {
-                    var basename = longBaseNames[j];
-                    string unitName = string.Format(name, basename);
-                    var unitNameTrimmed = unitName.Trim();
+                defaultLongUnitNamePluralForm = unitNames[DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX];
 
-                    // need to check - some combinations result in identical names
-                    if (longNameList.Contains(unitNameTrimmed)) { continue; }
+                var longUnitNameSingularFormIndex = Math.Min(DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX, unitNames.Length - 1);
+                defaultLongUnitNameSingularForm = unitNames[longUnitNameSingularFormIndex];
 
-                    longNameList.Add(unitNameTrimmed);
-
-                    if (i > DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX || defaultLongUnitNamePluralForm != defaultLongUnitNameSingularForm)
-                    {
-                        continue;
-                    }
-
-                    if (i == DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX && defaultLongUnitNamePluralForm == null)
-                    {
-                        defaultLongUnitNamePluralForm = unitName;
-                    }
-
-                    if (defaultLongUnitNamePluralForm == null || (Math.Max(i, j) != DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX && defaultLongUnitNameSingularForm != null))
-                    {
-                        continue;
-                    }
-                    defaultLongUnitNameSingularForm = unitName;
-                }
+                _longNames = unitNames.TrimStrings();
             }
-
-            return shortNames.Union(longNames).ToArray();
         }
 
         public Unit(double baseRatio, ICollection<UnitGroup> unitGroups,
@@ -103,8 +70,8 @@ namespace Elements.Quantity
             string[] longNames)
         {
             this.Ratio = baseRatio;
-            this.shortNames = shortNames;
-            this.longNames = longNames;
+            ShortUnitNames = shortNames;
+            LongUnitNames = longNames;
 
             if(unitGroups != null)
                 foreach (var unitGroup in unitGroups)
@@ -294,6 +261,32 @@ namespace Elements.Quantity
             }
 
             return defaultShortUnitName;
+        }
+
+        private string[] GenerateUnitNames(string[] names, string[] baseNames)
+        {
+            var nameListSize = names.Length;
+            var baseNamesListSize = baseNames.Length;
+            var generatedNameListSize = nameListSize * baseNamesListSize;
+
+            var namesList = new List<string>(generatedNameListSize);
+
+            for (var i = 0; i < generatedNameListSize; i++)
+            {
+                var nameIndex = i / baseNamesListSize;
+                var baseNameIndex = i % baseNamesListSize;
+
+                var name = names[nameIndex];
+                var baseName = baseNames[baseNameIndex];
+
+                var unitName = string.Format(name, baseName);
+
+                if (namesList.Contains(unitName)) { continue; }
+
+                namesList.Add(unitName);
+            }
+
+            return namesList.ToArray();
         }
 
         public static T operator*(Unit<T> unit, double n)
