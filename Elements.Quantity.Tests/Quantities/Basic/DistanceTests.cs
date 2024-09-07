@@ -23,7 +23,7 @@ public class DistanceTests
             new (Distance.Meter, "{0} m", "1 meter", "{0} meters"),
             new (Distance.Mile, "{0} mi", "1 mile", "{0} miles"),
             new (Distance.Parsec, "{0} pc", "1 parsec", "{0} parsecs"),
-            new (Distance.SolarRadius, "{0} R☉", "1 Solar radius", "{0} Solar radius"),
+            new (Distance.SolarRadius, "{0} R☉", "1 Solar radius", "{0} Solar radii"),
             new (Distance.Thou, "{0} th", "1 thou", "{0} thous"),
             new (Distance.Yard, "{0} yd", "1 yard", "{0} yards"),
             new (SI<Distance>.Kilo, "{0} km", "1 kilometer", "{0} kilometers"),
