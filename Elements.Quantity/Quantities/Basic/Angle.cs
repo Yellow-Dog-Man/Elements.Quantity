@@ -71,15 +71,15 @@ namespace Elements.Quantity
 
         public static readonly Unit<Angle> Radian = new UnitSI<Angle>(0, "", "");
 
-        public static readonly Unit<Angle> Degree = new Unit<Angle>(Math.PI/180,
+        public static readonly Unit<Angle> Degree = new Unit<Angle>(Math.PI/180.0,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { "°" }, new string[] { " degrees", " degree", " deg" });
 
-        public static readonly Unit<Angle> ArcMinute = new Unit<Angle>((Math.PI/180)/60.0,
+        public static readonly Unit<Angle> ArcMinute = new Unit<Angle>((Math.PI/180.0)/60.0,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { "′" }, new string[] { " arcmin", " amin" });
 
-        public static readonly Unit<Angle> ArcSecond = new Unit<Angle>((Math.PI/180)/(60.0*60.0),
+        public static readonly Unit<Angle> ArcSecond = new Unit<Angle>((Math.PI/180.0)/(60.0*60.0),
             new UnitGroup[] { UnitGroup.Common },
             new string[] { "″" }, new string[] { " arcsec", " asec" });
 
