@@ -99,6 +99,9 @@ namespace Elements.Quantity
 
         public Current New(double baseVal) { return new Current(baseVal); }
 
+        public Current Min(Current q) { return new Current(Math.Min(BaseValue, q.BaseValue)); }
+        public Current Max(Current q) { return new Current(Math.Max(BaseValue, q.BaseValue)); }
+
         public Current Add(Current q) { return new Current(BaseValue + q.BaseValue); }
         public Current Subtract(Current q) { return new Current(BaseValue - q.BaseValue); }
 
@@ -108,6 +111,20 @@ namespace Elements.Quantity
 
         public Current Divide(double n) { return new Current(BaseValue / n); }
         public Ratio Divide(Current q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Current Lerp(Current q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Current LerpUnclamped(Current q, double lerp) { return new Current(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Current Parse(string str, Unit<Current> defaultUnit = null) { return Unit<Current>.Parse(str, defaultUnit); }

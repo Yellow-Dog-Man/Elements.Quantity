@@ -19,6 +19,9 @@ namespace Elements.Quantity
     {
         T New(double baseValue);
 
+        T Min(T q);
+        T Max(T q);
+
         T Add(T q);
         T Subtract(T q);
 
@@ -26,6 +29,9 @@ namespace Elements.Quantity
 
         T Divide(double n);
         Ratio Divide(T q);
+
+        T Lerp(T q, double lerp);
+        T LerpUnclamped(T q, double lerp);
 
         Unit<T> DefaultUnit { get; }
     }

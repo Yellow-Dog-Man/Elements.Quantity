@@ -99,6 +99,9 @@ namespace Elements.Quantity
 
         public Voltage New(double baseVal) { return new Voltage(baseVal); }
 
+        public Voltage Min(Voltage q) { return new Voltage(Math.Min(BaseValue, q.BaseValue)); }
+        public Voltage Max(Voltage q) { return new Voltage(Math.Max(BaseValue, q.BaseValue)); }
+
         public Voltage Add(Voltage q) { return new Voltage(BaseValue + q.BaseValue); }
         public Voltage Subtract(Voltage q) { return new Voltage(BaseValue - q.BaseValue); }
 
@@ -108,6 +111,20 @@ namespace Elements.Quantity
 
         public Voltage Divide(double n) { return new Voltage(BaseValue / n); }
         public Ratio Divide(Voltage q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Voltage Lerp(Voltage q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Voltage LerpUnclamped(Voltage q, double lerp) { return new Voltage(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Voltage Parse(string str, Unit<Voltage> defaultUnit = null) { return Unit<Voltage>.Parse(str, defaultUnit); }

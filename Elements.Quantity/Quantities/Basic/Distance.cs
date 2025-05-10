@@ -130,6 +130,9 @@ namespace Elements.Quantity
 
         public Distance New(double baseVal) { return new Distance(baseVal); }
 
+        public Distance Min(Distance q) { return new Distance(Math.Min(BaseValue, q.BaseValue)); }
+        public Distance Max(Distance q) { return new Distance(Math.Max(BaseValue, q.BaseValue)); }
+
         public Distance Add(Distance q) { return new Distance(BaseValue + q.BaseValue); }
         public Distance Subtract(Distance q) { return new Distance(BaseValue - q.BaseValue); }
 
@@ -139,6 +142,20 @@ namespace Elements.Quantity
 
         public Distance Divide(double n) { return new Distance(BaseValue / n); }
         public Ratio Divide(Distance q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Distance Lerp(Distance q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Distance LerpUnclamped(Distance q, double lerp) { return new Distance(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Distance Parse(string str, Unit<Distance> defaultUnit = null) { return Unit<Distance>.Parse(str, defaultUnit); }

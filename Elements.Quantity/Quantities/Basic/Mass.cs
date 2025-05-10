@@ -125,6 +125,9 @@ namespace Elements.Quantity
 
         public Mass New(double baseVal) { return new Mass(baseVal); }
 
+        public Mass Min(Mass q) { return new Mass(Math.Min(BaseValue, q.BaseValue)); }
+        public Mass Max(Mass q) { return new Mass(Math.Max(BaseValue, q.BaseValue)); }
+
         public Mass Add(Mass q) { return new Mass(BaseValue + q.BaseValue); }
         public Mass Subtract(Mass q) { return new Mass(BaseValue - q.BaseValue); }
 
@@ -134,6 +137,20 @@ namespace Elements.Quantity
 
         public Mass Divide(double n) { return new Mass(BaseValue / n); }
         public Ratio Divide(Mass q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Mass Lerp(Mass q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Mass LerpUnclamped(Mass q, double lerp) { return new Mass(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Mass Parse(string str, Unit<Mass> defaultUnit = null) { return Unit<Mass>.Parse(str, defaultUnit); }

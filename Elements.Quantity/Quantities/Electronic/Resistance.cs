@@ -99,6 +99,9 @@ namespace Elements.Quantity
 
         public Resistance New(double baseVal) { return new Resistance(baseVal); }
 
+        public Resistance Min(Resistance q) { return new Resistance(Math.Min(BaseValue, q.BaseValue)); }
+        public Resistance Max(Resistance q) { return new Resistance(Math.Max(BaseValue, q.BaseValue)); }
+
         public Resistance Add(Resistance q) { return new Resistance(BaseValue + q.BaseValue); }
         public Resistance Subtract(Resistance q) { return new Resistance(BaseValue - q.BaseValue); }
 
@@ -108,6 +111,20 @@ namespace Elements.Quantity
 
         public Resistance Divide(double n) { return new Resistance(BaseValue / n); }
         public Ratio Divide(Resistance q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Resistance Lerp(Resistance q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Resistance LerpUnclamped(Resistance q, double lerp) { return new Resistance(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Resistance Parse(string str, Unit<Resistance> defaultUnit = null) { return Unit<Resistance>.Parse(str, defaultUnit); }

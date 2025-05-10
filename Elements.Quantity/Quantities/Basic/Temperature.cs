@@ -64,6 +64,9 @@ namespace Elements.Quantity
 
         public Temperature New(double baseVal) { return new Temperature(baseVal); }
 
+        public Temperature Min(Temperature q) { return new Temperature(Math.Min(BaseValue, q.BaseValue)); }
+        public Temperature Max(Temperature q) { return new Temperature(Math.Max(BaseValue, q.BaseValue)); }
+
         public Temperature Add(Temperature q) { return new Temperature(BaseValue + q.BaseValue); }
         public Temperature Subtract(Temperature q) { return new Temperature(BaseValue - q.BaseValue); }
 
@@ -73,6 +76,20 @@ namespace Elements.Quantity
 
         public Temperature Divide(double n) { return new Temperature(BaseValue / n); }
         public Ratio Divide(Temperature q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Temperature Lerp(Temperature q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Temperature LerpUnclamped(Temperature q, double lerp) { return new Temperature(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Temperature Parse(string str, Unit<Temperature> defaultUnit = null) { return Unit<Temperature>.Parse(str, defaultUnit); }

@@ -57,6 +57,9 @@ namespace Elements.Quantity
 
         public Ratio New(double baseVal) { return new Ratio(baseVal); }
 
+        public Ratio Min(Ratio q) { return new Ratio(Math.Min(BaseValue, q.BaseValue)); }
+        public Ratio Max(Ratio q) { return new Ratio(Math.Max(BaseValue, q.BaseValue)); }
+
         public Ratio Add(Ratio q) { return new Ratio(BaseValue + q.BaseValue); }
         public Ratio Subtract(Ratio q) { return new Ratio(BaseValue - q.BaseValue); }
 
@@ -65,6 +68,20 @@ namespace Elements.Quantity
 
         public Ratio Divide(double n) { return new Ratio(BaseValue / n); }
         public Ratio Divide(Ratio q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Ratio Lerp(Ratio q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Ratio LerpUnclamped(Ratio q, double lerp) { return new Ratio(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Ratio Parse(string str, Unit<Ratio> defaultUnit = null) { return Unit<Ratio>.Parse(str, defaultUnit); }

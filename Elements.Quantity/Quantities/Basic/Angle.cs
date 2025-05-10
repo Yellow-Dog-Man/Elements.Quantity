@@ -106,6 +106,9 @@ namespace Elements.Quantity
 
         public Angle New(double baseVal) { return new Angle(baseVal); }
 
+        public Angle Min(Angle q) { return new Angle(Math.Min(BaseValue, q.BaseValue)); }
+        public Angle Max(Angle q) { return new Angle(Math.Max(BaseValue, q.BaseValue)); }
+
         public Angle Add(Angle q) { return new Angle(BaseValue + q.BaseValue); }
         public Angle Subtract(Angle q) { return new Angle(BaseValue - q.BaseValue); }
 
@@ -115,6 +118,21 @@ namespace Elements.Quantity
 
         public Angle Divide(double n) { return new Angle(BaseValue / n); }
         public Ratio Divide(Angle q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Angle Lerp(Angle q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Angle LerpUnclamped(Angle q, double lerp) { return new Angle(BaseValue + (q.BaseValue - BaseValue) * lerp); }
+
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Angle Parse(string str, Unit<Angle> defaultUnit = null) { return Unit<Angle>.Parse(str, defaultUnit); }

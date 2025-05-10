@@ -69,6 +69,9 @@ namespace Elements.Quantity
 
         public Velocity New(double baseVal) { return new Velocity(baseVal); }
 
+        public Velocity Min(Velocity q) { return new Velocity(Math.Min(BaseValue, q.BaseValue)); }
+        public Velocity Max(Velocity q) { return new Velocity(Math.Max(BaseValue, q.BaseValue)); }
+
         public Velocity Add(Velocity q) { return new Velocity(BaseValue + q.BaseValue); }
         public Velocity Subtract(Velocity q) { return new Velocity(BaseValue - q.BaseValue); }
 
@@ -78,6 +81,20 @@ namespace Elements.Quantity
 
         public Velocity Divide(double n) { return new Velocity(BaseValue / n); }
         public Ratio Divide(Velocity q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Velocity Lerp(Velocity q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Velocity LerpUnclamped(Velocity q, double lerp) { return new Velocity(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Velocity Parse(string str, Unit<Velocity> defaultUnit = null) { return Unit<Velocity>.Parse(str, defaultUnit); }

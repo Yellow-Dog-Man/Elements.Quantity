@@ -131,6 +131,9 @@ namespace Elements.Quantity
 
         public Time New(double baseVal) { return new Time(baseVal); }
 
+        public Time Min(Time q) { return new Time(Math.Min(BaseValue, q.BaseValue)); }
+        public Time Max(Time q) { return new Time(Math.Max(BaseValue, q.BaseValue)); }
+
         public Time Add(Time q) { return new Time(BaseValue + q.BaseValue); }
         public Time Subtract(Time q) { return new Time(BaseValue - q.BaseValue); }
 
@@ -140,6 +143,20 @@ namespace Elements.Quantity
 
         public Time Divide(double n) { return new Time(BaseValue / n); }
         public Ratio Divide(Time q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Time Lerp(Time q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Time LerpUnclamped(Time q, double lerp) { return new Time(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Time Parse(string str, Unit<Time> defaultUnit = null) { return Unit<Time>.Parse(str, defaultUnit); }

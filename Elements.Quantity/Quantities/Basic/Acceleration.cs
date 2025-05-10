@@ -53,6 +53,9 @@ namespace Elements.Quantity
 
         public Acceleration New(double baseVal) { return new Acceleration(baseVal); }
 
+        public Acceleration Min(Acceleration q) { return new Acceleration(Math.Min(BaseValue, q.BaseValue)); }
+        public Acceleration Max(Acceleration q) { return new Acceleration(Math.Max(BaseValue, q.BaseValue)); }
+
         public Acceleration Add(Acceleration q) { return new Acceleration(BaseValue + q.BaseValue); }
         public Acceleration Subtract(Acceleration q) { return new Acceleration(BaseValue - q.BaseValue); }
 
@@ -62,6 +65,20 @@ namespace Elements.Quantity
 
         public Acceleration Divide(double n) { return new Acceleration(BaseValue / n); }
         public Ratio Divide(Acceleration q) { return new Ratio(BaseValue / q.BaseValue); }
+
+        public Acceleration Lerp(Acceleration q, double lerp)
+        {
+            if (lerp <= 0.0)
+            {
+                return this;
+            }
+            if (lerp >= 1.0)
+            {
+                return q;
+            }
+            return LerpUnclamped(q, lerp);
+        }
+        public Acceleration LerpUnclamped(Acceleration q, double lerp) { return new Acceleration(BaseValue + (q.BaseValue - BaseValue) * lerp); }
 
         // these should be defined as convenience, but cannot be forced by interface
         public static Acceleration Parse(string str, Unit<Acceleration> defaultUnit = null) { return Unit<Acceleration>.Parse(str, defaultUnit); }
