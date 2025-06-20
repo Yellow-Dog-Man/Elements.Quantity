@@ -92,7 +92,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Distance> Parsec = new Unit<Distance>(3.0857e16,
             new UnitGroup[] { UnitGroup.Astronomical },
-            new string[] { " pc" }, new string[] { " parsecs", " persec" });
+            new string[] { " pc" }, new string[] { " parsecs", " parsec" });
 
         // Imperial
         public static readonly Unit<Distance> Thou = new Unit<Distance>(0.0000254,
