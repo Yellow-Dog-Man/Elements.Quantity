@@ -92,7 +92,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Distance> Parsec = new Unit<Distance>(3.0857e16,
             new UnitGroup[] { UnitGroup.Astronomical },
-            new string[] { " pc" }, new string[] { " parsecs", " parsec" });
+            new string[] { " pc" }, new string[] { " parsecs", " persec" });
 
         // Imperial
         public static readonly Unit<Distance> Thou = new Unit<Distance>(0.0000254,
@@ -110,10 +110,6 @@ namespace Elements.Quantity
         public static readonly Unit<Distance> Yard = new Unit<Distance>(0.9144,
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " yd" }, new string[] { " yards", " yard" });
-
-        public static readonly Unit<Distance> Fathom = new Unit<Distance>(1.8288,
-            new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " ftm" }, new string[] { " fathoms", " fathom" });
 
         public static readonly Unit<Distance> Mile = new Unit<Distance>(1609.344,
             new UnitGroup[] { UnitGroup.Imperial },
