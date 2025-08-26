@@ -9,9 +9,9 @@ namespace Elements.Quantity
 
     public class CompoundFormatInfo<T> where T : unmanaged, IQuantity<T>
     {
-        public string LastNumberFormat { get; private set; }
+        public string? LastNumberFormat { get; private set; }
 
-        public string NumberFormat { get; private set; }
+        public string NumberFormat { get; private set; } = string.Empty;
 
         public CompoundZeroHandling ZeroHandling { get; private set; }
         public bool UseLongNames { get; private set; }
@@ -23,7 +23,7 @@ namespace Elements.Quantity
         Info[] formatInfo;
 
         public CompoundFormatInfo(string defaultSeparator,
-            string lastNumberFormat, CompoundZeroHandling zeroHandling, bool useLongNames, bool discardLastFraction,
+            string? lastNumberFormat, CompoundZeroHandling zeroHandling, bool useLongNames, bool discardLastFraction,
             params Info[] formatInfo) : this(defaultSeparator, lastNumberFormat, zeroHandling, useLongNames, discardLastFraction,
                 (IEnumerable<Info>)formatInfo )
         {
@@ -31,7 +31,7 @@ namespace Elements.Quantity
         }
 
         public CompoundFormatInfo(string defaultSeparator,
-            string lastNumberFormat, CompoundZeroHandling zeroHandling, bool useLongNames, bool discardLastFraction,
+            string? lastNumberFormat, CompoundZeroHandling zeroHandling, bool useLongNames, bool discardLastFraction,
             IEnumerable<Info> formatInfo)
         {
             this.ZeroHandling = zeroHandling;
@@ -52,7 +52,7 @@ namespace Elements.Quantity
         public string GetSeparator(int index)
             { return formatInfo[index].OverrideSeparator ?? defaultSeparator; }
 
-        public string GetUnitName(int index)
+        public string? GetUnitName(int index)
             { return formatInfo[index].OverrideUnitName; }
 
         public string GetNumberFormat(int index)
@@ -63,8 +63,8 @@ namespace Elements.Quantity
 
         public class Info
         {
-            public Info(Unit<T> unit, string overrideUnitName = null,
-                string overrideSeparator = null, string overrideNumberFormat = null,
+            public Info(Unit<T> unit, string? overrideUnitName = null,
+                string? overrideSeparator = null, string? overrideNumberFormat = null,
                 CompoundZeroHandling? overrideZeroHandling = null)
             {
                 this.Unit = unit;
@@ -75,9 +75,9 @@ namespace Elements.Quantity
             }
 
             public Unit<T> Unit { get; private set; }
-            public string OverrideUnitName { get; private set; }
-            public string OverrideSeparator { get; private set; }
-            public string OverrideNumberFormat { get; private set; }
+            public string? OverrideUnitName { get; private set; }
+            public string? OverrideSeparator { get; private set; }
+            public string? OverrideNumberFormat { get; private set; }
             public CompoundZeroHandling? OverrideZeroHandling { get; private set; }
         }
 

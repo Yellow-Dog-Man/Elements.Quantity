@@ -136,8 +136,8 @@ namespace Elements.Quantity
         public Ratio Divide(Mass q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Mass Parse(string str, Unit<Mass> defaultUnit = null) { return Unit<Mass>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Mass q, Unit<Mass> defaultUnit = null) { return Unit<Mass>.TryParse(str, out q, defaultUnit); }
+        public static Mass Parse(string str, Unit<Mass>? defaultUnit = null) { return Unit<Mass>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Mass q, Unit<Mass>? defaultUnit = null) { return Unit<Mass>.TryParse(str, out q, defaultUnit); }
 
         public static Mass operator +(Mass a, Mass b) { return a.Add(b); }
         public static Mass operator -(Mass a, Mass b) { return a.Subtract(b); }

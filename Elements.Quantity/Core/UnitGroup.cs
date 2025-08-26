@@ -35,13 +35,13 @@ namespace Elements.Quantity
 
         Dictionary<Type, SortedSet<IUnit>> units = new Dictionary<Type, SortedSet<IUnit>>();
 
-        public void RegisterUnit(IUnit unit) => GetSetForType(unit.ValueType).Add(unit);
-        public void RemoveUnit(IUnit unit) => GetSetForType(unit.ValueType).Remove(unit);
-        public bool HasUnit(IUnit unit) => GetSetForType(unit.ValueType).Contains(unit);
+        public void RegisterUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Add(unit);
+        public void RemoveUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Remove(unit);
+        public bool HasUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Contains(unit);
 
-        internal SortedSet<IUnit> GetSetForType(Type type, bool createIfNotExists = true)
+        internal SortedSet<IUnit>? GetSetForType(Type type, bool createIfNotExists = true)
         {
-            if (units.TryGetValue(type, out SortedSet<IUnit> set))
+            if (units.TryGetValue(type, out SortedSet<IUnit>? set))
                 return set;
 
             if (createIfNotExists)

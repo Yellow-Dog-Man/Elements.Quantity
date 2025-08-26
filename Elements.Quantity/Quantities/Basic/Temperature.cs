@@ -75,8 +75,8 @@ namespace Elements.Quantity
         public Ratio Divide(Temperature q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Temperature Parse(string str, Unit<Temperature> defaultUnit = null) { return Unit<Temperature>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Temperature q, Unit<Temperature> defaultUnit = null) { return Unit<Temperature>.TryParse(str, out q, defaultUnit); }
+        public static Temperature Parse(string str, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Temperature q, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.TryParse(str, out q, defaultUnit); }
 
         public static Temperature operator +(Temperature a, Temperature b) { return a.Add(b); }
         public static Temperature operator -(Temperature a, Temperature b) { return a.Subtract(b); }

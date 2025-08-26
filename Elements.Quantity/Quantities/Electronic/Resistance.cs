@@ -110,8 +110,8 @@ namespace Elements.Quantity
         public Ratio Divide(Resistance q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Resistance Parse(string str, Unit<Resistance> defaultUnit = null) { return Unit<Resistance>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Resistance q, Unit<Resistance> defaultUnit = null) { return Unit<Resistance>.TryParse(str, out q, defaultUnit); }
+        public static Resistance Parse(string str, Unit<Resistance>? defaultUnit = null) { return Unit<Resistance>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Resistance q, Unit<Resistance>? defaultUnit = null) { return Unit<Resistance>.TryParse(str, out q, defaultUnit); }
 
         public static Resistance operator +(Resistance a, Resistance b) { return a.Add(b); }
         public static Resistance operator -(Resistance a, Resistance b) { return a.Subtract(b); }

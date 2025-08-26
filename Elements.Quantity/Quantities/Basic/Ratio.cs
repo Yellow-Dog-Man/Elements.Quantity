@@ -67,8 +67,8 @@ namespace Elements.Quantity
         public Ratio Divide(Ratio q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Ratio Parse(string str, Unit<Ratio> defaultUnit = null) { return Unit<Ratio>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Ratio q, Unit<Ratio> defaultUnit = null) { return Unit<Ratio>.TryParse(str, out q, defaultUnit); }
+        public static Ratio Parse(string str, Unit<Ratio>? defaultUnit = null) { return Unit<Ratio>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Ratio q, Unit<Ratio>? defaultUnit = null) { return Unit<Ratio>.TryParse(str, out q, defaultUnit); }
 
         public static Ratio operator +(Ratio a, Ratio b) { return a.Add(b); }
         public static Ratio operator -(Ratio a, Ratio b) { return a.Subtract(b); }

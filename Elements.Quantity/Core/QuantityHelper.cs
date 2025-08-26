@@ -13,7 +13,7 @@ namespace Elements.Quantity
         // CONFIGURATION
 
         public static CultureInfo Culture = System.Globalization.CultureInfo.InvariantCulture;
-        public static NumberTryParseHandler<double> CustomParser;
+        public static NumberTryParseHandler<double>? CustomParser;
 
         public static bool TryParse(string str, NumberStyles numberStyles, IFormatProvider formatProvider, out double value)
         {
@@ -30,13 +30,13 @@ namespace Elements.Quantity
             return unit.ConvertTo(q);
         }
 
-        public static string FormatAs<T>(this T q, Unit<T> unit, string formatNum = null,
-            bool longName = false, string overrideName = null) where T : unmanaged, IQuantity<T>
+        public static string FormatAs<T>(this T q, Unit<T> unit, string? formatNum = null,
+            bool longName = false, string? overrideName = null) where T : unmanaged, IQuantity<T>
         {
             return unit.FormatAs(q, formatNum, longName, overrideName);
         }
 
-        public static string FormatAs<T>(this T q, string unitName, string formatNum = null,
+        public static string FormatAs<T>(this T q, string unitName, string? formatNum = null,
             bool longName = false) where T : unmanaged, IQuantity<T>
         {
             // find the unit
@@ -49,15 +49,15 @@ namespace Elements.Quantity
         }
 
         public static string FormatAuto<T>(this T q, string formatNum, bool longName,
-            UnitGroup unitGroup, Unit<T> defaultUnit = null) where T : unmanaged, IQuantity<T>
+            UnitGroup unitGroup, Unit<T>? defaultUnit = null) where T : unmanaged, IQuantity<T>
         {
             return FormatAuto(q, formatNum, longName, new List<UnitGroup> { unitGroup }, defaultUnit);
         }
 
-        public static string FormatAuto<T>(this T q, string formatNum = null,
-            bool longName = false, List<UnitGroup> groups = null, Unit<T> defaultUnit = null) where T : unmanaged, IQuantity<T>
+        public static string FormatAuto<T>(this T q, string? formatNum = null,
+            bool longName = false, List<UnitGroup>? groups = null, Unit<T>? defaultUnit = null) where T : unmanaged, IQuantity<T>
         {
-            Unit<T> selectedUnit = null;
+            Unit<T>? selectedUnit = null;
 
             if (q.BaseValue == 0)
                 selectedUnit = defaultUnit ?? q.DefaultUnit;
@@ -70,7 +70,7 @@ namespace Elements.Quantity
         public static string FormatCompound<T>(this T q, ICollection<Unit<T>> units,
             string separator = " ",
             CompoundZeroHandling zeroHandling = CompoundZeroHandling.RemoveAny,
-            string lastNumberFormat = null, bool longNames = false, bool discardLastFraction = false) where T : unmanaged, IQuantity<T>
+            string? lastNumberFormat = null, bool longNames = false, bool discardLastFraction = false) where T : unmanaged, IQuantity<T>
         {
             // compose info array
             var infolist = new List<CompoundFormatInfo<T>.Info>();
@@ -169,14 +169,17 @@ namespace Elements.Quantity
 
             var units = unitCache[typeof(T)];
 
-            IUnit selectedUnit = null;
+            IUnit? selectedUnit = null;
             //int lastRating = int.MaxValue;
 
             double baseValue = Math.Abs(q.BaseValue);
 
             foreach(var group in groups)
             {
-                foreach(var unit in group.GetSetForType(typeof(T)))
+                var typeSet = group.GetSetForType(typeof(T), false);
+                if (typeSet == null) continue;
+                
+                foreach(var unit in typeSet)
                 {
                     // calculate ratio between values
                     double log = Math.Log10(baseValue / unit.Ratio);
@@ -194,7 +197,7 @@ namespace Elements.Quantity
                 }
             }
 
-            return (Unit<T>)selectedUnit;
+            return selectedUnit as Unit<T> ?? throw new InvalidOperationException("No suitable unit found");
         }
 
         static bool ContainsUnit(IUnit unit, List<UnitGroup> groups)
@@ -205,7 +208,7 @@ namespace Elements.Quantity
             return false;
         }
 
-        public static IUnit GetUnitByName<T>(string name)
+        public static IUnit? GetUnitByName<T>(string name)
         {
             if (name == null)
                 return null;
@@ -230,7 +233,7 @@ namespace Elements.Quantity
             {
                 if (typeof(IQuantity).IsAssignableFrom(t) && t.IsValueType)
                 {
-                    IQuantity quantity = (IQuantity)Activator.CreateInstance(t);  // make sure it's initialized first
+                    IQuantity quantity = (IQuantity?)Activator.CreateInstance(t) ?? throw new InvalidOperationException($"Failed to create instance of {t}");  // make sure it's initialized first
 
                     var units = new List<IUnit>();
                     unitCache.Add(t, units);
@@ -276,7 +279,11 @@ namespace Elements.Quantity
                     foreach(var ff in fields)
                         foreach(var f in ff)
                             if (typeof(IUnit).IsAssignableFrom(f.FieldType))
-                                units.Add((IUnit)f.GetValue(null));
+                            {
+                                var unit = (IUnit?)f.GetValue(null);
+                                if (unit != null)
+                                    units.Add(unit);
+                            }
 
                     units.Sort();
 
