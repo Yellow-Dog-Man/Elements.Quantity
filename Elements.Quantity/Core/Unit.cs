@@ -64,7 +64,7 @@ namespace Elements.Quantity
             }
         }
 
-        public Unit(double baseRatio, ICollection<UnitGroup> unitGroups,
+        public Unit(double baseRatio, ICollection<UnitGroup>? unitGroups,
             string[] shortNames,
             string[] longNames)
         {
@@ -245,7 +245,7 @@ namespace Elements.Quantity
             string? overrideName = null)
         {
             var quantityValue = ConvertTo(q);
-            var numberText = quantityValue.ToString(formatNum);
+            var numberText = quantityValue.Format(formatNum);
 
             var unitName = overrideName != null ? overrideName : GetDefaultUnitNameByValue(quantityValue, useLongName);
 
