@@ -40,7 +40,7 @@ namespace Elements.Quantity
             bool longName = false) where T : unmanaged, IQuantity<T>
         {
             // find the unit
-            var unit = GetUnitByName<T>(unitName);
+            var unit = GetUnitByName<T>(unitName.Trim());
 
             if (unit == null)
                 throw new UnitNameNotFoundException(unitName);
