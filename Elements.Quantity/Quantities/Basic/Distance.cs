@@ -96,19 +96,24 @@ namespace Elements.Quantity
         // Imperial
         public static readonly Unit<Distance> Thou = new Unit<Distance>(0.0000254,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " th" }, new string[] { " thou" });
+            new string[] { " th" }, new string[] { " thou" });            
         public static readonly Unit<Distance> Inch = new Unit<Distance>(0.0254,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " in", "\"" }, new string[] { " inches", " inch" });
+            new string[] { " in", "\"" }, new string[] { " inches", " inch" });            
         public static readonly Unit<Distance> Foot = new Unit<Distance>(0.3048,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " ft", "'" }, new string[] { " feet" });
+            new string[] { " ft", "'" }, new string[] { " feet" });            
         public static readonly Unit<Distance> Yard = new Unit<Distance>(0.9144,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " yd" }, new string[] { " yards", " yard" });
+            new string[] { " yd" }, new string[] { " yards", " yard" });            
         public static readonly Unit<Distance> Mile = new Unit<Distance>(1609.344,
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " mi" }, new string[] { " miles", " mile" });
+
+         //Marine
+        public static readonly Unit<Distance> NauticalMile = new Unit<Distance>(1852,
+            new UnitGroup[] { UnitGroup.Maritime },
+            new string[] { " NM" }, new string[] { " nautical miles", " nautical mile" });
 
         #endregion
 
