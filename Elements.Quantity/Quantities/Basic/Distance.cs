@@ -110,7 +110,7 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " mi" }, new string[] { " miles", " mile" });
 
-        public static readonly Unit<Distance> Fathom = new Unit<Distance>(0.546807,
+        public static readonly Unit<Distance> Fathom = new Unit<Distance>(1.8288,
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " ftm" }, new string[] { " fathoms", " fathom" });
 
