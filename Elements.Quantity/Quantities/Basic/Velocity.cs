@@ -80,8 +80,8 @@ namespace Elements.Quantity
         public Ratio Divide(Velocity q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Velocity Parse(string str, Unit<Velocity> defaultUnit = null) { return Unit<Velocity>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Velocity q, Unit<Velocity> defaultUnit = null) { return Unit<Velocity>.TryParse(str, out q, defaultUnit); }
+        public static Velocity Parse(string str, Unit<Velocity>? defaultUnit = null) { return Unit<Velocity>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Velocity q, Unit<Velocity>? defaultUnit = null) { return Unit<Velocity>.TryParse(str, out q, defaultUnit); }
 
         public static Velocity operator +(Velocity a, Velocity b) { return a.Add(b); }
         public static Velocity operator -(Velocity a, Velocity b) { return a.Subtract(b); }

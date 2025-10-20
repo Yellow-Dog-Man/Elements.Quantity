@@ -141,8 +141,8 @@ namespace Elements.Quantity
         public Ratio Divide(Distance q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Distance Parse(string str, Unit<Distance> defaultUnit = null) { return Unit<Distance>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Distance q, Unit<Distance> defaultUnit = null) { return Unit<Distance>.TryParse(str, out q, defaultUnit); }
+        public static Distance Parse(string str, Unit<Distance>? defaultUnit = null) { return Unit<Distance>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Distance q, Unit<Distance>? defaultUnit = null) { return Unit<Distance>.TryParse(str, out q, defaultUnit); }
 
         public static Distance operator +(Distance a, Distance b) { return a.Add(b); }
         public static Distance operator -(Distance a, Distance b) { return a.Subtract(b); }

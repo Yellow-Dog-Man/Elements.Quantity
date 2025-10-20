@@ -117,8 +117,8 @@ namespace Elements.Quantity
         public Ratio Divide(Angle q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Angle Parse(string str, Unit<Angle> defaultUnit = null) { return Unit<Angle>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Angle q, Unit<Angle> defaultUnit = null) { return Unit<Angle>.TryParse(str, out q, defaultUnit); }
+        public static Angle Parse(string str, Unit<Angle>? defaultUnit = null) { return Unit<Angle>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Angle q, Unit<Angle>? defaultUnit = null) { return Unit<Angle>.TryParse(str, out q, defaultUnit); }
 
         public static Angle operator +(Angle a, Angle b) { return a.Add(b); }
         public static Angle operator -(Angle a, Angle b) { return a.Subtract(b); }

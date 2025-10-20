@@ -33,7 +33,7 @@ namespace Elements.Quantity
 
         public Type ValueType => typeof(T);
 
-        public int CompareTo(IUnit other) => Ratio.CompareTo(other.Ratio);
+        public int CompareTo(IUnit? other) => other == null ? 1 : Ratio.CompareTo(other.Ratio);
 
         public ICollection<string> GetUnitNames() => ShortUnitNames.Union(LongUnitNames).ToArray();
 
@@ -93,30 +93,30 @@ namespace Elements.Quantity
             return default(T).New(val * Ratio);
         }
 
-        public static T Parse(string str, NumberStyles numberStyles, IFormatProvider formatProvider, Unit<T> defaultUnit = null)
+        public static T Parse(string str, NumberStyles numberStyles, IFormatProvider formatProvider, Unit<T>? defaultUnit = null)
         {
             ParseIntern(str, numberStyles, formatProvider, out T quantity, defaultUnit, true);
             return quantity;
         }
 
-        public static T Parse(string str, Unit<T> defaultUnit = null)
+        public static T Parse(string str, Unit<T>? defaultUnit = null)
         {
             return Parse(str, NumberStyles.Any, QuantityHelper.Culture, defaultUnit);
         }
 
-        public static bool TryParse(string str, out T quantity, Unit<T> defaultUnit = null)
+        public static bool TryParse(string str, out T quantity, Unit<T>? defaultUnit = null)
         {
             return TryParse(str, NumberStyles.Any, QuantityHelper.Culture, out quantity, defaultUnit);
         }
 
         public static bool TryParse(string str, NumberStyles numberStyles, IFormatProvider formatProvider, out T quantity,
-            Unit<T> defaultUnit = null)
+            Unit<T>? defaultUnit = null)
         {
             return ParseIntern(str, numberStyles, formatProvider, out quantity, defaultUnit, false);
         }
 
         static bool ParseIntern(string str, NumberStyles numberStyles, IFormatProvider formatProvider, out T quantity,
-            Unit<T> defaultUnit, bool throwOnFail)
+            Unit<T>? defaultUnit, bool throwOnFail)
         {
             if (string.IsNullOrWhiteSpace(str))
             {
@@ -152,7 +152,7 @@ namespace Elements.Quantity
                 unitstr.Trim();
 
                 // find the right unit in the dictionary
-                Unit<T> unit = GetUnitFromSubstring(unitstr, out int unitEndIndex) as Unit<T>;
+                Unit<T>? unit = GetUnitFromSubstring(unitstr, out int unitEndIndex) as Unit<T>;
 
                 if (unit == null)
                 {
@@ -179,7 +179,7 @@ namespace Elements.Quantity
             }
         }
 
-        static IUnit GetUnitFromSubstring(string str, out int unitEndIndex, bool byLetter = false)
+        static IUnit? GetUnitFromSubstring(string str, out int unitEndIndex, bool byLetter = false)
         {
             int length = str.Length;
 
@@ -242,8 +242,8 @@ namespace Elements.Quantity
             return str.Length;
         }
 
-        public string FormatAs(T q, string formatNum = null, bool useLongName = false,
-            string overrideName = null)
+        public string FormatAs(T q, string? formatNum = null, bool longName = false,
+            string? overrideName = null)
         {
             var quantityValue = ConvertTo(q);
             var numberText = quantityValue.ToString(formatNum);

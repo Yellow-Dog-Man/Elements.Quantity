@@ -110,8 +110,8 @@ namespace Elements.Quantity
         public Ratio Divide(Current q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Current Parse(string str, Unit<Current> defaultUnit = null) { return Unit<Current>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Current q, Unit<Current> defaultUnit = null) { return Unit<Current>.TryParse(str, out q, defaultUnit); }
+        public static Current Parse(string str, Unit<Current>? defaultUnit = null) { return Unit<Current>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Current q, Unit<Current>? defaultUnit = null) { return Unit<Current>.TryParse(str, out q, defaultUnit); }
 
         public static Current operator +(Current a, Current b) { return a.Add(b); }
         public static Current operator -(Current a, Current b) { return a.Subtract(b); }
