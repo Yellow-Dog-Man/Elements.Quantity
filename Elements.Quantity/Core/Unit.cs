@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-
-using System.Text;
+using System.Linq;
+using Elements.Quantity.Core.Internal;
 
 
 namespace Elements.Quantity
@@ -17,41 +18,51 @@ namespace Elements.Quantity
 
     public class Unit<T> : IUnit where T : unmanaged, IQuantity<T>
     {
+        private const byte DEFAULT_SHORT_UNIT_NAME_INDEX = 0;
+        private const byte DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX = 0;
+        private const byte DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX = 1;
+
         public double Ratio { get; protected set; }
 
-        string[] shortNames;
-        string[] longNames;
+        private string[] _shortNames;
+        private string[] _longNames;
 
-        static string shortBaseName;
-        static string longBaseName;
+        private string defaultShortUnitName;
+        private string defaultLongUnitNamePluralForm;
+        private string defaultLongUnitNameSingularForm;
 
         public Type ValueType => typeof(T);
 
         public int CompareTo(IUnit other) => Ratio.CompareTo(other.Ratio);
 
-        public ICollection<string> GetUnitNames()
+        public ICollection<string> GetUnitNames() => ShortUnitNames.Union(LongUnitNames).ToArray();
+
+        private string[] ShortUnitNames
         {
-            var list = new List<string>();
-            var t = default(T);
-            var shortBaseNames = t.GetShortBaseNames();
-            var longBaseNames  = t.GetLongBaseNames();
+            get => _shortNames;
+            set
+            {
+                var unitNames = GenerateUnitNames(value, default(T).GetShortBaseNames());
+                defaultShortUnitName = unitNames[DEFAULT_SHORT_UNIT_NAME_INDEX];
 
-            // cache them - this function will be called by the library initializer
-            shortBaseName = shortBaseNames[0];
-            longBaseName = longBaseNames[0];
+                _shortNames = unitNames.TrimStrings();
+            }
+        }
 
-            for (int i = 0; i < 2; i++)
-                foreach (var name in (i == 0) ? shortNames : longNames)
-                    foreach (var basename in (i == 0) ? shortBaseNames : longBaseNames)
-                    {
-                        string unitName = string.Format(name, basename).Trim();
+        private string[] LongUnitNames
+        {
+            get => _longNames;
+            set
+            {
+                var unitNames = GenerateUnitNames(value, default(T).GetLongBaseNames());
 
-                        // need to check - some combinations result in identical names
-                        if (!list.Contains(unitName)) 
-                            list.Add(unitName);
-                    }
+                defaultLongUnitNamePluralForm = unitNames[DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX];
 
-            return list;
+                var longUnitNameSingularFormIndex = Math.Min(DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX, unitNames.Length - 1);
+                defaultLongUnitNameSingularForm = unitNames[longUnitNameSingularFormIndex];
+
+                _longNames = unitNames.TrimStrings();
+            }
         }
 
         public Unit(double baseRatio, ICollection<UnitGroup> unitGroups,
@@ -59,8 +70,8 @@ namespace Elements.Quantity
             string[] longNames)
         {
             this.Ratio = baseRatio;
-            this.shortNames = shortNames;
-            this.longNames = longNames;
+            ShortUnitNames = shortNames;
+            LongUnitNames = longNames;
 
             if(unitGroups != null)
                 foreach (var unitGroup in unitGroups)
@@ -231,18 +242,51 @@ namespace Elements.Quantity
             return str.Length;
         }
 
-        public string FormatAs(T q, string formatNum = null, bool longName = false,
+        public string FormatAs(T q, string formatNum = null, bool useLongName = false,
             string overrideName = null)
         {
-            string number;
+            var quantityValue = ConvertTo(q);
+            var numberText = quantityValue.ToString(formatNum);
 
-            if (string.IsNullOrEmpty(formatNum))
-                number = ConvertTo(q).ToString();
-            else
-                number = ConvertTo(q).ToString(formatNum);
+            var unitName = overrideName != null ? overrideName : GetDefaultUnitNameByValue(quantityValue, useLongName);
 
-            return number + (overrideName ?? string.Format(longName ? longNames[0] : shortNames[0],
-                longName ? longBaseName : shortBaseName));
+            return $"{numberText}{unitName}";
+        }
+
+        private string GetDefaultUnitNameByValue(double quantityValue, bool useLongName)
+        {
+            if (useLongName)
+            {
+                return quantityValue.IsSingular() ? defaultLongUnitNameSingularForm : defaultLongUnitNamePluralForm;
+            }
+
+            return defaultShortUnitName;
+        }
+
+        private string[] GenerateUnitNames(string[] names, string[] baseNames)
+        {
+            var nameListSize = names.Length;
+            var baseNamesListSize = baseNames.Length;
+            var generatedNameListSize = nameListSize * baseNamesListSize;
+
+            var namesList = new List<string>(generatedNameListSize);
+
+            for (var i = 0; i < generatedNameListSize; i++)
+            {
+                var nameIndex = i / baseNamesListSize;
+                var baseNameIndex = i % baseNamesListSize;
+
+                var name = names[nameIndex];
+                var baseName = baseNames[baseNameIndex];
+
+                var unitName = string.Format(name, baseName);
+
+                if (namesList.Contains(unitName)) { continue; }
+
+                namesList.Add(unitName);
+            }
+
+            return namesList.ToArray();
         }
 
         public static T operator*(Unit<T> unit, double n)

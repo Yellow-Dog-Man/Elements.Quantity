@@ -16,7 +16,6 @@
     <PackageTags>quantities units conversion</PackageTags>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
   </PropertyGroup>
-
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -27,7 +26,8 @@
     <AssemblyName>Elements.Quantity</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Core\CompoundFormatInfo.cs" />
     <Compile Include="Core\Exceptions.cs" />
+    <Compile Include="Core\Internal\NumberExtension.cs" />
+    <Compile Include="Core\Internal\ArrayExtension.cs" />
     <Compile Include="Core\QVector3.cs" />
     <Compile Include="Core\SI.cs" />
     <Compile Include="Core\UnitNonLinear.cs" />
@@ -81,9 +83,9 @@
     <Compile Include="Quantities\Electronic\Voltage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Quantities\QuantitySITemplate.txt"  Pack="false" CopyToOutput="false"/>
-    <Content Include="Quantities\QuantityTemplate.txt" Pack="false" CopyToOutput="false"/>
-    <None Include="Images\icon.png" Pack="true" PackagePath="\"/>
+    <Content Include="Quantities\QuantitySITemplate.txt" Pack="false" CopyToOutput="false" />
+    <Content Include="Quantities\QuantityTemplate.txt" Pack="false" CopyToOutput="false" />
+    <None Include="Images\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

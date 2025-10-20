@@ -77,11 +77,11 @@ namespace Elements.Quantity
 
         public static readonly Unit<Angle> ArcMinute = new Unit<Angle>((180.0/Math.PI)/60.0,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { "′" }, new string[] { " arcmin", " amin" });
+            new string[] { "′" }, new string[] { " arcminutes", " arcminute", " arcmin", " amin" });
 
         public static readonly Unit<Angle> ArcSecond = new Unit<Angle>((180.0/Math.PI)/(60.0*60.0),
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { "″" }, new string[] { " arcsec", " asec" });
+            new string[] { "″" }, new string[] { " arcseconds", " arcsecond", " arcsec", " asec" });
 
         #endregion
 

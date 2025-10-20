@@ -25,7 +25,7 @@ namespace Elements.Quantity
 
         public string[] GetShortBaseNames() { return new string[] { "m" }; }
         public string[] GetLongBaseNames()
-        { return new string[] { "meters", "metres", "meter", "metre" }; }
+        { return new string[] { "meters", "meter", "metres", "metre" }; }
 
         #endregion
 
@@ -75,7 +75,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Distance> SolarRadius = new Unit<Distance>(6.957e8,
             new UnitGroup[] { UnitGroup.Astronomical },
-            new string[] { " R☉" }, new string[] { " Solar radii", " Solar radius", });
+            new string[] { " R☉" }, new string[] { " Solar radii", " Solar radius" });
 
         public static readonly Unit<Distance> AU = new Unit<Distance>(149597871464,
             new UnitGroup[] { UnitGroup.Astronomical, UnitGroup.Common },
@@ -91,18 +91,18 @@ namespace Elements.Quantity
 
         public static readonly Unit<Distance> Parsec = new Unit<Distance>(3.0857e16,
             new UnitGroup[] { UnitGroup.Astronomical },
-            new string[] { " pc" }, new string[] { " parsecs", " persec" });
+            new string[] { " pc" }, new string[] { " parsecs", " parsec" });
 
         // Imperial
         public static readonly Unit<Distance> Thou = new Unit<Distance>(0.0000254,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " th" }, new string[] { " thou" });
+            new string[] { " th" }, new string[] { " thous", " thou" });
         public static readonly Unit<Distance> Inch = new Unit<Distance>(0.0254,
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " in", "\"" }, new string[] { " inches", " inch" });
         public static readonly Unit<Distance> Foot = new Unit<Distance>(0.3048,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " ft", "'" }, new string[] { " feet" });
+            new string[] { " ft", "'" }, new string[] { " feet", " foot" });
         public static readonly Unit<Distance> Yard = new Unit<Distance>(0.9144,
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " yd" }, new string[] { " yards", " yard" });
