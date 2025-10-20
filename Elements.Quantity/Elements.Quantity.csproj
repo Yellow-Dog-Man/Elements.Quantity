@@ -17,11 +17,6 @@
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <!-- Needed to release, not included in build -->
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="6.7.0" PrivateAssets="all" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Quantities\QuantitySITemplate.txt" Pack="false" CopyToOutput="false" />
     <Content Include="Quantities\QuantityTemplate.txt" Pack="false" CopyToOutput="false" />
     <None Include="Images\icon.png" Pack="true" PackagePath="\" />

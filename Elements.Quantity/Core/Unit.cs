@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -24,12 +23,12 @@ namespace Elements.Quantity
 
         public double Ratio { get; protected set; }
 
-        private string[] _shortNames;
-        private string[] _longNames;
+        private string[] _shortNames = [];
+        private string[] _longNames = [];
 
-        private string defaultShortUnitName;
-        private string defaultLongUnitNamePluralForm;
-        private string defaultLongUnitNameSingularForm;
+        private string defaultShortUnitName = string.Empty;
+        private string defaultLongUnitNamePluralForm = string.Empty;
+        private string defaultLongUnitNameSingularForm = string.Empty;
 
         public Type ValueType => typeof(T);
 
@@ -242,7 +241,7 @@ namespace Elements.Quantity
             return str.Length;
         }
 
-        public string FormatAs(T q, string? formatNum = null, bool longName = false,
+        public string FormatAs(T q, string? formatNum = null, bool useLongName = false,
             string? overrideName = null)
         {
             var quantityValue = ConvertTo(q);
