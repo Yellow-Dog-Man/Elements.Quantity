@@ -278,7 +278,7 @@ namespace Elements.Quantity
                     // collect and add all units to the list
                     foreach(var ff in fields)
                         foreach(var f in ff)
-                            if (typeof(IUnit).IsAssignableFrom(f.FieldType))
+                            if (typeof(IUnit).IsAssignableFrom(f.FieldType) && f.GetCustomAttribute<ObsoleteAttribute>() == null)
                             {
                                 var unit = (IUnit?)f.GetValue(null);
                                 if (unit != null)
