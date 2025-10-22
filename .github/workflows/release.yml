@@ -6,18 +6,18 @@ on:
     types: [published]
 jobs:
   publish:
-    # 2019, has our .NET needs, latest does not
-    runs-on: windows-2019
+    # Windows Server 2022 contains .NET 9
+    runs-on: windows-2022
     env:
       VERSION: ${{ github.event.release.tag_name }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Get version
       run: echo "Building with ${{ env.VERSION }}"
-    - name: Setup .NET 7
-      uses: actions/setup-dotnet@v3
+    - name: Setup .NET 9
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 9.0.x
     - name: Install dependencies
       run: dotnet restore
     - name: Build

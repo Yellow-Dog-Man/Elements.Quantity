@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{F163205C-0EBA-40EC-A4ED-0AE26C4A5BC5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elements.Quantity", "Elements.Quantity\Elements.Quantity.csproj", "{7DA9B41E-A0F0-4392-8672-966642C94884}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elements.Quantity.Test", "Elements.Quantity.Tests\Elements.Quantity.Test.csproj", "{40DBC8C3-EF68-47E0-AA3C-83692A649E60}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F163205C-0EBA-40EC-A4ED-0AE26C4A5BC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F163205C-0EBA-40EC-A4ED-0AE26C4A5BC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F163205C-0EBA-40EC-A4ED-0AE26C4A5BC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F163205C-0EBA-40EC-A4ED-0AE26C4A5BC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7DA9B41E-A0F0-4392-8672-966642C94884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7DA9B41E-A0F0-4392-8672-966642C94884}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DA9B41E-A0F0-4392-8672-966642C94884}.Release|Any CPU.ActiveCfg = Release|Any CPU
