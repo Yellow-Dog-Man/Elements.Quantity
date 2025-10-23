@@ -39,6 +39,9 @@ namespace Elements.Quantity
         // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<Acceleration> DefaultUnit { get { return MetersPerSecondPerSecond; } }
 
+        /// <inheritdoc/>
+        public string QuantityFamily => string.Empty;
+
         // define actual units for the quantity (excluding SI units which are automatic)
 
         public static readonly Unit<Acceleration> MetersPerSecondPerSecond = new Unit<Acceleration>(1,

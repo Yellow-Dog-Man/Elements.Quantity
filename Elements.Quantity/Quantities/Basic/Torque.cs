@@ -28,6 +28,9 @@ namespace Elements.Quantity
 
         public Unit<Torque> DefaultUnit { get { return NewtonMeter; } }
 
+        /// <inheritdoc/>
+        public string QuantityFamily => string.Empty;
+
         public static readonly Unit<Torque> NewtonMeter = new Unit<Torque>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " N m", " N·m" }, new string[] { " newton meters", " newton meter", " newton metres", " newton metre" });

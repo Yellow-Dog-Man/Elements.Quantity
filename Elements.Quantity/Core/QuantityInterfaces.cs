@@ -28,6 +28,15 @@ namespace Elements.Quantity
         Ratio Divide(T q);
 
         Unit<T> DefaultUnit { get; }
+
+        /// <summary>
+        /// The quantity family that this quantity type belongs to.
+        /// </summary>
+        /// <remarks>
+        /// This is used to generate the value for <see cref="Unit{T}.UnitKey"/>. For quantity
+        /// types that fall under the 'Basic' family, an empty string should always be returned.
+        /// </remarks>
+        string QuantityFamily { get; }
     }
 
     public interface IQuantitySI
