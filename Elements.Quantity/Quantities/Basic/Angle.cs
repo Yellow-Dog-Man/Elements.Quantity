@@ -66,6 +66,8 @@ namespace Elements.Quantity
         // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<Angle> DefaultUnit { get { return Radian; } }
 
+        public string QuantityFamily => string.Empty;
+
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:
 

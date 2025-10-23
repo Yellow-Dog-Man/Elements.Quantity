@@ -28,6 +28,8 @@ namespace Elements.Quantity
         Ratio Divide(T q);
 
         Unit<T> DefaultUnit { get; }
+
+        string QuantityFamily { get; }
     }
 
     public interface IQuantitySI

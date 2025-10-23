@@ -86,6 +86,8 @@ namespace Elements.Quantity
         // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<Current> DefaultUnit { get { return Ampere; } }
 
+        public string QuantityFamily => "Electronic";
+
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:
 

@@ -71,6 +71,8 @@ namespace Elements.Quantity
         // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<Mass> DefaultUnit { get { return SI<Mass>.Kilo; } }
 
+        public string QuantityFamily => string.Empty;
+
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:
 
