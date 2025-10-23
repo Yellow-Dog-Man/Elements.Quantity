@@ -28,6 +28,9 @@ namespace Elements.Quantity
 
         public Unit<Luminance> DefaultUnit { get { return CandelaPerSquareMeter; } }
 
+        /// <inheritdoc/>
+        public string QuantityFamily => string.Empty;
+
         public static readonly Unit<Luminance> CandelaPerSquareMeter = new Unit<Luminance>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " cd/m²", " cd/m^2" }, new string[] { " candelas per square meter", " candela per square meter" });
