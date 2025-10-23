@@ -14,7 +14,7 @@ public class AccelerationTests
     {
         get => new AccelerationTestData[]
         {
-            new (Acceleration.MetersPerSecondPerSecond, "{0} m/s^2", "1 meter per second per second", "{0} meters per second per second")
+            new (Acceleration.MetersPerSecondPerSecond, "{0} m/s^2", "1 meter per second squared", "{0} meters per second squared")
         };
     }
 
