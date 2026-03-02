@@ -110,8 +110,8 @@ namespace Elements.Quantity
         public Ratio Divide(Voltage q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Voltage Parse(string str, Unit<Voltage> defaultUnit = null) { return Unit<Voltage>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Voltage q, Unit<Voltage> defaultUnit = null) { return Unit<Voltage>.TryParse(str, out q, defaultUnit); }
+        public static Voltage Parse(string str, Unit<Voltage>? defaultUnit = null) { return Unit<Voltage>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Voltage q, Unit<Voltage>? defaultUnit = null) { return Unit<Voltage>.TryParse(str, out q, defaultUnit); }
 
         public static Voltage operator +(Voltage a, Voltage b) { return a.Add(b); }
         public static Voltage operator -(Voltage a, Voltage b) { return a.Subtract(b); }

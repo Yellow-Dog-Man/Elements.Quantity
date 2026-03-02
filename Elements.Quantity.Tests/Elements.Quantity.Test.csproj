@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <IsTestProject>true</IsTestProject>
+    <TestProjectType>UnitTest</TestProjectType>
+    <IsPackable>false</IsPackable>
+    <IsCodedUITest>False</IsCodedUITest>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MSTest" Version="3.10.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Elements.Quantity\Elements.Quantity.csproj" />
+  </ItemGroup>
+</Project>

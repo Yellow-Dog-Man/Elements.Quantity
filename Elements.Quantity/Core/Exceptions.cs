@@ -7,7 +7,7 @@ namespace Elements.Quantity
 {
     public class SmartQuantityException : Exception
     {
-        public SmartQuantityException(string message, Exception innerException = null)
+        public SmartQuantityException(string message, Exception? innerException = null)
             : base(message, innerException)
         {
         }
@@ -17,7 +17,7 @@ namespace Elements.Quantity
     {
         public string UnitName { get; private set; }
 
-        public UnitNameNotFoundException(string unitName, Exception innerException = null)
+        public UnitNameNotFoundException(string unitName, Exception? innerException = null)
             : base("Specified unit name isn't defined by any of the units.", innerException)
         {
             this.UnitName = unitName;
