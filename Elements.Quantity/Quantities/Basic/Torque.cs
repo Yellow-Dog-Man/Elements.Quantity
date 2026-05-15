@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Elements.Quantity
 {
@@ -30,7 +30,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Torque> NewtonMeter = new Unit<Torque>(1,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " Nm" }, new string[] { "newton meters" });
+            new string[] { " N m" }, new string[] { "newton meters" });
 
         public static readonly Unit<Torque> PoundFoot = new Unit<Torque>(1.35582,
             new UnitGroup[] { UnitGroup.Imperial },
