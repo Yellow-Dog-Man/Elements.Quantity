@@ -83,7 +83,7 @@ namespace Elements.Quantity
             new string[] { " bar" }, new string[] { " bars", " bar" });
         public static readonly Unit<Pressure> Atmosphere = new Unit<Pressure>(1.01325e5,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " atm" }, new string[] { " atmospheres", " atmosphere" });
+            new string[] { " atm" }, new string[] { " standard atmospheres", " standard atmosphere", " atmospheres", " atmosphere" });
         public static readonly Unit<Pressure> Torr = new Unit<Pressure>(1.01325e5 / 760,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " Torr" }, new string[] { " torrs", " torr" });
