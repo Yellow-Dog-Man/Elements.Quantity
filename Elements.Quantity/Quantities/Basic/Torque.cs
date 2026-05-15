@@ -30,11 +30,11 @@ namespace Elements.Quantity
 
         public static readonly Unit<Torque> NewtonMeter = new Unit<Torque>(1,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " N m", " N·m" }, new string[] { "newton meters", "newton meter", "newton metres", "newton metre" });
+            new string[] { " N m", " N·m" }, new string[] { " newton meters", " newton meter", " newton metres", " newton metre" });
 
         public static readonly Unit<Torque> PoundFoot = new Unit<Torque>(1.35582,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " lb·ft", " lb-ft", " lbf·ft", " lbf-ft" }, new string[] { "pound-feet", "pound-foot" });
+            new string[] { " lb·ft", " lb-ft", " lbf·ft", " lbf-ft" }, new string[] { " pound-feet", " pound-foot" });
 
         #endregion
 
