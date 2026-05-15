@@ -76,9 +76,12 @@ namespace Elements.Quantity
 
         public static readonly Unit<Mass> Gram = new UnitSI<Mass>(0, "", "");
 
-        public static readonly Unit<Mass> Ton = new Unit<Mass>(1e6,
+        public static readonly Unit<Mass> Tonne = new Unit<Mass>(1e6,
             new UnitGroup[] { UnitGroup.Common, UnitGroup.Metric },
-            new string[] { " t" }, new string[] { " tonnes", " ton" });
+            new string[] { " t" }, new string[] { " tonnes", " tonne" });
+
+        [Obsolete("Use 'Mass.Tonne' instead.")]
+        public static readonly Unit<Mass> Ton = Tonne;
 
         // Imperial
         public static readonly Unit<Mass> Grain = new Unit<Mass>(0.06479891,
@@ -111,7 +114,11 @@ namespace Elements.Quantity
 
         public static readonly Unit<Mass> ImperialTon = new Unit<Mass>(1016.0469088 * 1000,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { }, new string[] { " imperial tonnes", " imperial ton" });
+            new string[] { " LT" }, new string[] { " imperial tons", " imperial ton" });
+
+        public static readonly Unit<Mass> ShortTon = new Unit<Mass>(907.18 * 1000,
+            new UnitGroup[] { UnitGroup.Imperial },
+            new string[] { " tn" }, new string[] { " tons", " ton", " short tons", " short ton" });
 
         public static readonly Unit<Mass> Slug = new Unit<Mass>(14593.90294,
             new UnitGroup[] { UnitGroup.Imperial },
@@ -136,8 +143,8 @@ namespace Elements.Quantity
         public Ratio Divide(Mass q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Mass Parse(string str, Unit<Mass> defaultUnit = null) { return Unit<Mass>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Mass q, Unit<Mass> defaultUnit = null) { return Unit<Mass>.TryParse(str, out q, defaultUnit); }
+        public static Mass Parse(string str, Unit<Mass>? defaultUnit = null) { return Unit<Mass>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Mass q, Unit<Mass>? defaultUnit = null) { return Unit<Mass>.TryParse(str, out q, defaultUnit); }
 
         public static Mass operator +(Mass a, Mass b) { return a.Add(b); }
         public static Mass operator -(Mass a, Mass b) { return a.Subtract(b); }

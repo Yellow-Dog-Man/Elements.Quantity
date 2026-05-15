@@ -77,11 +77,11 @@ namespace Elements.Quantity
 
         public static readonly Unit<Angle> ArcMinute = new Unit<Angle>((180.0/Math.PI)/60.0,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { "′" }, new string[] { " arcmin", " amin" });
+            new string[] { "′" }, new string[] { " arcminutes", " arcminute", " arcmin", " amin" });
 
         public static readonly Unit<Angle> ArcSecond = new Unit<Angle>((180.0/Math.PI)/(60.0*60.0),
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { "″" }, new string[] { " arcsec", " asec" });
+            new string[] { "″" }, new string[] { " arcseconds", " arcsecond", " arcsec", " asec" });
 
         #endregion
 
@@ -117,8 +117,8 @@ namespace Elements.Quantity
         public Ratio Divide(Angle q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Angle Parse(string str, Unit<Angle> defaultUnit = null) { return Unit<Angle>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Angle q, Unit<Angle> defaultUnit = null) { return Unit<Angle>.TryParse(str, out q, defaultUnit); }
+        public static Angle Parse(string str, Unit<Angle>? defaultUnit = null) { return Unit<Angle>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Angle q, Unit<Angle>? defaultUnit = null) { return Unit<Angle>.TryParse(str, out q, defaultUnit); }
 
         public static Angle operator +(Angle a, Angle b) { return a.Add(b); }
         public static Angle operator -(Angle a, Angle b) { return a.Subtract(b); }

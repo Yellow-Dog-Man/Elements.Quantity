@@ -43,7 +43,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Acceleration> MetersPerSecondPerSecond = new Unit<Acceleration>(1,
             new UnitGroup[] { UnitGroup.Common, UnitGroup.Metric },
-            new string[] { " m/s^2", " m/s/s" }, new string[] { " meters per second per second" });
+            new string[] { " m/s^2", " m/s/s" }, new string[] { " meters per second per second", " meter per second per second", " meters per second squared", " meter per second squared" });
 
         #endregion
 
@@ -64,8 +64,8 @@ namespace Elements.Quantity
         public Ratio Divide(Acceleration q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Acceleration Parse(string str, Unit<Acceleration> defaultUnit = null) { return Unit<Acceleration>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Acceleration q, Unit<Acceleration> defaultUnit = null) { return Unit<Acceleration>.TryParse(str, out q, defaultUnit); }
+        public static Acceleration Parse(string str, Unit<Acceleration>? defaultUnit = null) { return Unit<Acceleration>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Acceleration q, Unit<Acceleration>? defaultUnit = null) { return Unit<Acceleration>.TryParse(str, out q, defaultUnit); }
 
         public static Acceleration operator +(Acceleration a, Acceleration b) { return a.Add(b); }
         public static Acceleration operator -(Acceleration a, Acceleration b) { return a.Subtract(b); }

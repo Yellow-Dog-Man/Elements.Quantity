@@ -49,12 +49,12 @@ namespace Elements.Quantity
         public static readonly Unit<Temperature> Celsius = new UnitNonLinear<Temperature>(
             (K)=>(K-273.15), (C)=>(C+273.15),
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " °C" }, new string[] { " Celsius", " degrees Celsius"});
+            new string[] { " °C" }, new string[] { " degrees Celsius", " degree Celsius", " Celsius" });
 
         public static readonly Unit<Temperature> Fahrenheit = new UnitNonLinear<Temperature>(
             (K) => (K * (9.0 / 5.0) - 459.67), (F) => ((F + 459.67)*(5.0 / 9.0)),
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " °F" }, new string[] { " Fahrenheit", " degrees Fahrenheit" });
+            new string[] { " °F" }, new string[] { " degrees Fahrenheit", " degree Fahrenheit", " Fahrenheit" });
 
         #endregion
 
@@ -75,8 +75,8 @@ namespace Elements.Quantity
         public Ratio Divide(Temperature q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Temperature Parse(string str, Unit<Temperature> defaultUnit = null) { return Unit<Temperature>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Temperature q, Unit<Temperature> defaultUnit = null) { return Unit<Temperature>.TryParse(str, out q, defaultUnit); }
+        public static Temperature Parse(string str, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Temperature q, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.TryParse(str, out q, defaultUnit); }
 
         public static Temperature operator +(Temperature a, Temperature b) { return a.Add(b); }
         public static Temperature operator -(Temperature a, Temperature b) { return a.Subtract(b); }
