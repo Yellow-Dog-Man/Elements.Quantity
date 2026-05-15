@@ -19,8 +19,8 @@ namespace Elements.Quantity
 
         #region QUANTITY NAME DEFINITIONS
 
-        public string[] GetShortBaseNames() { return new string[] { "cd/m²" }; }
-        public string[] GetLongBaseNames() { return new string[] { "candelas per square meter", "candela per square meter" }; }
+        public string[] GetShortBaseNames() { return new string[] { "" }; }
+        public string[] GetLongBaseNames() { return new string[] { "" }; }
 
         #endregion
 
