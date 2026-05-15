@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Elements.Quantity
 {
@@ -34,7 +34,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Luminance> Nit = new Unit<Luminance>(1,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " nit" }, new string[] { "nits" }); // Nit is a non-SI name for cd/m²
+            new string[] { " nt" }, new string[] { "nits" }); // Nit is a non-SI name for cd/m²
 
         #endregion
 
