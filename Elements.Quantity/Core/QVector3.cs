@@ -67,7 +67,7 @@ namespace Elements.Quantity
             }
         }
 
-        public string FormatAs(Unit<T> unit, string formatNum = null, bool longName = false)
+        public string FormatAs(Unit<T> unit, string? formatNum = null, bool longName = false)
         {
             return "["
                 + x.FormatAs(unit, formatNum, longName) + "; "
@@ -75,8 +75,8 @@ namespace Elements.Quantity
                 + z.FormatAs(unit, formatNum, longName) + "]";
         }
 
-        public string FormatAuto(string formatNum = null, bool longName = false,
-            List<UnitGroup> unitGroups = null)
+        public string FormatAuto(string? formatNum = null, bool longName = false,
+            List<UnitGroup>? unitGroups = null)
         {
             return "["
                 + x.FormatAuto(formatNum, longName, unitGroups) + "; "

@@ -43,19 +43,19 @@ namespace Elements.Quantity
 
         public static readonly Unit<Velocity> MetersPerSecond = new Unit<Velocity>(1,
             new UnitGroup[] { UnitGroup.Common, UnitGroup.Metric },
-            new string[] { " m/s", " mps" }, new string[] { " meters per second" });
+            new string[] { " m/s", " mps" }, new string[] { " meters per second", " meter per second" });
 
         public static readonly Unit<Velocity> KilometersPerHour = new Unit<Velocity>(1/3.6,
             new UnitGroup[] { UnitGroup.Common, UnitGroup.Metric },
-            new string[] { " km/h", " kmh" }, new string[] { " kilometers per hour" });
+            new string[] { " km/h", " kmh" }, new string[] { " kilometers per hour", " kilometer per hour" });
 
         public static readonly Unit<Velocity> MilesPerHour = new Unit<Velocity>(0.44704,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " mph" }, new string[] { " miles per hour" });
+            new string[] { " mph" }, new string[] { " miles per hour", " mile per hour" });
 
         public static readonly Unit<Velocity> FeetPerSecond = new Unit<Velocity>(0.3048,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " ft/s" }, new string[] { " feet per second" });
+            new string[] { " ft/s" }, new string[] { " feet per second", " foot per second" });
 
         public static readonly Unit<Velocity> Knots = new Unit<Velocity>(0.514444,
             new UnitGroup[] { UnitGroup.Meteorological, UnitGroup.Aviation, UnitGroup.Maritime },
@@ -80,8 +80,8 @@ namespace Elements.Quantity
         public Ratio Divide(Velocity q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Velocity Parse(string str, Unit<Velocity> defaultUnit = null) { return Unit<Velocity>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Velocity q, Unit<Velocity> defaultUnit = null) { return Unit<Velocity>.TryParse(str, out q, defaultUnit); }
+        public static Velocity Parse(string str, Unit<Velocity>? defaultUnit = null) { return Unit<Velocity>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Velocity q, Unit<Velocity>? defaultUnit = null) { return Unit<Velocity>.TryParse(str, out q, defaultUnit); }
 
         public static Velocity operator +(Velocity a, Velocity b) { return a.Add(b); }
         public static Velocity operator -(Velocity a, Velocity b) { return a.Subtract(b); }

@@ -142,8 +142,8 @@ namespace Elements.Quantity
         public Ratio Divide(Time q) { return new Ratio(BaseValue / q.BaseValue); }
 
         // these should be defined as convenience, but cannot be forced by interface
-        public static Time Parse(string str, Unit<Time> defaultUnit = null) { return Unit<Time>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Time q, Unit<Time> defaultUnit = null) { return Unit<Time>.TryParse(str, out q, defaultUnit); }
+        public static Time Parse(string str, Unit<Time>? defaultUnit = null) { return Unit<Time>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Time q, Unit<Time>? defaultUnit = null) { return Unit<Time>.TryParse(str, out q, defaultUnit); }
 
         public static Time operator +(Time a, Time b) { return a.Add(b); }
         public static Time operator -(Time a, Time b) { return a.Subtract(b); }
