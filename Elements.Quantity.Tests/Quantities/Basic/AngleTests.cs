@@ -113,4 +113,29 @@ public class AngleTests
 
         Assert.AreEqual(expectedStr, resultStr);
     }
+
+    [DataRow(Math.PI/2, 90d)]
+    [DataRow(Math.PI/4, 45d)]
+    [DataRow(Math.PI, 180d)]
+    [DataRow(Math.PI*2, 360d)]
+    [TestMethod]
+    public void RadianToDegrees(double radians, double degrees)
+    {
+        var angle = new Angle(radians);
+
+        Assert.AreEqual(degrees, angle.ConvertTo(Angle.Degree), 0.1);
+    }
+
+    [DataRow(90d, Math.PI/2)]
+    [DataRow(45d, Math.PI/4)]
+    [DataRow(180d, Math.PI)]
+    [DataRow(360d, Math.PI*2)]
+    [TestMethod]
+    public void DegreesToRadians(double degrees, double radians)
+    {
+        var angle = Angle.Degree.ConvertFrom(degrees);
+
+        Assert.AreEqual(radians, angle.BaseValue, 0.0001);
+    }
+
 }
