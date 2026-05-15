@@ -30,7 +30,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Luminance> CandelaPerSquareMeter = new Unit<Luminance>(1,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " cd/m²" }, new string[] { "candelas per square meter", "candela per square meter" });
+            new string[] { " cd/m²", " cd/m^2" }, new string[] { "candelas per square meter", "candela per square meter" });
 
         public static readonly Unit<Luminance> Nit = new Unit<Luminance>(1,
             new UnitGroup[] { UnitGroup.Common },
