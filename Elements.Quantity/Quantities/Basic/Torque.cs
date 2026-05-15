@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Elements.Quantity
 {
@@ -19,8 +19,8 @@ namespace Elements.Quantity
 
         #region QUANTITY NAME DEFINITIONS
 
-        public string[] GetShortBaseNames() { return new string[] { "Nm" }; }
-        public string[] GetLongBaseNames() { return new string[] { "newton meters", "newton meter" }; }
+        public string[] GetShortBaseNames() { return new string[] { "" }; }
+        public string[] GetLongBaseNames() { return new string[] { "" }; }
 
         #endregion
 
@@ -30,11 +30,11 @@ namespace Elements.Quantity
 
         public static readonly Unit<Torque> NewtonMeter = new Unit<Torque>(1,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " Nm" }, new string[] { "newton meters" });
+            new string[] { " N m", " N·m" }, new string[] { " newton meters", " newton meter", " newton metres", " newton metre" });
 
         public static readonly Unit<Torque> PoundFoot = new Unit<Torque>(1.35582,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " lb·ft" }, new string[] { "pound-feet" });
+            new string[] { " lb·ft", " lb-ft", " lbf·ft", " lbf-ft" }, new string[] { " pound-feet", " pound-foot" });
 
         #endregion
 
