@@ -104,8 +104,8 @@ namespace Elements.Quantity
         public Pressure Divide(double n) { return new Pressure(BaseValue / n); }
         public Ratio Divide(Pressure q) { return new Ratio(BaseValue / q.BaseValue); }
 
-        public static Pressure Parse(string str, Unit<Pressure> defaultUnit = null) { return Unit<Pressure>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Pressure q, Unit<Pressure> defaultUnit = null) { return Unit<Pressure>.TryParse(str, out q, defaultUnit); }
+        public static Pressure Parse(string str, Unit<Pressure>? defaultUnit = null) { return Unit<Pressure>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Pressure q, Unit<Pressure>? defaultUnit = null) { return Unit<Pressure>.TryParse(str, out q, defaultUnit); }
 
         public static Pressure operator +(Pressure a, Pressure b) { return a.Add(b); }
         public static Pressure operator -(Pressure a, Pressure b) { return a.Subtract(b); }
