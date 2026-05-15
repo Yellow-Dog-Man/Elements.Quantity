@@ -30,15 +30,15 @@ namespace Elements.Quantity
 
         public static readonly Unit<Density> KilogramPerCubicMeter = new Unit<Density>(1,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " kg/m³", " kg/m^3" }, new string[] { "kilograms per cubic meter", "kilogram per cubic meter" });
+            new string[] { " kg/m³", " kg/m^3" }, new string[] { " kilograms per cubic meter", " kilogram per cubic meter" });
 
         public static readonly Unit<Density> GramPerCubicCentimeter = new Unit<Density>(1000,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " g/cm³", " g/cm^3" }, new string[] { "grams per cubic centimeter", "gram per cubic centimeter" });
+            new string[] { " g/cm³", " g/cm^3" }, new string[] { " grams per cubic centimeter", " gram per cubic centimeter" });
 
         public static readonly Unit<Density> PoundPerCubicFoot = new Unit<Density>(16.0185,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " lb/ft³", " lb/ft^3" }, new string[] { "pounds per cubic foot", "pound per cubic foot" });
+            new string[] { " lb/ft³", " lb/ft^3" }, new string[] { " pounds per cubic foot", " pound per cubic foot" });
 
         #endregion
 
