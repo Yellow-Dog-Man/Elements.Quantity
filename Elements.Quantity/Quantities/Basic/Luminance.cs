@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Elements.Quantity
 {
@@ -19,8 +19,8 @@ namespace Elements.Quantity
 
         #region QUANTITY NAME DEFINITIONS
 
-        public string[] GetShortBaseNames() { return new string[] { "cd/m²" }; }
-        public string[] GetLongBaseNames() { return new string[] { "candelas per square meter", "candela per square meter" }; }
+        public string[] GetShortBaseNames() { return new string[] { "" }; }
+        public string[] GetLongBaseNames() { return new string[] { "" }; }
 
         #endregion
 
@@ -30,11 +30,11 @@ namespace Elements.Quantity
 
         public static readonly Unit<Luminance> CandelaPerSquareMeter = new Unit<Luminance>(1,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " cd/m²" }, new string[] { "candelas per square meter" });
+            new string[] { " cd/m²", " cd/m^2" }, new string[] { " candelas per square meter", " candela per square meter" });
 
         public static readonly Unit<Luminance> Nit = new Unit<Luminance>(1,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " nit" }, new string[] { "nits" }); // Nit is a non-SI name for cd/m²
+            new string[] { " nt" }, new string[] { " nits", " nit" }); // Nit is a non-SI name for cd/m²
 
         #endregion
 
