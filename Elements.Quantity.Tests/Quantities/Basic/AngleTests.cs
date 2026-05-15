@@ -55,14 +55,16 @@ public class AngleTests
         get => new object[][]
         {
             [Angle.DegreeMinSec, 0d, ""],
-            [Angle.DegreeMinSec, 0.25d, "16″"],
-            [Angle.DegreeMinSec, 0.5d, "31″"],
-            [Angle.DegreeMinSec, 0.96d, "1′"],
-            [Angle.DegreeMinSec, 1d, "1′3″"],
-            [Angle.DegreeMinSec, 1.25d, "1′19″"],
-            [Angle.DegreeMinSec, 57.3d, "1°"],
-            [Angle.DegreeMinSec, 57.31d, "1°1″"],
-            [Angle.DegreeMinSec, 58.26d, "1°1′1″"]
+            [Angle.DegreeMinSec, 0.25d, "14°19′26″"],
+            [Angle.DegreeMinSec, 0.5d, "28°38′52″"],
+            [Angle.DegreeMinSec, 0.96d, "55°14″"],
+            [Angle.DegreeMinSec, 1d, "57°17′45″"],
+            [Angle.DegreeMinSec, 1.25d, "71°37′11″"],
+
+            // Constructed using constants, to match the expected values from before #17
+            [Angle.DegreeMinSec, Math.PI/180d, "1°"],
+            [Angle.DegreeMinSec, Math.PI/180d + Math.PI/648000d, "1°1″"],
+            [Angle.DegreeMinSec, Math.PI/180d + Math.PI/10800d + Math.PI/648000d, "1°1′1″"]
         };
     }
 
@@ -96,6 +98,12 @@ public class AngleTests
         Assert.AreEqual(expectedStr, resultStr);
     }
 
+    /// <summary>
+    /// Test that Angle's are correctly formatted when using <see cref="CompoundFormatInfo{Angle}"/>
+    /// </summary>
+    /// <param name="angleCompoundFormatInfo">Format Info used</param>
+    /// <param name="angleValue">Angle value in <see cref="Angle.DefaultUnit"/> Unit.</param>
+    /// <param name="expectedStr">Expected format result</param>
     [TestMethod]
     [DynamicData(nameof(AnglePredefinedCompoundFormatInfoArgs))]
     public void AngleUnit_PredefinedQuantityCompoundFormatInfo_FormatsQuantityAsString(CompoundFormatInfo<Angle> angleCompoundFormatInfo, double angleValue, string expectedStr)
