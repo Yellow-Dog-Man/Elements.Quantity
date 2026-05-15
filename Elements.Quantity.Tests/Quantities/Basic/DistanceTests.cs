@@ -26,6 +26,7 @@ public class DistanceTests
             new (Distance.SolarRadius, "{0} R☉", "1 Solar radius", "{0} Solar radii"),
             new (Distance.Thou, "{0} th", "1 thou", "{0} thous"),
             new (Distance.Yard, "{0} yd", "1 yard", "{0} yards"),
+            new (Distance.NauticalMile, "{0} NM", "1 nautical mile", "{0} nautical miles"),
             new (SI<Distance>.Kilo, "{0} km", "1 kilometer", "{0} kilometers"),
             new (SI<Distance>.Centi, "{0} cm", "1 centimeter", "{0} centimeters"),
             new (SI<Distance>.Milli, "{0} mm", "1 millimeter", "{0} millimeters"),
