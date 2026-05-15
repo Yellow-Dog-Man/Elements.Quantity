@@ -12,6 +12,10 @@ namespace Elements.Quantity
 
         double IQuantity.BaseValue => BaseValue;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="baseValue">Base value, using <see cref="DefaultUnit"/>'s value as the unit.</param>
         public Angle(double baseValue = 0) : this() { BaseValue = baseValue; }
 
         public bool Equals(Angle other) { return BaseValue == other.BaseValue; }
