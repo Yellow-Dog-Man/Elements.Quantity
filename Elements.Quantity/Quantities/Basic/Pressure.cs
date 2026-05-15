@@ -77,16 +77,16 @@ namespace Elements.Quantity
 
         public Unit<Pressure> DefaultUnit { get { return Pascal; } }
 
-        public static readonly Unit<Pressure> Pascal = new UnitSI<Pressure>(0, "Pa", "pascal");
+        public static readonly Unit<Pressure> Pascal = new UnitSI<Pressure>(0, "", "");
         public static readonly Unit<Pressure> Bar = new Unit<Pressure>(1e5,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " bar" }, new string[] { " bars" });
+            new string[] { " bar" }, new string[] { " bars", " bar" });
         public static readonly Unit<Pressure> Atmosphere = new Unit<Pressure>(1.01325e5,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " atm" }, new string[] { " atmospheres" });
+            new string[] { " atm" }, new string[] { " standard atmospheres", " standard atmosphere", " atmospheres", " atmosphere" });
         public static readonly Unit<Pressure> Torr = new Unit<Pressure>(1.01325e5 / 760,
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " Torr" }, new string[] { " torrs" });
+            new string[] { " Torr" }, new string[] { " torrs", " torr" });
 
         #endregion
 
@@ -104,8 +104,8 @@ namespace Elements.Quantity
         public Pressure Divide(double n) { return new Pressure(BaseValue / n); }
         public Ratio Divide(Pressure q) { return new Ratio(BaseValue / q.BaseValue); }
 
-        public static Pressure Parse(string str, Unit<Pressure> defaultUnit = null) { return Unit<Pressure>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Pressure q, Unit<Pressure> defaultUnit = null) { return Unit<Pressure>.TryParse(str, out q, defaultUnit); }
+        public static Pressure Parse(string str, Unit<Pressure>? defaultUnit = null) { return Unit<Pressure>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Pressure q, Unit<Pressure>? defaultUnit = null) { return Unit<Pressure>.TryParse(str, out q, defaultUnit); }
 
         public static Pressure operator +(Pressure a, Pressure b) { return a.Add(b); }
         public static Pressure operator -(Pressure a, Pressure b) { return a.Subtract(b); }
