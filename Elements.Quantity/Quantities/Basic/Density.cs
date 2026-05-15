@@ -19,8 +19,8 @@ namespace Elements.Quantity
 
         #region QUANTITY NAME DEFINITIONS
 
-        public string[] GetShortBaseNames() { return new string[] { "kg/m³" }; }
-        public string[] GetLongBaseNames() { return new string[] { "kilograms per cubic meter", "kilogram per cubic meter" }; }
+        public string[] GetShortBaseNames() { return new string[] { "" }; }
+        public string[] GetLongBaseNames() { return new string[] { "" }; }
 
         #endregion
 
