@@ -25,6 +25,8 @@ public class PressureTests
             new (Pressure.Bar, "{0} bar", "1 bar", "{0} bars"),
             new (Pressure.Atmosphere, "{0} atm", "1 standard atmosphere", "{0} standard atmospheres"),
             new (Pressure.Torr, "{0} Torr", "1 torr", "{0} torrs"),
+            new (Pressure.Millibar, "{0} mbar", "1 millibar", "{0} millibars"),
+            new (Pressure.PoundPerSquareInch, "{0} psi", "1 pound per square inch", "{0} pounds per square inch"),
             new (SI<Pressure>.Quecto, "{0} qPa", "1 quectopascal", "{0} quectopascals"),
             new (SI<Pressure>.Ronto, "{0} rPa", "1 rontopascal", "{0} rontopascals"),
             new (SI<Pressure>.Yocto, "{0} yPa", "1 yoctopascal", "{0} yoctopascals"),
