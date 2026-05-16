@@ -87,6 +87,12 @@ namespace Elements.Quantity
         public static readonly Unit<Pressure> Torr = new Unit<Pressure>(1.01325e5 / 760,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " Torr" }, new string[] { " torrs", " torr" });
+        public static readonly Unit<Pressure> Millibar = new Unit<Pressure>(100,
+            new UnitGroup[] { UnitGroup.Common },
+            new string[] { " mbar" }, new string[] { " millibars", " millibar" });
+        public static readonly Unit<Pressure> PoundPerSquareInch = new Unit<Pressure>(1.450377e-4,
+            new UnitGroup[] { UnitGroup.Common },
+            new string[] { " psi", " lbf/in²", " lbf/in^2" }, new string[] { " pounds per square inch", " pound per square inch", "pound-forces per square inch", "pound-force per square inch" });
 
         #endregion
 
