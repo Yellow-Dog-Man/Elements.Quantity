@@ -53,7 +53,7 @@ namespace Elements.Quantity
             };
         }
 
-        public IUnit[] GetExcludedSIUnits()
+        public IUnit[] GetExludedSIUnits()
         {
             return new IUnit[] {
                 SI<Pressure>.Quecto,
@@ -127,17 +127,5 @@ namespace Elements.Quantity
         /* *********************************************** */
 
         public override string ToString() => this.FormatAuto();
-
-        public IUnit[] GetExludedSIUnits()
-        {
-            // TODO: adjust?
-            // The usual exclusions.
-            return new IUnit[] {
-                SI<Angle>.Centi,
-                SI<Angle>.Deca,
-                SI<Angle>.Deci,
-                SI<Angle>.Hecto
-            };
-        }
     }
 }
