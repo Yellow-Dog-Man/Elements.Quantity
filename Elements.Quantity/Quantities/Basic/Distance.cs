@@ -66,6 +66,8 @@ namespace Elements.Quantity
 
         public Unit<Distance> DefaultUnit { get { return Meter; } }
 
+        public string QuantityFamily => string.Empty;
+
         public static readonly Unit<Distance> Meter = new UnitSI<Distance>(0, "", "");
 
         // Scientific

@@ -39,6 +39,8 @@ namespace Elements.Quantity
         // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<Ratio> DefaultUnit { get { return RatioValue; } }
 
+        public string QuantityFamily => string.Empty;
+
         // define actual units for the quantity (excluding SI units which are automatic)
 
         public static readonly Unit<Ratio> RatioValue = new Unit<Ratio>(1,

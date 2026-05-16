@@ -12,6 +12,14 @@ namespace Elements.Quantity
         double Ratio { get; }
         Type ValueType { get; }
 
+        string DefaultShortUnitName { get; }
+
+        string DefaultLongUnitNamePluralForm { get; }
+
+        string DefaultLongUnitNameSingularForm { get; }
+
+        string UnitKey { get; }
+
         ICollection<string> GetUnitNames();
     }
 
@@ -26,9 +34,11 @@ namespace Elements.Quantity
         private string[] _shortNames = [];
         private string[] _longNames = [];
 
-        private string defaultShortUnitName = string.Empty;
-        private string defaultLongUnitNamePluralForm = string.Empty;
-        private string defaultLongUnitNameSingularForm = string.Empty;
+        public string DefaultShortUnitName { get; private set; } = string.Empty;
+
+        public string DefaultLongUnitNamePluralForm { get; private set; } = string.Empty;
+
+        public string DefaultLongUnitNameSingularForm { get; private set; } = string.Empty;
 
         public Type ValueType => typeof(T);
 
@@ -36,13 +46,15 @@ namespace Elements.Quantity
 
         public ICollection<string> GetUnitNames() => ShortUnitNames.Union(LongUnitNames).ToArray();
 
+        public string UnitKey { get; private set; }
+
         private string[] ShortUnitNames
         {
             get => _shortNames;
             set
             {
                 var unitNames = GenerateUnitNames(value, default(T).GetShortBaseNames());
-                defaultShortUnitName = unitNames[DEFAULT_SHORT_UNIT_NAME_INDEX];
+                DefaultShortUnitName = unitNames[DEFAULT_SHORT_UNIT_NAME_INDEX];
 
                 _shortNames = unitNames.TrimStrings();
             }
@@ -55,10 +67,10 @@ namespace Elements.Quantity
             {
                 var unitNames = GenerateUnitNames(value, default(T).GetLongBaseNames());
 
-                defaultLongUnitNamePluralForm = unitNames[DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX];
+                DefaultLongUnitNamePluralForm = unitNames[DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX];
 
                 var longUnitNameSingularFormIndex = Math.Min(DEFAULT_LONG_UNIT_NAME_SINGULAR_FORM_INDEX, unitNames.Length - 1);
-                defaultLongUnitNameSingularForm = unitNames[longUnitNameSingularFormIndex];
+                DefaultLongUnitNameSingularForm = unitNames[longUnitNameSingularFormIndex];
 
                 _longNames = unitNames.TrimStrings();
             }
@@ -66,13 +78,23 @@ namespace Elements.Quantity
 
         public Unit(double baseRatio, ICollection<UnitGroup>? unitGroups,
             string[] shortNames,
-            string[] longNames)
+            string[] longNames,
+            string? unitNameKeyOverride = null)
         {
             this.Ratio = baseRatio;
             ShortUnitNames = shortNames;
             LongUnitNames = longNames;
 
-            if(unitGroups != null)
+            var unitNameKey = unitNameKeyOverride ?? DefaultLongUnitNamePluralForm
+                .Split(' ')
+                .Select(str => str.Trim().ToPascalCase())
+                .Join();
+
+            UnitKey = new string[] {"Quantity", "Unit", default(T).QuantityFamily, typeof(T).Name, unitNameKey }
+                .Where(str => !string.IsNullOrWhiteSpace(str))
+                .Join(".");
+
+            if (unitGroups != null)
                 foreach (var unitGroup in unitGroups)
                     unitGroup.RegisterUnit(this);
         }
@@ -256,10 +278,10 @@ namespace Elements.Quantity
         {
             if (useLongName)
             {
-                return quantityValue.IsSingular() ? defaultLongUnitNameSingularForm : defaultLongUnitNamePluralForm;
+                return quantityValue.IsSingular() ? DefaultLongUnitNameSingularForm : DefaultLongUnitNamePluralForm;
             }
 
-            return defaultShortUnitName;
+            return DefaultShortUnitName;
         }
 
         private string[] GenerateUnitNames(string[] names, string[] baseNames)

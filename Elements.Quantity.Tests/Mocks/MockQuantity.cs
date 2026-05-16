@@ -15,6 +15,8 @@ namespace Elements.Quantity.Test.Mocks
 
         public Unit<MockQuantity> DefaultUnit => throw new NotImplementedException();
 
+        public string QuantityFamily => "Mock";
+
         public MockQuantity(double baseValue = 0) : this() { BaseValue = baseValue; }
         public bool Equals(MockQuantity other) { return BaseValue == other.BaseValue; }
         public int CompareTo(MockQuantity other) { return BaseValue.CompareTo(other.BaseValue); }

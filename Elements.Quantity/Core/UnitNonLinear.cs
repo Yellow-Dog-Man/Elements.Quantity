@@ -15,7 +15,8 @@ namespace Elements.Quantity
             Func<double, double> convertFromFunc,
             ICollection<UnitGroup> unitGroups,
             string[] shortNames,
-            string[] longNames) : base(0f, unitGroups, shortNames, longNames)
+            string[] longNames,
+            string? unitNameKeyOverride = null) : base(0f, unitGroups, shortNames, longNames, unitNameKeyOverride)
         {
             this.convertToFunc = convertToFunc;
             this.convertFromFunc = convertFromFunc;
