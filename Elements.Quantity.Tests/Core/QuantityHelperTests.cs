@@ -66,6 +66,16 @@ public partial class QuantityHelperTests
         Assert.ThrowsExactly<UnitNameNotFoundException>(() => quantity.FormatAs("mockunit", "#"));
     }
 
+    /// <summary>
+    /// Verifies that all quantity units have unique unit keys.
+    /// </summary>
+    [TestMethod]
+    public void GetAllUnitKeys_UniqueUnits_ReturnsUniqueUnitKeys()
+    {
+        var unitKeys = QuantityHelper.GetUnitKeys();
+        CollectionAssert.AllItemsAreUnique(unitKeys.ToArray());
+    }
+
     [GeneratedRegex("u$", RegexOptions.Compiled)]
     private static partial Regex MockUnitPrefixRegex();
 }
