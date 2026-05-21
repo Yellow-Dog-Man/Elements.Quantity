@@ -42,7 +42,16 @@ namespace Elements.Quantity
 
         public Type ValueType => typeof(T);
 
-        public int CompareTo(IUnit? other) => other == null ? 1 : Ratio.CompareTo(other.Ratio);
+        public int CompareTo(IUnit? other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+
+            var ratioCompareResult = Ratio.CompareTo(other.Ratio);
+            return ratioCompareResult != 0 ? ratioCompareResult : UnitKey.CompareTo(other.UnitKey); 
+        }
 
         public ICollection<string> GetUnitNames() => ShortUnitNames.Union(LongUnitNames).ToArray();
 
@@ -321,5 +330,19 @@ namespace Elements.Quantity
         }
 
         public override string ToString() => UnitKey;
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not Unit<T>)
+            {
+                return false;
+            }
+
+            var otherUnit = (Unit<T>)obj;
+
+            return otherUnit.UnitKey == UnitKey;
+        }
+
+        public override int GetHashCode() => UnitKey.GetHashCode();
     }
 }
