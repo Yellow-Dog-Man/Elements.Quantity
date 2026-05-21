@@ -319,7 +319,7 @@ namespace Elements.Quantity
         {
             return unit.ConvertFrom(n);
         }
-    }
 
-    
+        public override string ToString() => UnitKey;
+    }
 }
