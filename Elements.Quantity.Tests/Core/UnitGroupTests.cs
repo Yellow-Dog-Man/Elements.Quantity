@@ -13,6 +13,48 @@ using CopyToArrayTestData = (Array? array, int index);
 public class UnitGroupTests
 {
     /// <summary>
+    /// Verifies that the mockUnit mockGroup can register units.
+    /// </summary>
+    [TestMethod]
+    public void AddUnitToUnitGroup_ValidUnit_AddsUnitToGroup()
+    {
+        var mockUnit = MockProvider.MockUnit;
+        var mockGroup = new UnitGroup();
+
+        mockGroup.RegisterUnit(mockUnit);
+
+        CollectionAssert.Contains(mockGroup, mockUnit);
+        Assert.IsTrue(mockGroup.HasQuantity(mockUnit.ValueType));
+    }
+
+    /// <summary>
+    /// Verifies that two different units with the same ratio and family can be registered.
+    /// together.
+    /// </summary>
+    /// <remarks>
+    /// Additional asserts added due to https://github.com/Yellow-Dog-Man/Elements.Quantity/issues/45.
+    /// </remarks>
+    [TestMethod]
+    public void AddUnitToUnitGroup_TwoUnitsOfSameRatio_AddsBothUnitsToGroup()
+    {
+        var mockUnitOne = MockProvider.MockUnit;
+        var mockUnitTwo = new Unit<MockQuantity>(mockUnitOne.Ratio, [], ["u2"], ["mock 2 units", "mock 2 unit"]);
+        var mockGroup = new UnitGroup();
+
+        mockGroup.RegisterUnit(mockUnitOne);
+        CollectionAssert.Contains(mockGroup, mockUnitOne);
+        CollectionAssert.DoesNotContain(mockGroup, mockUnitTwo);
+        Assert.AreEqual(1, mockGroup.Count);
+        Assert.IsTrue(mockGroup.HasQuantity(mockUnitOne.ValueType));
+
+        mockGroup.RegisterUnit(mockUnitTwo);
+        CollectionAssert.Contains(mockGroup, mockUnitOne);
+        CollectionAssert.Contains(mockGroup, mockUnitTwo);
+        Assert.AreEqual(2, mockGroup.Count);
+        Assert.IsTrue(mockGroup.HasQuantity(mockUnitOne.ValueType));
+    }
+
+    /// <summary>
     /// Verifies that the unit group returns <c>true</c> when it contains the given unit.
     /// </summary>
     [TestMethod]
@@ -43,6 +85,22 @@ public class UnitGroupTests
 
         mockGroup.RegisterUnit(mockExistingUnit);
         Assert.IsFalse(mockGroup.HasUnit(mockNonexistingUnit));
+    }
+
+    /// <summary>
+    /// Verifies that the unit group returns <c>false</c> if the given unit is not in the
+    /// group and the quantity set associated with that unit is not created if that quantity
+    /// set was never a part of the group.
+    /// </summary>
+    [TestMethod]
+    public void CheckUnitInGroup_NonexistingUnit_ReturnsFalse()
+    {
+        var mockNonexistingUnit = MockProvider.MockUnit;
+        var mockGroup = new UnitGroup();
+
+        Assert.IsFalse(mockGroup.HasUnit(mockNonexistingUnit));
+        Assert.IsFalse(mockGroup.HasQuantity(mockNonexistingUnit.ValueType));
+    }
 
     /// <summary>
     /// Verifies that the unit group removes the exact given unit from the group and removes
