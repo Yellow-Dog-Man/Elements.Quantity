@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Elements.Quantity
 {
-    public class UnitGroup : IEnumerable<IUnit>
+    public class UnitGroup : IEnumerable<IUnit>, ICollection
     {
         #region UNIT_GROUPS
 
@@ -31,9 +32,47 @@ namespace Elements.Quantity
 
         public static readonly UnitGroup Imperial = new UnitGroup();
 
+        private object _lock = new object();
+
         #endregion
 
         Dictionary<Type, SortedSet<IUnit>> units = new Dictionary<Type, SortedSet<IUnit>>();
+
+        /// <inheritdoc/>
+        public int Count => units.Sum(u => u.Value.Count);
+
+        /// <inheritdoc/>
+        public bool IsSynchronized => false;
+
+        /// <inheritdoc/>
+        public object SyncRoot => _lock;
+
+        /// <inheritdoc/>
+        public void CopyTo(Array array, int index)
+        {
+            ArgumentNullException.ThrowIfNull(array);
+            ArgumentOutOfRangeException.ThrowIfLessThan(index, 0);
+
+            // Official .Net documentation states that the given array to copy to must
+            // always be single-dimensional. Although unit groups can be 2D arrays, this
+            // .Net standard implementation pattern must be followed.
+            if (array.Rank != 1)
+            {
+                throw new ArgumentException("Only single-dimensional arrays are supported.");
+            }
+
+            if (array.Length - index < Count)
+            {
+                throw new ArgumentException("There is not enough space to copy to the destination array.");
+            }
+
+            var currentIndex = 0;
+            foreach (var unit in this)
+            {
+                array.SetValue(unit, index + currentIndex);
+                currentIndex++;
+            }
+        }
 
         public void RegisterUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Add(unit);
 
@@ -121,10 +160,7 @@ namespace Elements.Quantity
                     return true;
             }
 
-            public void Reset()
-            {
-                throw new NotSupportedException();
-            }
+            public void Reset() => throw new NotSupportedException();
         }
 
         public Enumerator GetEnumerator() => new Enumerator(this);

@@ -13,6 +13,22 @@ using CopyToArrayTestData = (Array? array, int index);
 public class UnitGroupTests
 {
     /// <summary>
+    /// An array of test data tuples representing one or more invalid arguments to be passed
+    /// to <c>CopyTo</c>.
+    /// </summary>
+    /// <remarks>
+    /// This property is intended for use in unit tests.
+    /// </remarks>
+    internal static CopyToArrayTestData[] InvalidCopyToArrayTestData =>
+    [
+        new (new IUnit[0], 0),
+        new (new IUnit[100], -1),
+        new (new IUnit[5,5], 0),
+        new (null, 0),
+        new (new IUnit[10], 10)
+    ];
+
+    /// <summary>
     /// Verifies that the mockUnit mockGroup can register units.
     /// </summary>
     [TestMethod]
@@ -138,6 +154,57 @@ public class UnitGroupTests
         Assert.IsFalse(mockGroup.HasUnit(mockUnitTwo));
         Assert.IsFalse(mockGroup.HasQuantity(mockUnitOne.ValueType));
     }
+
+    /// <summary>
+    /// Verifies that a unit group can be copied to an array.
+    /// </summary>
+    [TestMethod]
+    public void CopyUnitGroupToArray_ValidArray_CopiesUnitsToArray()
+    {
+        var mockUnitOne = MockProvider.MockUnit;
+        var mockUnitTwo = new Unit<MockQuantity>(mockUnitOne.Ratio, [], ["u2"], ["mock 2 units", "mock 2 unit"]);
+        var mockUnitThree = new Unit<MockQuantity>(mockUnitOne.Ratio, [], ["u3"], ["mock 3 units", "mock 3 unit"]);
+        var mockUnitFour = new Unit<MockQuantity>(mockUnitOne.Ratio, [], ["u4"], ["mock 4 units", "mock 4 unit"]);
+        var mockUnitFive = new Unit<MockQuantity>(mockUnitOne.Ratio, [], ["u5"], ["mock 5 units", "mock 5 unit"]);
+        var expectedArray = new[] { mockUnitOne, mockUnitTwo, mockUnitThree, mockUnitFour, mockUnitFive };
+
+        var mockGroup = new UnitGroup();
+        mockGroup.RegisterUnit(mockUnitOne);
+        mockGroup.RegisterUnit(mockUnitTwo);
+        mockGroup.RegisterUnit(mockUnitThree);
+        mockGroup.RegisterUnit(mockUnitFour);
+        mockGroup.RegisterUnit(mockUnitFive);
+
+        IUnit[] copyArray = new IUnit[5];
+
+        mockGroup.CopyTo(copyArray, 0);
+
+        CollectionAssert.AreEquivalent(copyArray, expectedArray);
+    }
+
+    /// <summary>
+    /// Verifies that invalid argument supplied to the unit group's <c>CopyTo</c> method
+    /// will throw an exception.
+    /// </summary>
+    /// <param name="arrayToCopyTo">The valid or invalid array to copy the unit group's units to.</param>
+    /// <param name="index">The valid or invalid starting index in the given array to start copying to.</param>
+    /// <remarks>
+    /// One or more arguments are invalid.
+    /// </remarks>
+    [TestMethod]
+    [DynamicData(nameof(InvalidCopyToArrayTestData))]
+    public void CopyUnitGroupToArray_InvalidArguments_ThrowsException(Array arrayToCopyTo, int index)
+    {
+        var mockUnitOne = MockProvider.MockUnit;
+        var mockUnitTwo = new Unit<MockQuantity>(mockUnitOne.Ratio, [], ["u2"], ["mock 2 units", "mock 2 unit"]);
+        var mockUnitThree = new Unit<MockQuantity>(mockUnitOne.Ratio, [], ["u3"], ["mock 3 units", "mock 3 unit"]);
+
+        var mockGroup = new UnitGroup();
+        mockGroup.RegisterUnit(mockUnitOne);
+        mockGroup.RegisterUnit(mockUnitTwo);
+        mockGroup.RegisterUnit(mockUnitThree);
+
+        Assert.Throws<Exception>(() => mockGroup.CopyTo(arrayToCopyTo, index));
     }
 
 }
