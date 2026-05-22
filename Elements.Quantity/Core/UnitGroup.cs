@@ -37,22 +37,32 @@ namespace Elements.Quantity
 
         public void RegisterUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Add(unit);
         public void RemoveUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Remove(unit);
-        public bool HasUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Contains(unit);
+
+        /// <summary>
+        /// Checks if the given unit is part of the group.
+        /// </summary>
+        /// <param name="unit">The unit to check.</param>
+        /// <returns><c>true</c> if the unit is part of the group; otherwise, <c>false</c></returns>.
+        public bool HasUnit(IUnit unit)
+        {
+            var set = GetSetForType(unit.ValueType, false);
+            return set != null && set.Contains(unit);
+        }
+
+        public bool HasQuantity(Type quantityType) => units.ContainsKey(quantityType);
 
         internal SortedSet<IUnit>? GetSetForType(Type type, bool createIfNotExists = true)
         {
-            if (units.TryGetValue(type, out SortedSet<IUnit>? set))
-                return set;
-
-            if (createIfNotExists)
+            // If not creating, return set variable since it will be null if not in dictionary.
+            if (units.TryGetValue(type, out SortedSet<IUnit>? set) || !createIfNotExists)
             {
-                set = new SortedSet<IUnit>();
-                units.Add(type, set);
                 return set;
             }
 
-            return null;
-        }
+            set = [];
+                units.Add(type, set);
+                return set;
+            }
 
         #region ENUMERATOR
 
