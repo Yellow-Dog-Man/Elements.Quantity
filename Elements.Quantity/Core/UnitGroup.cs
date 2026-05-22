@@ -36,7 +36,24 @@ namespace Elements.Quantity
         Dictionary<Type, SortedSet<IUnit>> units = new Dictionary<Type, SortedSet<IUnit>>();
 
         public void RegisterUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Add(unit);
-        public void RemoveUnit(IUnit unit) => GetSetForType(unit.ValueType)!.Remove(unit);
+
+        /// <summary>
+        /// Removes the given unit from the group and, if applicable, removes the quntity type
+        /// from the dictionary if the resulting set is empty after removal.
+        /// </summary>
+        /// <param name="unit">The unit to remove.</param>
+        public void RemoveUnit(IUnit unit)
+        {
+            var set = GetSetForType(unit.ValueType)!;
+            set.Remove(unit);
+
+            if (set.Any())
+            {
+                return;
+            }
+
+            units.Remove(unit.ValueType);
+        }
 
         /// <summary>
         /// Checks if the given unit is part of the group.
