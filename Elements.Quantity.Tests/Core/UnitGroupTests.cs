@@ -207,4 +207,64 @@ public class UnitGroupTests
         Assert.Throws<Exception>(() => mockGroup.CopyTo(arrayToCopyTo, index));
     }
 
+    /// <summary>
+    /// Verifies that enumerating a unit group will return all registered units and returns them in the
+    /// correct order.
+    /// </summary>
+    /// <remarks>
+    /// The enumeration order is determined by when a quantity set has been registered followed by the
+    /// unit's ratio value in ascending order.
+    /// </remarks>
+    [TestMethod]
+    public void EnumerateUnitGroup_ValidUnitGroup_ReturnsUnits()
+    {
+        var mockGroup = new UnitGroup();
+        mockGroup.RegisterUnit(Acceleration.MetersPerSecondPerSecond);
+        mockGroup.RegisterUnit(Velocity.MetersPerSecond);
+        mockGroup.RegisterUnit(MockProvider.MockUnit);
+        mockGroup.RegisterUnit(Density.GramPerCubicCentimeter);
+        mockGroup.RegisterUnit(Velocity.Knots);
+        mockGroup.RegisterUnit(Density.KilogramPerCubicMeter);
+
+        var expectedOrder = new IUnit[]
+        {
+            Acceleration.MetersPerSecondPerSecond,
+            Velocity.Knots,
+            Velocity.MetersPerSecond,
+            MockProvider.MockUnit,
+            Density.KilogramPerCubicMeter,
+            Density.GramPerCubicCentimeter
+        };
+
+        var actualOrder = new List<IUnit>();
+
+        foreach (var unit in mockGroup)
+        {
+            actualOrder.Add(unit);
+        }
+
+        CollectionAssert.AreEqual(expectedOrder, actualOrder);
+    }
+
+    /// <summary>
+    /// Verifies that calling the unit group's enumerator's <c>Reset</c> method should throw an
+    /// exception.
+    /// </summary>
+    /// <remarks>
+    /// This is very typical to do since it appears that this method is required to be defined
+    /// due to legacy reasons.
+    /// </remarks>
+    [TestMethod]
+    public void ResetEnumerator_CallMethod_ThrowsException()
+    {
+        var mockGroup = new UnitGroup();
+        mockGroup.RegisterUnit(MockProvider.MockUnit);
+
+        var enumerator = mockGroup.GetEnumerator();
+        enumerator.MoveNext();
+
+        Assert.ThrowsExactly<NotSupportedException>(() => enumerator.Reset());
+
+        enumerator.Dispose();
+    }
 }

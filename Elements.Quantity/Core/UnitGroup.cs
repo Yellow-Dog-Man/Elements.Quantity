@@ -116,15 +116,14 @@ namespace Elements.Quantity
             }
 
             set = [];
-                units.Add(type, set);
-                return set;
-            }
+            units.Add(type, set);
+            return set;
+        }
 
         #region ENUMERATOR
 
         public struct Enumerator : IEnumerator<IUnit>
         {
-            bool firstDone;
             Dictionary<Type, SortedSet<IUnit>>.Enumerator dictEnum;
             SortedSet<IUnit>.Enumerator setEnum;
 
@@ -132,7 +131,6 @@ namespace Elements.Quantity
             {
                 dictEnum = group.units.GetEnumerator();
                 setEnum = default;
-                firstDone = false;
             }
 
             public IUnit Current => setEnum.Current;
@@ -146,18 +144,18 @@ namespace Elements.Quantity
 
             public bool MoveNext()
             {
-                if (!firstDone || !setEnum.MoveNext())
+                if (setEnum.Current != null && setEnum.MoveNext())
                 {
-                    if (dictEnum.MoveNext())
-                    {
-                        setEnum = dictEnum.Current.Value.GetEnumerator();
-                        return setEnum.MoveNext();
-                    }
-                    else
-                        return false;
-                }
-                else
                     return true;
+                }
+                if (!dictEnum.MoveNext())
+                {
+                    return false;
+                }
+
+                setEnum.Dispose();
+                setEnum = dictEnum.Current.Value.GetEnumerator();
+                return setEnum.MoveNext();
             }
 
             public void Reset() => throw new NotSupportedException();
