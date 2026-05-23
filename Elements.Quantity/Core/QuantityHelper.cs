@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using System.Reflection;
+using System.Linq;
 
 namespace Elements.Quantity
 {
@@ -161,6 +162,12 @@ namespace Elements.Quantity
         {
             return unitCache[typeof(T)];
         }
+
+        public static IEnumerable<IUnit> GetAllUnits() =>
+            unitCache.Values.SelectMany(u => u);
+
+        public static IEnumerable<string> GetUnitKeys() =>
+            GetAllUnits().Select(u => u.UnitKey).OrderBy(k => k);
 
         public static Unit<T> SelectBestUnit<T>(this T q, List<UnitGroup> groups)
             where T : unmanaged, IQuantity<T>
