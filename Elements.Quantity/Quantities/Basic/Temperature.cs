@@ -46,14 +46,14 @@ namespace Elements.Quantity
         // Parameters:
 
         ///<summary>
-        /// <see href="https://en.wikipedia.org/wiki/Kelvin">Kelvin</see> is a scientific unit of temperature where 0 is equal to absolute zero. Derived from Celsius/Centegrade.
+        /// <seealso href="https://en.wikipedia.org/wiki/Kelvin">Kelvin</seealso> is a scientific unit of temperature where 0 is equal to absolute zero. Derived from Celsius/Centegrade.
         /// </summary>
         public static readonly Unit<Temperature> Kelvin = new Unit<Temperature>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " K" }, new string[] { " Kelvins", " Kelvin" });
 
         /// <summary>
-        /// <see href="https://en.wikipedia.org/wiki/Celsius">Celsius</see> is a unit of temperature where 0 degrees celsius is the freezing point of water, and 100 degrees is the boiling point of water.
+        /// <seealso href="https://en.wikipedia.org/wiki/Celsius">Celsius</seealso> is a unit of temperature where 0 degrees celsius is the freezing point of water, and 100 degrees is the boiling point of water.
         /// </summary>
         public static readonly Unit<Temperature> Celsius = new UnitNonLinear<Temperature>(
             (K)=>(K - 273.15), (C)=>(C + 273.15),
@@ -62,7 +62,7 @@ namespace Elements.Quantity
             "Celsius");
 
         /// <summary>
-        /// <see href="https://en.wikipedia.org/wiki/Fahrenheit">Fahrenheit</see> is a unit of temperature that has no known original basis other than "how cold can i make something", water freezes at 32 degrees and boils at 212 degrees.
+        /// <seealso href="https://en.wikipedia.org/wiki/Fahrenheit">Fahrenheit</seealso> is a unit of temperature that has no known original basis other than "how cold can i make something", water freezes at 32 degrees and boils at 212 degrees.
         /// </summary>
         public static readonly Unit<Temperature> Fahrenheit = new UnitNonLinear<Temperature>(
             (K) => (K * (9.0 / 5.0) - 459.67), (F) => ((F + 459.67)*(5.0 / 9.0)),
@@ -71,7 +71,7 @@ namespace Elements.Quantity
             "Fahrenheit");
 
         /// <summary>
-        /// <see href="https://en.wikipedia.org/wiki/Rankine_scale">Rankine</see> is the Kelvin of Fahrenheit meaning 0 degrees Rankine is absolute zero, 491.67 degrees is where water freezes, and 671.641 is where water boils.
+        /// <seealso href="https://en.wikipedia.org/wiki/Rankine_scale">Rankine</seealso> is the Kelvin of Fahrenheit meaning 0 degrees Rankine is absolute zero, 491.67 degrees is where water freezes, and 671.641 is where water boils.
         /// </summary>
         public static readonly Unit<Temperature> Rankine = new UnitNonLinear<Temperature>(
             (K) => (K * (9.0 / 5.0)), (R) => (R * (5.0 / 9.0)),
