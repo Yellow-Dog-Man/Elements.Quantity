@@ -103,6 +103,8 @@ public class TemperatureTests
         Assert.AreEqual(expectedUnitKey, temperatureUnit.UnitKey);
     }
 
+    public const double TEMPERATURE_EPSILION = 0.001;
+
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]
     [DataRow(273.15, 0)]
@@ -112,7 +114,7 @@ public class TemperatureTests
     {
         var temperature = new Temperature(kelvin);
 
-        Assert.AreEqual(expectedCelius, temperature.ConvertTo(Temperature.Celsius), 0.1);
+        Assert.AreEqual(expectedCelius, temperature.ConvertTo(Temperature.Celsius), TEMPERATURE_EPSILION);
     }
 
     [DataRow(1, -457.87)]
@@ -124,6 +126,27 @@ public class TemperatureTests
     {
         var temperature = new Temperature(kelvin);
 
-        Assert.AreEqual(expectedFarenheit, temperature.ConvertTo(Temperature.Fahrenheit), 0.1);
+        Assert.AreEqual(expectedFarenheit, temperature.ConvertTo(Temperature.Fahrenheit), TEMPERATURE_EPSILION);
+    }
+
+    [DataRow(0, 32)]
+    [TestMethod]
+    public void CelciusToFarenheit(double celcius, double expectedFarenheit)
+    {
+        var result = Temperature.Fahrenheit.ConvertFrom(Temperature.Celsius.ConvertFrom(celcius));
+        Assert.AreEqual(expectedFarenheit, (celcius * Temperature.Celsius) * Temperature.Fahrenheit, 0.1);
+        Assert.AreEqual(expectedFarenheit, Temperature.Celsius.ConvertFrom(celcius).ToFarenheit(), 0.1);
+        Assert.AreEqual(expectedFarenheit, Temperature.Celsius.ConvertFrom(celcius).ConvertTo(Temperature.Fahrenheit), 0.1);
+    }
+
+    [TestMethod]
+    public void TestImplicitOperator()
+    {
+        const double kelvin = 273;
+        var t = new Temperature(kelvin);
+        var x = t.New(kelvin);
+
+        Assert.AreEqual(kelvin, t, 0.1);
+        Assert.AreEqual(kelvin, x, 0.1);
     }
 }

@@ -83,6 +83,8 @@ namespace Elements.Quantity
         public static Temperature Parse(string str, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.Parse(str, defaultUnit); }
         public static bool TryParse(string str, out Temperature q, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.TryParse(str, out q, defaultUnit); }
 
+        public static implicit operator double(Temperature t) => t.BaseValue;
+
         public static Temperature operator +(Temperature a, Temperature b) { return a.Add(b); }
         public static Temperature operator -(Temperature a, Temperature b) { return a.Subtract(b); }
         public static Temperature operator *(Temperature a, double n) { return a.Multiply(n); }
@@ -97,6 +99,18 @@ namespace Elements.Quantity
         #region CONVERSIONS
 
         // provide various operators to convert between quantities or adjust the quantity
+
+        public double ToFarenheit()
+        {
+            return this.ConvertTo(Fahrenheit);
+        }
+
+        public double ToCelcius()
+        {
+            return this.ConvertTo(Celsius);
+        }
+
+        public static double operator *(Temperature a, Unit<Temperature> u) => a.ConvertTo(u);
 
         #endregion
 
