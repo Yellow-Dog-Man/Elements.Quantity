@@ -103,6 +103,8 @@ public class TemperatureTests
         Assert.AreEqual(expectedUnitKey, temperatureUnit.UnitKey);
     }
 
+    public const double TEMPERATURE_EPSILION = 0.001;
+
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]
     [DataRow(273.15, 0)]
@@ -112,7 +114,7 @@ public class TemperatureTests
     {
         var temperature = new Temperature(kelvin);
 
-        Assert.AreEqual(expectedCelius, temperature.ConvertTo(Temperature.Celsius), 0.1);
+        Assert.AreEqual(expectedCelius, temperature.ConvertTo(Temperature.Celsius), TEMPERATURE_EPSILION);
     }
 
     [DataRow(1, -457.87)]
@@ -124,7 +126,7 @@ public class TemperatureTests
     {
         var temperature = new Temperature(kelvin);
 
-        Assert.AreEqual(expectedFarenheit, temperature.ConvertTo(Temperature.Fahrenheit), 0.1);
+        Assert.AreEqual(expectedFarenheit, temperature.ConvertTo(Temperature.Fahrenheit), TEMPERATURE_EPSILION);
     }
 
     [DataRow(0, 32)]
