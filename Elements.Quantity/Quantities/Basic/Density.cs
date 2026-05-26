@@ -28,6 +28,9 @@ namespace Elements.Quantity
 
         public Unit<Density> DefaultUnit { get { return KilogramPerCubicMeter; } }
 
+        /// <inheritdoc/>
+        public string QuantityFamily => string.Empty;
+
         public static readonly Unit<Density> KilogramPerCubicMeter = new Unit<Density>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " kg/m³", " kg/m^3" }, new string[] { " kilograms per cubic meter", " kilogram per cubic meter" });

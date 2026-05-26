@@ -1,26 +1,34 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 
 namespace Elements.Quantity.Test.Quantities.Basic;
 
-using TimeTestData = (Unit<Time> unit, string shortName, string longNameSingle, string longNamePlural);
+using TimeTestData = QuantityTestData<Time>;
+using TimeUnitKeyTestData = (Unit<Time> unit, string unitKey);
 
 [TestClass]
+[ExcludeFromCodeCoverage]
 public class TimeTests
 {
-    internal static TimeTestData[] TimeTestDataTuples
-    {
-        get => new TimeTestData[]
-        {
-            new (Time.Millisecond, "{0} ms", "1 millisecond", "{0} milliseconds"),
-            new (Time.Second, "{0} s", "1 second", "{0} seconds"),
-            new (Time.Minute, "{0} m", "1 minute", "{0} minutes"),
-            new (Time.Hour, "{0} h", "1 hour", "{0} hours"),
-            new (Time.Day, "{0} d", "1 day", "{0} days")
-        };
-    }
+    /// <summary>
+    /// An array of test data tuples representing different time units and their display formats. Each
+    /// element in the array contains information about a time unit, the short name, the singular
+    /// long name, plural long name, and unit key.
+    /// </summary>
+    /// <remarks>
+    /// This property is intended for use in unit tests.
+    /// </remarks>
+    internal static TimeTestData[] TimeTestDataTuples =>
+    [
+        new (Time.Millisecond, "{0} ms", "1 millisecond", "{0} milliseconds", "Quantity.Unit.Time.Milliseconds"),
+        new (Time.Second, "{0} s", "1 second", "{0} seconds", "Quantity.Unit.Time.Seconds"),
+        new (Time.Minute, "{0} m", "1 minute", "{0} minutes", "Quantity.Unit.Time.Minutes"),
+        new (Time.Hour, "{0} h", "1 hour", "{0} hours", "Quantity.Unit.Time.Hours"),
+        new (Time.Day, "{0} d", "1 day", "{0} days", "Quantity.Unit.Time.Days")
+    ];
 
     internal static IEnumerable<object[]> TimeShortNameArgs
     {
@@ -105,6 +113,15 @@ public class TimeTests
         };
     }
 
+    /// <summary>
+    /// A collection of test arguments for verifying the unit keys for time units.
+    /// </summary>
+    /// <remarks>
+    /// This property is intended for use in unit tests.
+    /// </remarks>
+    internal static IEnumerable<TimeUnitKeyTestData> TimeUnitKeyArgs =>
+        TimeTestDataTuples.Select(unitArgs => new TimeUnitKeyTestData(unitArgs.unit, unitArgs.unitKey));
+
     [TestMethod]
     [DynamicData(nameof(TimeShortNameArgs))]
     public void TimeUnit_QuantityProvidedFormatAsShortName_FormatsWithDefaultShortName(Unit<Time> timeUnit, double timeValue, string expectedStr)
@@ -143,5 +160,17 @@ public class TimeTests
         var resultStr = time.FormatCompound(timeCompoundFormatInfo);
 
         Assert.AreEqual(expectedStr, resultStr);
+    }
+
+    /// <summary>
+    /// Verifies that getting a unit key from an Time unit will return the expected unit key.
+    /// </summary>
+    /// <param name="timeUnit">The time unit to use when getting the unit key.</param>
+    /// <param name="expectedUnitKey">The expected unit key that this unit should return.</param>
+    [TestMethod]
+    [DynamicData(nameof(TimeUnitKeyArgs))]
+    public void GetTimeUnitKey_ValidUnit_ReturnsUnitKey(Unit<Time> timeUnit, string expectedUnitKey)
+    {
+        Assert.AreEqual(expectedUnitKey, timeUnit.UnitKey);
     }
 }

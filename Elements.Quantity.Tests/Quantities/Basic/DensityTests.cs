@@ -1,31 +1,31 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Elements.Quantity.Test.Quantities.Basic;
 
-using DensityTestData = (Unit<Density> unit, string shortName, string longNameSingle, string longNamePlural);
+using DensityTestData = QuantityTestData<Density>;
+using DensityUnitKeyTestData = (Unit<Density> unit, string unitKey);
 
 [TestClass]
+[ExcludeFromCodeCoverage]
 public class DensityTests
 {
     /// <summary>
     /// An array of test data tuples representing different density units and their display formats. Each
     /// element in the array contains information about a density unit, the short name, the singular
-    /// long name, and plural long name.
+    /// long name, plural long name, and unit key.
     /// </summary>
     /// <remarks>
     /// This property is intended for use in unit tests.
     /// </remarks>
-    internal static DensityTestData[] DensityTestDataTuples
-    {
-        get =>
-        [
-            new (Density.KilogramPerCubicMeter, "{0} kg/m³", "1 kilogram per cubic meter", "{0} kilograms per cubic meter"),
-            new (Density.GramPerCubicCentimeter, "{0} g/cm³", "1 gram per cubic centimeter", "{0} grams per cubic centimeter"),
-            new (Density.PoundPerCubicFoot, "{0} lb/ft³", "1 pound per cubic foot", "{0} pounds per cubic foot")
-        ];
-    }
+    internal static DensityTestData[] DensityTestDataTuples =>
+    [
+        new (Density.KilogramPerCubicMeter, "{0} kg/m³", "1 kilogram per cubic meter", "{0} kilograms per cubic meter", "Quantity.Unit.Density.KilogramsPerCubicMeter"),
+        new (Density.GramPerCubicCentimeter, "{0} g/cm³", "1 gram per cubic centimeter", "{0} grams per cubic centimeter", "Quantity.Unit.Density.GramsPerCubicCentimeter"),
+        new (Density.PoundPerCubicFoot, "{0} lb/ft³", "1 pound per cubic foot", "{0} pounds per cubic foot", "Quantity.Unit.Density.PoundsPerCubicFoot")
+    ];
 
     /// <summary>
     /// A collection of test data containing the density unit, the numeric value, and the expected
@@ -72,6 +72,15 @@ public class DensityTests
             }).ToArray()
         );
     }
+
+    /// <summary>
+    /// A collection of test arguments for verifying the unit keys for density units.
+    /// </summary>
+    /// <remarks>
+    /// This property is intended for use in unit tests.
+    /// </remarks>
+    internal static IEnumerable<DensityUnitKeyTestData> DensityUnitKeyArgs =>
+        DensityTestDataTuples.Select(unitArgs => new DensityUnitKeyTestData(unitArgs.unit, unitArgs.unitKey));
 
     /// <summary>
     /// Verifies that formatting a Density quantity using the specified unit and the default short name produces the
@@ -134,5 +143,17 @@ public class DensityTests
         var resultStr = density.FormatAs(densityUnit, longName: true, formatNum: "0.#");
 
         Assert.AreEqual(expectedStr, resultStr);
+    }
+
+    /// <summary>
+    /// Verifies that getting a unit key from an Density unit will return the expected unit key.
+    /// </summary>
+    /// <param name="densityUnit">The density unit to use when getting the unit key.</param>
+    /// <param name="expectedUnitKey">The expected unit key that this unit should return.</param>
+    [TestMethod]
+    [DynamicData(nameof(DensityUnitKeyArgs))]
+    public void GetDensityUnitKey_ValidUnit_ReturnsUnitKey(Unit<Density> densityUnit, string expectedUnitKey)
+    {
+        Assert.AreEqual(expectedUnitKey, densityUnit.UnitKey);
     }
 }

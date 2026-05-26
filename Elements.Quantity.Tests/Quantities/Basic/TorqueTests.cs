@@ -1,30 +1,30 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Elements.Quantity.Test.Quantities.Basic;
 
-using TorqueTestData = (Unit<Torque> unit, string shortName, string longNameSingle, string longNamePlural);
+using TorqueTestData = QuantityTestData<Torque>;
+using TorqueUnitKeyTestData = (Unit<Torque> unit, string unitKey);
 
 [TestClass]
+[ExcludeFromCodeCoverage]
 public class TorqueTests
 {
     /// <summary>
     /// An array of test data tuples representing different torque units and their display formats. Each
     /// element in the array contains information about a torque unit, the short name, the singular
-    /// long name, and plural long name.
+    /// long name, plural long name, and unit key.
     /// </summary>
     /// <remarks>
     /// This property is intended for use in unit tests.
     /// </remarks>
-    internal static TorqueTestData[] TorqueTestDataTuples
-    {
-        get =>
-        [
-            new (Torque.NewtonMeter, "{0} N m", "1 newton meter", "{0} newton meters"),
-            new (Torque.PoundFoot, "{0} lb·ft", "1 pound-foot", "{0} pound-feet")
-        ];
-    }
+    internal static TorqueTestData[] TorqueTestDataTuples =>
+    [
+        new (Torque.NewtonMeter, "{0} N m", "1 newton meter", "{0} newton meters", "Quantity.Unit.Torque.NewtonMeters"),
+        new (Torque.PoundFoot, "{0} lb·ft", "1 pound-foot", "{0} pound-feet", "Quantity.Unit.Torque.Pound-feet")
+    ];
 
     /// <summary>
     /// A collection of test data containing the torque unit, the numeric value, and the expected
@@ -71,6 +71,15 @@ public class TorqueTests
             }).ToArray()
         );
     }
+
+    /// <summary>
+    /// A collection of test arguments for verifying the unit keys for torque units.
+    /// </summary>
+    /// <remarks>
+    /// This property is intended for use in unit tests.
+    /// </remarks>
+    internal static IEnumerable<TorqueUnitKeyTestData> TorqueUnitKeyArgs =>
+        TorqueTestDataTuples.Select(unitArgs => new TorqueUnitKeyTestData(unitArgs.unit, unitArgs.unitKey));
 
     /// <summary>
     /// Verifies that formatting a Torque quantity using the specified unit and the default short name produces the
@@ -133,5 +142,17 @@ public class TorqueTests
         var resultStr = torque.FormatAs(torqueUnit, longName: true, formatNum: "0.#");
 
         Assert.AreEqual(expectedStr, resultStr);
+    }
+
+    /// <summary>
+    /// Verifies that getting a unit key from an Torque unit will return the expected unit key.
+    /// </summary>
+    /// <param name="torqueUnit">The torque unit to use when getting the unit key.</param>
+    /// <param name="expectedUnitKey">The expected unit key that this unit should return.</param>
+    [TestMethod]
+    [DynamicData(nameof(TorqueUnitKeyArgs))]
+    public void GetTorqueUnitKey_ValidUnit_ReturnsUnitKey(Unit<Torque> torqueUnit, string expectedUnitKey)
+    {
+        Assert.AreEqual(expectedUnitKey, torqueUnit.UnitKey);
     }
 }

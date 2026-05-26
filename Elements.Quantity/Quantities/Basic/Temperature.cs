@@ -39,6 +39,9 @@ namespace Elements.Quantity
         // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<Temperature> DefaultUnit { get { return Kelvin; } }
 
+        /// <inheritdoc/>
+        public string QuantityFamily => string.Empty;
+
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:
 
@@ -52,13 +55,15 @@ namespace Elements.Quantity
         public static readonly Unit<Temperature> Celsius = new UnitNonLinear<Temperature>(
             (K)=>(K - 273.15), (C)=>(C + 273.15),
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " °C" }, new string[] { " degrees Celsius", " degree Celsius", " Celsius" });
+            new string[] { " °C" }, new string[] { " degrees Celsius", " degree Celsius", " Celsius" },
+            "Celsius");
 
         //Fahrenheit is the stupid temperature system for most things except how hot it feels outside.
         public static readonly Unit<Temperature> Fahrenheit = new UnitNonLinear<Temperature>(
             (K) => (K * (9.0 / 5.0) - 459.67), (F) => ((F + 459.67)*(5.0 / 9.0)),
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " °F" }, new string[] { " degrees Fahrenheit", " degree Fahrenheit", " Fahrenheit" });
+            new string[] { " °F" }, new string[] { " degrees Fahrenheit", " degree Fahrenheit", " Fahrenheit" },
+            "Fahrenheit");
 
         //Rankine is to Fahrenheit as Kelven is to Celsius, its rarely used but I'm putting it here for the sake of completion
         public static readonly Unit<Temperature> Rankine = new UnitNonLinear<Temperature>(
