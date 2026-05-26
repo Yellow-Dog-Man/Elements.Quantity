@@ -44,6 +44,13 @@ namespace Elements.Quantity
 
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:
+
+        /// <summary>
+        /// These are the four most used temperature unit scales.
+        /// Celsius and Kelvin are the most common across the world and scientific application where as Fahrenheit and Rankine are used in place of them in specific applications and regions.
+        /// more information can be found on their respective wikipedia pages: <see href="https://en.wikipedia.org/wiki/Celsius">Celsius</see> <see href="https://en.wikipedia.org/wiki/Kelvin">Kelvin</see>, <see href="https://en.wikipedia.org/wiki/Fahrenheit">Fahrenheit</see>, and <see href="https://en.wikipedia.org/wiki/Rankine_scale">Rankine</see>.
+        /// </summary>
+
         public static readonly Unit<Temperature> Kelvin = new Unit<Temperature>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " K" }, new string[] { " Kelvins", " Kelvin" });
