@@ -50,10 +50,9 @@ namespace Elements.Quantity
 
         //Celsius, the type that is best used for science in most cases
         public static readonly Unit<Temperature> Celsius = new UnitNonLinear<Temperature>(
-            (K)=>(K-273.15), (C)=>(C+273.15),
+            (K)=>(K - 273.15), (C)=>(C + 273.15),
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " °C" }, new string[] { " degrees Celsius", " degree Celsius", " Celsius" });
-
 
         //Fahrenheit is the stupid temperature system for most things except how hot it feels outside.
         public static readonly Unit<Temperature> Fahrenheit = new UnitNonLinear<Temperature>(
