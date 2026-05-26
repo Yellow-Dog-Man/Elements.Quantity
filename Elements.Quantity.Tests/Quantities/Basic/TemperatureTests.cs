@@ -16,7 +16,8 @@ public class TemperatureTests
         {
             new (Temperature.Kelvin, "{0} K", "1 Kelvin", "{0} Kelvins"),
             new (Temperature.Celsius, "{0} °C", "1 degree Celsius", "{0} degrees Celsius"),
-            new (Temperature.Fahrenheit, "{0} °F", "1 degree Fahrenheit", "{0} degrees Fahrenheit")
+            new (Temperature.Fahrenheit, "{0} °F", "1 degree Fahrenheit", "{0} degrees Fahrenheit"),
+            new (Temperature.Rankine , "{0} °R", "1 degree Rankine", "{0} degrees Rankine")
         };
     }
 

@@ -43,7 +43,7 @@ namespace Elements.Quantity
         // Parameters:
 
 
-        //zero Kelven is the coldest anything can be, zero movement.
+        //Zero Kelven is the coldest anything can be, zero movement.
         public static readonly Unit<Temperature> Kelvin = new Unit<Temperature>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " K" }, new string[] { " Kelvins", " Kelvin" });
@@ -61,7 +61,7 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " °F" }, new string[] { " degrees Fahrenheit", " degree Fahrenheit", " Fahrenheit" });
 
-        //Rankine is to fahrenheit as kelven is to celsius, its like rarely used but im putting it here for the sake of completion
+        //Rankine is to Fahrenheit as Kelven is to Celsius, its rarely used but I'm putting it here for the sake of completion
         public static readonly Unit<Temperature> Rankine = new UnitNonLinear<Temperature>(
             (K) => (K * (9.0 / 5.0)), (R) => (R * (5.0 / 9.0)),
             new UnitGroup[] { UnitGroup.Common },
