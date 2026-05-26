@@ -126,4 +126,25 @@ public class TemperatureTests
 
         Assert.AreEqual(expectedFarenheit, temperature.ConvertTo(Temperature.Fahrenheit), 0.1);
     }
+
+    [DataRow(0, 32)]
+    [TestMethod]
+    public void CelciusToFarenheit(double celcius, double expectedFarenheit)
+    {
+        var result = Temperature.Fahrenheit.ConvertFrom(Temperature.Celsius.ConvertFrom(celcius));
+        Assert.AreEqual(expectedFarenheit, (celcius * Temperature.Celsius) * Temperature.Fahrenheit, 0.1);
+        Assert.AreEqual(expectedFarenheit, Temperature.Celsius.ConvertFrom(celcius).ToFarenheit(), 0.1);
+        Assert.AreEqual(expectedFarenheit, Temperature.Celsius.ConvertFrom(celcius).ConvertTo(Temperature.Fahrenheit), 0.1);
+    }
+
+    [TestMethod]
+    public void TestImplicitOperator()
+    {
+        const double kelvin = 273;
+        var t = new Temperature(kelvin);
+        var x = t.New(kelvin);
+
+        Assert.AreEqual(kelvin, t, 0.1);
+        Assert.AreEqual(kelvin, x, 0.1);
+    }
 }
