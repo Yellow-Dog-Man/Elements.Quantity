@@ -22,16 +22,17 @@ public class TemperatureTests
     /// </remarks>
     internal static TemperatureTestData[] TemperatureTestDataTuples =>
     [
-        new (Temperature.Kelvin, "{0} K", "1 Kelvin", "{0} Kelvins", "Quantity.Unit.Temperature.Kelvins"),
-        new (Temperature.Celsius, "{0} °C", "1 degree Celsius", "{0} degrees Celsius", "Quantity.Unit.Temperature.Celsius"),
-        new (Temperature.Fahrenheit, "{0} °F", "1 degree Fahrenheit", "{0} degrees Fahrenheit", "Quantity.Unit.Temperature.Fahrenheit")
-        new (Temperature.Rankine , "{0} °R", "1 degree Rankine", "{0} degrees Rankine")
+        new(Temperature.Kelvin, "{0} K", "1 Kelvin", "{0} Kelvins", "Quantity.Unit.Temperature.Kelvins"),
+        new(Temperature.Celsius, "{0} °C", "1 degree Celsius", "{0} degrees Celsius", "Quantity.Unit.Temperature.Celsius"),
+        new(Temperature.Fahrenheit, "{0} °F", "1 degree Fahrenheit", "{0} degrees Fahrenheit", "Quantity.Unit.Temperature.Fahrenheit"),
+        new(Temperature.Rankine, "{0} °R", "1 degree Rankine", "{0} degrees Rankine", "Quantity.Unit.Temperature.Rankine")
     ];
 
     internal static IEnumerable<object[]> TemperatureShortNameArgs
     {
         get => DataProvider.UnitQuantityShortNameNumberValues.SelectMany(numValue =>
-            TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[] {
+            TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[]
+            {
                 temperatureUnitArgs.unit, numValue, string.Format(temperatureUnitArgs.shortName, numValue)
             }).ToArray()
         );
@@ -39,7 +40,8 @@ public class TemperatureTests
 
     internal static IEnumerable<object[]> TemperatureLongNameSingularFormArgs
     {
-        get => TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[] {
+        get => TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[]
+        {
             temperatureUnitArgs.unit, temperatureUnitArgs.longNameSingle
         });
     }
@@ -47,7 +49,8 @@ public class TemperatureTests
     internal static IEnumerable<object[]> TemperatureLongNamePluralFormArgs
     {
         get => DataProvider.UnitQuantityPluralNumberValues.SelectMany(numValue =>
-            TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[] {
+            TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[]
+            {
                 temperatureUnitArgs.unit, numValue, string.Format(temperatureUnitArgs.longNamePlural, numValue)
             }).ToArray()
         );
@@ -64,7 +67,8 @@ public class TemperatureTests
 
     [TestMethod]
     [DynamicData(nameof(TemperatureShortNameArgs))]
-    public void TemperatureUnit_QuantityProvidedFormatAsShortName_FormatsWithDefaultShortName(Unit<Temperature> temperatureUnit, double temperatureValue, string expectedStr)
+    public void TemperatureUnit_QuantityProvidedFormatAsShortName_FormatsWithDefaultShortName(
+        Unit<Temperature> temperatureUnit, double temperatureValue, string expectedStr)
     {
         var temperature = temperatureUnit.ConvertFrom(temperatureValue);
         var resultStr = temperature.FormatAs(temperatureUnit, formatNum: "0.#");
@@ -74,7 +78,8 @@ public class TemperatureTests
 
     [TestMethod]
     [DynamicData(nameof(TemperatureLongNameSingularFormArgs))]
-    public void TemperatureUnit_QuantitySingleValueFormatAsLongName_FormatsWithDefaultLongNameSingularForm(Unit<Temperature> temperatureUnit, string expectedStr)
+    public void TemperatureUnit_QuantitySingleValueFormatAsLongName_FormatsWithDefaultLongNameSingularForm(
+        Unit<Temperature> temperatureUnit, string expectedStr)
     {
         var temperature = temperatureUnit.ConvertFrom(1);
         var resultStr = temperature.FormatAs(temperatureUnit, longName: true, formatNum: "0.#");
@@ -84,7 +89,8 @@ public class TemperatureTests
 
     [TestMethod]
     [DynamicData(nameof(TemperatureLongNamePluralFormArgs))]
-    public void TemperatureUnit_QuantityPluralValueFormatAsLongName_FormatsWithDefaultLongNamePluralForm(Unit<Temperature> temperatureUnit, double temperatureValue, string expectedStr)
+    public void TemperatureUnit_QuantityPluralValueFormatAsLongName_FormatsWithDefaultLongNamePluralForm(
+        Unit<Temperature> temperatureUnit, double temperatureValue, string expectedStr)
     {
         var temperature = temperatureUnit.ConvertFrom(temperatureValue);
         var resultStr = temperature.FormatAs(temperatureUnit, longName: true, formatNum: "0.#");
@@ -99,25 +105,28 @@ public class TemperatureTests
     /// <param name="expectedUnitKey">The expected unit key that this unit should return.</param>
     [TestMethod]
     [DynamicData(nameof(TemperatureUnitKeyArgs))]
-    public void GetTemperatureUnitKey_ValidUnit_ReturnsUnitKey(Unit<Temperature> temperatureUnit, string expectedUnitKey)
+    public void GetTemperatureUnitKey_ValidUnit_ReturnsUnitKey(Unit<Temperature> temperatureUnit,
+        string expectedUnitKey)
     {
         Assert.AreEqual(expectedUnitKey, temperatureUnit.UnitKey);
     }
 
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]
+    [DataRow(373.1, 100)]//Boiling point of water
     [DataRow(273.15, 0)]
     [DataRow(273.15 * 2, 273.15)]
     [TestMethod]
-    public void KelvinToCelcius(double kelvin, double expectedCelius)
+    public void KelvinToCelsius(double kelvin, double expectedCelsius)
     {
         var temperature = new Temperature(kelvin);
 
-        Assert.AreEqual(expectedCelius, temperature.ConvertTo(Temperature.Celsius), 0.1);
+        Assert.AreEqual(expectedCelsius, temperature.ConvertTo(Temperature.Celsius), 0.1);
     }
 
     [DataRow(1, -457.87)]
     [DataRow(0, -459.67)]
+    [DataRow(373.1, 212)]//boiling point of water
     [DataRow(273.15, 32)]
     [DataRow(273.15 * 2, 523.67)]
     [TestMethod]
@@ -126,5 +135,19 @@ public class TemperatureTests
         var temperature = new Temperature(kelvin);
 
         Assert.AreEqual(expectedFarenheit, temperature.ConvertTo(Temperature.Fahrenheit), 0.1);
+    }
+
+
+    [DataRow(1, 1.8)]
+    [DataRow(0, 0)]
+    [DataRow(373.1,671.67)]//boiling point of water
+    [DataRow(256, 460.8)]
+    [DataRow(256 * 2, 921.6)]
+    [TestMethod]
+    public void KelvinToRankine(double kelvin, double expectedRankine)
+    {
+        var temperature = new Temperature(kelvin);
+
+        Assert.AreEqual(expectedRankine, temperature.ConvertTo(Temperature.Rankine), 0.1);
     }
 }
