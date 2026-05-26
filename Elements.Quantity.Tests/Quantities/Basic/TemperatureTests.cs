@@ -101,6 +101,8 @@ public class TemperatureTests
     public void GetTemperatureUnitKey_ValidUnit_ReturnsUnitKey(Unit<Temperature> temperatureUnit, string expectedUnitKey)
     {
         Assert.AreEqual(expectedUnitKey, temperatureUnit.UnitKey);
+    }
+
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]
     [DataRow(273.15, 0)]
