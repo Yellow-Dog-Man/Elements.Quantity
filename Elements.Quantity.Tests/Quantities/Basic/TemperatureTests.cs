@@ -75,4 +75,28 @@ public class TemperatureTests
 
         Assert.AreEqual(expectedStr, resultStr);
     }
+
+    [DataRow(1, -272.15)]
+    [DataRow(0, -273.15)]
+    [DataRow(273.15, 0)]
+    [DataRow(273.15 * 2, 273.15)]
+    [TestMethod]
+    public void KelvinToCelcius(double kelvin, double expectedCelius)
+    {
+        var temperature = new Temperature(kelvin);
+
+        Assert.AreEqual(expectedCelius, temperature.ConvertTo(Temperature.Celsius), 0.1);
+    }
+
+    [DataRow(1, -457.87)]
+    [DataRow(0, -459.67)]
+    [DataRow(273.15, 32)]
+    [DataRow(273.15 * 2, 523.67)]
+    [TestMethod]
+    public void KelvinToFarenheit(double kelvin, double expectedFarenheit)
+    {
+        var temperature = new Temperature(kelvin);
+
+        Assert.AreEqual(expectedFarenheit, temperature.ConvertTo(Temperature.Fahrenheit), 0.1);
+    }
 }
