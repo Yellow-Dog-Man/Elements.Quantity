@@ -45,28 +45,34 @@ namespace Elements.Quantity
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:
 
-        /// <summary>
-        /// These are the four most used temperature unit scales.
-        /// Celsius and Kelvin are the most common across the world and scientific application where as Fahrenheit and Rankine are used in place of them in specific applications and regions.
-        /// more information can be found on their respective wikipedia pages: <see href="https://en.wikipedia.org/wiki/Celsius">Celsius</see> <see href="https://en.wikipedia.org/wiki/Kelvin">Kelvin</see>, <see href="https://en.wikipedia.org/wiki/Fahrenheit">Fahrenheit</see>, and <see href="https://en.wikipedia.org/wiki/Rankine_scale">Rankine</see>.
+        ///<summary>
+        /// <see href="https://en.wikipedia.org/wiki/Kelvin">Kelvin</see> is a scientific unit of temperature where 0 is equal to absolute zero. Derived from Celsius/Centegrade.
         /// </summary>
-
         public static readonly Unit<Temperature> Kelvin = new Unit<Temperature>(1,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " K" }, new string[] { " Kelvins", " Kelvin" });
 
+        /// <summary>
+        /// <see href="https://en.wikipedia.org/wiki/Celsius">Celsius</see> is a unit of temperature where 0 degrees celsius is the freezing point of water, and 100 degrees is the boiling point of water.
+        /// </summary>
         public static readonly Unit<Temperature> Celsius = new UnitNonLinear<Temperature>(
             (K)=>(K - 273.15), (C)=>(C + 273.15),
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " °C" }, new string[] { " degrees Celsius", " degree Celsius", " Celsius" },
             "Celsius");
 
+        /// <summary>
+        /// <see href="https://en.wikipedia.org/wiki/Fahrenheit">Fahrenheit</see> is a unit of temperature that has no known original basis other than "how cold can i make something", water freezes at 32 degrees and boils at 212 degrees.
+        /// </summary>
         public static readonly Unit<Temperature> Fahrenheit = new UnitNonLinear<Temperature>(
             (K) => (K * (9.0 / 5.0) - 459.67), (F) => ((F + 459.67)*(5.0 / 9.0)),
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " °F" }, new string[] { " degrees Fahrenheit", " degree Fahrenheit", " Fahrenheit" },
             "Fahrenheit");
 
+        /// <summary>
+        /// <see href="https://en.wikipedia.org/wiki/Rankine_scale">Rankine</see> is the Kelvin of Fahrenheit meaning 0 degrees Rankine is absolute zero, 491.67 degrees is where water freezes, and 671.641 is where water boils.
+        /// </summary>
         public static readonly Unit<Temperature> Rankine = new UnitNonLinear<Temperature>(
             (K) => (K * (9.0 / 5.0)), (R) => (R * (5.0 / 9.0)),
             new UnitGroup[] { UnitGroup.Common },
