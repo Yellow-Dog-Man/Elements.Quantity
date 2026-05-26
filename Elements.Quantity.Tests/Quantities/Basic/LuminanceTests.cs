@@ -1,30 +1,30 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Elements.Quantity.Test.Quantities.Basic;
 
-using LuminanceTestData = (Unit<Luminance> unit, string shortName, string longNameSingle, string longNamePlural);
+using LuminanceTestData = QuantityTestData<Luminance>;
+using LuminanceUnitKeyTestData = (Unit<Luminance> unit, string unitKey);
 
 [TestClass]
+[ExcludeFromCodeCoverage]
 public class LuminanceTests
 {
     /// <summary>
     /// An array of test data tuples representing different luminance units and their display formats. Each
     /// element in the array contains information about a luminance unit, the short name, the singular
-    /// long name, and plural long name.
+    /// long name, plural long name, and unit key.
     /// </summary>
     /// <remarks>
     /// This property is intended for use in unit tests.
     /// </remarks>
-    internal static LuminanceTestData[] LuminanceTestDataTuples
-    {
-        get =>
-        [
-            new (Luminance.CandelaPerSquareMeter, "{0} cd/m²", "1 candela per square meter", "{0} candelas per square meter"),
-            new (Luminance.Nit, "{0} nt", "1 nit", "{0} nits")
-        ];
-    }
+    internal static LuminanceTestData[] LuminanceTestDataTuples =>
+    [
+        new (Luminance.CandelaPerSquareMeter, "{0} cd/m²", "1 candela per square meter", "{0} candelas per square meter", "Quantity.Unit.Luminance.CandelasPerSquareMeter"),
+        new (Luminance.Nit, "{0} nt", "1 nit", "{0} nits", "Quantity.Unit.Luminance.Nits")
+    ];
 
     /// <summary>
     /// A collection of test data containing the luminance unit, the numeric value, and the expected
@@ -71,6 +71,15 @@ public class LuminanceTests
             }).ToArray()
         );
     }
+
+    /// <summary>
+    /// A collection of test arguments for verifying the unit keys for luminance units.
+    /// </summary>
+    /// <remarks>
+    /// This property is intended for use in unit tests.
+    /// </remarks>
+    internal static IEnumerable<LuminanceUnitKeyTestData> LuminanceUnitKeyArgs =>
+        LuminanceTestDataTuples.Select(unitArgs => new LuminanceUnitKeyTestData(unitArgs.unit, unitArgs.unitKey));
 
     /// <summary>
     /// Verifies that formatting a Luminance quantity using the specified unit and the default short name produces the
@@ -133,5 +142,17 @@ public class LuminanceTests
         var resultStr = luminance.FormatAs(luminanceUnit, longName: true, formatNum: "0.#");
 
         Assert.AreEqual(expectedStr, resultStr);
+    }
+
+    /// <summary>
+    /// Verifies that getting a unit key from an Luminance unit will return the expected unit key.
+    /// </summary>
+    /// <param name="luminanceUnit">The luminance unit to use when getting the unit key.</param>
+    /// <param name="expectedUnitKey">The expected unit key that this unit should return.</param>
+    [TestMethod]
+    [DynamicData(nameof(LuminanceUnitKeyArgs))]
+    public void GetLuminanceUnitKey_ValidUnit_ReturnsUnitKey(Unit<Luminance> luminanceUnit, string expectedUnitKey)
+    {
+        Assert.AreEqual(expectedUnitKey, luminanceUnit.UnitKey);
     }
 }

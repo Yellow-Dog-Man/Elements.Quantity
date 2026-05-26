@@ -1,24 +1,31 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Elements.Quantity.Test.Quantities.Basic;
 
-using TemperatureTestData = (Unit<Temperature> unit, string shortName, string longNameSingle, string longNamePlural);
+using TemperatureTestData = QuantityTestData<Temperature>;
+using TemperatureUnitKeyTestData = (Unit<Temperature> unit, string unitKey);
 
 [TestClass]
+[ExcludeFromCodeCoverage]
 public class TemperatureTests
 {
-    internal static TemperatureTestData[] TemperatureTestDataTuples
-    {
-        get => new TemperatureTestData[]
-        {
-            new (Temperature.Kelvin, "{0} K", "1 Kelvin", "{0} Kelvins"),
-            new (Temperature.Celsius, "{0} °C", "1 degree Celsius", "{0} degrees Celsius"),
-            new (Temperature.Fahrenheit, "{0} °F", "1 degree Fahrenheit", "{0} degrees Fahrenheit")
-        };
-    }
+    /// <summary>
+    /// An array of test data tuples representing different temperature units and their display formats. Each
+    /// element in the array contains information about a temperature unit, the short name, the singular
+    /// long name, plural long name, and unit key.
+    /// </summary>
+    /// <remarks>
+    /// This property is intended for use in unit tests.
+    /// </remarks>
+    internal static TemperatureTestData[] TemperatureTestDataTuples =>
+    [
+        new (Temperature.Kelvin, "{0} K", "1 Kelvin", "{0} Kelvins", "Quantity.Unit.Temperature.Kelvins"),
+        new (Temperature.Celsius, "{0} °C", "1 degree Celsius", "{0} degrees Celsius", "Quantity.Unit.Temperature.Celsius"),
+        new (Temperature.Fahrenheit, "{0} °F", "1 degree Fahrenheit", "{0} degrees Fahrenheit", "Quantity.Unit.Temperature.Fahrenheit")
+    ];
 
     internal static IEnumerable<object[]> TemperatureShortNameArgs
     {
@@ -44,6 +51,15 @@ public class TemperatureTests
             }).ToArray()
         );
     }
+
+    /// <summary>
+    /// A collection of test arguments for verifying the unit keys for temperature units.
+    /// </summary>
+    /// <remarks>
+    /// This property is intended for use in unit tests.
+    /// </remarks>
+    internal static IEnumerable<TemperatureUnitKeyTestData> TemperatureUnitKeyArgs =>
+        TemperatureTestDataTuples.Select(unitArgs => new TemperatureUnitKeyTestData(unitArgs.unit, unitArgs.unitKey));
 
     [TestMethod]
     [DynamicData(nameof(TemperatureShortNameArgs))]
@@ -75,6 +91,16 @@ public class TemperatureTests
         Assert.AreEqual(expectedStr, resultStr);
     }
 
+    /// <summary>
+    /// Verifies that getting a unit key from an Temperature unit will return the expected unit key.
+    /// </summary>
+    /// <param name="temperatureUnit">The temperature unit to use when getting the unit key.</param>
+    /// <param name="expectedUnitKey">The expected unit key that this unit should return.</param>
+    [TestMethod]
+    [DynamicData(nameof(TemperatureUnitKeyArgs))]
+    public void GetTemperatureUnitKey_ValidUnit_ReturnsUnitKey(Unit<Temperature> temperatureUnit, string expectedUnitKey)
+    {
+        Assert.AreEqual(expectedUnitKey, temperatureUnit.UnitKey);
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]
     [DataRow(273.15, 0)]

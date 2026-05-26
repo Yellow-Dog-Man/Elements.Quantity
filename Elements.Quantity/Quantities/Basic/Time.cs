@@ -39,6 +39,9 @@ namespace Elements.Quantity
         // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<Time> DefaultUnit { get { return Second; } }
 
+        /// <inheritdoc/>
+        public string QuantityFamily => string.Empty;
+
         public static readonly Unit<Time> Millisecond = new Unit<Time>(1.0 / 1000.0,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " ms" }, new string[] { " milliseconds", " millisecond" });
