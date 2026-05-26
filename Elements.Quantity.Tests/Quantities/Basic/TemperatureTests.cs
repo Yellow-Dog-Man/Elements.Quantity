@@ -140,7 +140,7 @@ public class TemperatureTests
 
     [DataRow(1, 1.8)]
     [DataRow(0, 0)]
-    [DataRow(373.1,671.67)]//boiling point of water
+    [DataRow(373.1, 671.67)]//boiling point of water
     [DataRow(256, 460.8)]
     [DataRow(256 * 2, 921.6)]
     [TestMethod]

@@ -63,7 +63,8 @@ namespace Elements.Quantity
         public static readonly Unit<Temperature> Rankine = new UnitNonLinear<Temperature>(
             (K) => (K * (9.0 / 5.0)), (R) => (R * (5.0 / 9.0)),
             new UnitGroup[] { UnitGroup.Common },
-            new string[] { " °R" }, new string[] { " degrees Rankine", " degree Rankine", " Rankine" });
+            new string[] { " °R" }, new string[] { " degrees Rankine", " degree Rankine", " Rankine" },
+            "Rankine");
 
         #endregion
 
