@@ -126,6 +126,22 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " ftm" }, new string[] { " fathoms", " fathom" });
 
+
+        //Surveying
+
+        /// <summary>
+        /// <seealso cref="https://en.wikipedia.org/wiki/Chain_(unit)"/>Chains</seealso> are used in various niche applications like tires and surveying.
+        /// </summary>
+        public static readonly Unit<Distance> Chain = new Unit<Distance>(20.1168,
+            new UnitGroup[] { UnitGroup.Surveying },
+            new string[] { " ch" }, new string[] { " chains", " chain" });
+
+        /// <summary>
+        /// <seealso cref="https://en.wikipedia.org/wiki/Rod_(unit)"/>Rods</seealso> are used in various niche applications such as surveying.
+        /// </summary>
+        public static readonly Unit<Distance> Rod = new Unit<Distance>(5.0292,
+            new UnitGroup[]  { UnitGroup.Surveying },
+            new string[] { " rd" }, new string[] { " rods", " rod" } );
         #endregion
 
         /* *********************************************** */
