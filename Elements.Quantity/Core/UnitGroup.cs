@@ -30,6 +30,7 @@ namespace Elements.Quantity
         public static readonly UnitGroup Maritime = new UnitGroup();
 
         public static readonly UnitGroup Imperial = new UnitGroup();
+        public static readonly UnitGroup Surveying = new UnitGroup();
 
         #endregion
 
