@@ -7,7 +7,7 @@
     <Authors>Yellow Dog Man Studios</Authors>
     <PackageId>YellowDogMan.Elements.Quantity</PackageId>
     <Description>This library facilitates the manipulation of quantities associated with units, such as temperature, weight, and distance, by offering various utilities for working with them.</Description>
-    <Copyright>Copyright (c) Yellow Dog Man Studios s.r.o. 2023</Copyright>
+    <Copyright>Copyright (c) Yellow Dog Man Studios s.r.o.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Yellow-Dog-Man/Elements.Quantity</RepositoryUrl>
