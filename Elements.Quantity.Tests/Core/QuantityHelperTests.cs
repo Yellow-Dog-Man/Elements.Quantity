@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Elements.Quantity.Test.Mocks;
 using System.Text.RegularExpressions;
+using System.Collections.Frozen;
 
 namespace Elements.Quantity.Test.Core;
 
@@ -74,6 +75,29 @@ public partial class QuantityHelperTests
     {
         var unitKeys = QuantityHelper.GetUnitKeys();
         CollectionAssert.AllItemsAreUnique(unitKeys.ToArray());
+    }
+
+    /// <summary>
+    /// Verifies that all quantity units are unique.
+    /// </summary>
+    /// <remarks>
+    /// This test verifies that units do not match with each other when their <c>CompareTo</c>
+    /// method is used. This was found to be an issue in <see cref="UnitGroup"/>.
+    /// </remarks>
+    [TestMethod]
+    public void GetAllUnits_UniqueUnits_ReturnsUniqueUnits()
+    {
+        var units = QuantityHelper.GetAllUnits();
+        var sortedSet = new SortedSet<IUnit>();
+
+        foreach(var unit in units)
+        {
+            if (sortedSet.Contains(unit))
+            {
+                Assert.Fail($"Unit '{unit.UnitKey}' is matching with an existing registered unit.");
+            }
+            sortedSet.Add(unit);
+        }
     }
 
     [GeneratedRegex("u$", RegexOptions.Compiled)]
