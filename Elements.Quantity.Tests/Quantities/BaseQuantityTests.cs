@@ -14,11 +14,6 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
 {
     private static QuantityTestData<TQuantity>[] TestDataTuples => TData.TestDataTuples;
 
-    public static IEnumerable<object[]> PredefinedCompoundFormatInfoArgs =>
-        TData.CompoundFormatInfoDataTuples?.Select(row => (object[])[row.Format, row.Value, row.ExpectedStr])
-        // No test cases => yield one null entry to prevent MSTest from failing
-        ?? [(object?[])[null, 0d, ""]];
-
     /// <summary>
     /// A collection of test data containing the <typeparamref name="TQuantity"/> unit, the numeric value, and the expected
     /// formatted short name.
@@ -91,7 +86,7 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
     /// </param>
     [TestMethod]
     [DynamicData(nameof(ShortNameArgs))]
-    public void QuantityProvidedFormatAsShortName_FormatsWithDefaultShortName(
+    public void FormatQuantity_ShortNameFormat_FormatsWithDefaultShortName(
         Unit<TQuantity> unit, double value, string expectedStr)
     {
         var quantity = unit.ConvertFrom(value);
@@ -112,7 +107,7 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
     /// <param name="expectedStr">The expected string result when formatting the quantity value with the long name option.</param>
     [TestMethod]
     [DynamicData(nameof(LongNameSingularFormArgs))]
-    public void QuantitySingleValueFormatAsLongName_FormatsWithDefaultLongNameSingularForm(
+    public void FormatSingularQuantity_LongNameFormat_FormatsWithDefaultLongNameSingularForm(
         Unit<TQuantity> unit, string expectedStr)
     {
         var quantity = unit.ConvertFrom(1d);
@@ -134,7 +129,7 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
     /// <param name="expectedStr">The expected string result when formatting the quantity value with the long name option.</param>
     [TestMethod]
     [DynamicData(nameof(LongNamePluralFormArgs))]
-    public void QuantityPluralValueFormatAsLongName_FormatsWithDefaultLongNamePluralForm(
+    public void FormatPluralQuantity_LongNameFormat_FormatsWithDefaultLongNamePluralForm(
         Unit<TQuantity> unit, double value, string expectedStr)
     {
         var quantity = unit.ConvertFrom(value);
@@ -153,24 +148,5 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
     public void GetQuantityUnitKey_ValidUnit_ReturnsUnitKey(Unit<TQuantity> unit, string expectedUnitKey)
     {
         Assert.AreEqual(expectedUnitKey, unit.UnitKey);
-    }
-
-    /// <summary>
-    /// Test that <typeparamref name="TQuantity"/> is correctly formatted when using <see cref="CompoundFormatInfo{TQuantity}"/>
-    /// </summary>
-    /// <param name="format">Format Info used</param>
-    /// <param name="value">Quantity value in <see cref="TQuantity.DefaultUnit"/> Unit.</param>
-    /// <param name="expectedStr">Expected format result</param>
-    [TestMethod]
-    [DynamicData(nameof(PredefinedCompoundFormatInfoArgs))]
-    public void DistanceUnit_PredefinedQuantityCompoundFormatInfo_FormatsQuantityAsString(CompoundFormatInfo<TQuantity>? format, double value, string expectedStr)
-    {
-        // Skip if no tests are to be run (single null row)
-        if (format is null) Assert.Inconclusive();
-
-        var quantity = default(TQuantity).New(value);
-        var resultStr = quantity.FormatCompound(format);
-
-        Assert.AreEqual(expectedStr, resultStr);
     }
 }

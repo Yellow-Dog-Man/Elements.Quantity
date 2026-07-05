@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Elements.Quantity.Test.Quantities.Basic;
@@ -51,7 +50,4 @@ public class MassTests : BaseQuantityTests<MassTests, Mass>, IQuantityTestData<M
         new(SI<Mass>.Ronna, "{0} Rg", "1 ronnagram", "{0} ronnagrams", "Quantity.Unit.Mass.Ronnagrams"),
         new(SI<Mass>.Quetta, "{0} Qg", "1 quettagram", "{0} quettagrams", "Quantity.Unit.Mass.Quettagrams")
     ];
-
-    /// <inheritdoc/>
-    public static IEnumerable<QuantityFormatTestData<Mass>>? CompoundFormatInfoDataTuples => null;
 }

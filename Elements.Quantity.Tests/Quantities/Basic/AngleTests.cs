@@ -7,7 +7,7 @@ namespace Elements.Quantity.Test.Quantities.Basic;
 
 [TestClass]
 [ExcludeFromCodeCoverage]
-public sealed class AngleTests : BaseQuantityTests<AngleTests, Angle>, IQuantityTestData<Angle>
+public sealed class AngleTests : BaseQuantityCompoundFormattedTests<AngleTests, Angle>, IQuantityCompoundFormattedTestData<Angle>
 {
     /// <inheritdoc/>
     public static QuantityTestData<Angle>[] TestDataTuples =>

@@ -7,7 +7,7 @@ namespace Elements.Quantity.Test.Quantities.Basic;
 
 [TestClass]
 [ExcludeFromCodeCoverage]
-public class TimeTests : BaseQuantityTests<TimeTests, Time>, IQuantityTestData<Time>
+public class TimeTests : BaseQuantityCompoundFormattedTests<TimeTests, Time>, IQuantityCompoundFormattedTestData<Time>
 {
     /// <inheritdoc/>
     public static QuantityTestData<Time>[] TestDataTuples =>
@@ -20,7 +20,7 @@ public class TimeTests : BaseQuantityTests<TimeTests, Time>, IQuantityTestData<T
     ];
 
     /// <inheritdoc/>
-    public static IEnumerable<QuantityFormatTestData<Time>>? CompoundFormatInfoDataTuples => [
+    public static IEnumerable<QuantityFormatTestData<Time>> CompoundFormatInfoDataTuples => [
         new(Time.MinuteSecond, 0d, "00:00"),
         new(Time.MinuteSecond, 30d, "00:30"),
         new(Time.MinuteSecond, 150d, "02:30"),
