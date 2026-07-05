@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Elements.Quantity.Test.Quantities.Basic;
@@ -16,9 +15,6 @@ public class TemperatureTests : BaseQuantityTests<TemperatureTests, Temperature>
         new(Temperature.Fahrenheit, "{0} °F", "1 degree Fahrenheit", "{0} degrees Fahrenheit", "Quantity.Unit.Temperature.Fahrenheit"),
         new(Temperature.Rankine, "{0} °R", "1 degree Rankine", "{0} degrees Rankine", "Quantity.Unit.Temperature.Rankine")
     ];
-
-    /// <inheritdoc/>
-    public static IEnumerable<QuantityFormatTestData<Temperature>>? CompoundFormatInfoDataTuples => null;
 
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]

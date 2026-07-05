@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 
@@ -38,7 +37,4 @@ public class CurrentTests : BaseQuantityTests<CurrentTests, Current>, IQuantityT
         new(SI<Current>.Ronna, "{0} RA", "1 ronnaampere", "{0} ronnaamperes", "Quantity.Unit.Electronic.Current.Ronnaamperes"),
         new(SI<Current>.Quetta, "{0} QA", "1 quettaampere", "{0} quettaamperes", "Quantity.Unit.Electronic.Current.Quettaamperes")
     ];
-
-    /// <inheritdoc/>
-    public static IEnumerable<QuantityFormatTestData<Current>>? CompoundFormatInfoDataTuples => null;
 }

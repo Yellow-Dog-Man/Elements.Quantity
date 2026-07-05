@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Elements.Quantity.Test.Quantities.Basic;
@@ -42,7 +41,4 @@ public class PressureTests : BaseQuantityTests<PressureTests, Pressure>, IQuanti
         new(SI<Pressure>.Ronna, "{0} RPa", "1 ronnapascal", "{0} ronnapascals", "Quantity.Unit.Pressure.Ronnapascals"),
         new(SI<Pressure>.Quetta, "{0} QPa", "1 quettapascal", "{0} quettapascals", "Quantity.Unit.Pressure.Quettapascals")
     ];
-
-    /// <inheritdoc/>
-    public static IEnumerable<QuantityFormatTestData<Pressure>>? CompoundFormatInfoDataTuples => null;
 }
