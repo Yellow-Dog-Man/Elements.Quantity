@@ -1,6 +1,6 @@
 ﻿namespace Elements.Quantity.Test;
 
-internal readonly record struct QuantityTestData<T>(
+public readonly record struct QuantityTestData<T>(
     Unit<T> unit,
     string shortName,
     string longNameSingle,
