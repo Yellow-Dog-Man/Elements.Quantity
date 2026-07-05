@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Elements.Quantity.Test.Quantities.Electronic;
@@ -37,7 +36,4 @@ public class ResistanceTests : BaseQuantityTests<ResistanceTests, Resistance>, I
         new(SI<Resistance>.Ronna, "{0} RΩ", "1 ronnaohm", "{0} ronnaohms", "Quantity.Unit.Electronic.Resistance.Ronnaohms"),
         new(SI<Resistance>.Quetta, "{0} QΩ", "1 quettaohm", "{0} quettaohms", "Quantity.Unit.Electronic.Resistance.Quettaohms")
     ];
-
-    /// <inheritdoc/>
-    public static IEnumerable<QuantityFormatTestData<Resistance>>? CompoundFormatInfoDataTuples => null;
 }

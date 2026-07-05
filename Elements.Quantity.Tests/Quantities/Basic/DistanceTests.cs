@@ -7,7 +7,7 @@ namespace Elements.Quantity.Test.Quantities.Basic;
 
 [TestClass]
 [ExcludeFromCodeCoverage]
-public class DistanceTests : BaseQuantityTests<DistanceTests, Distance>, IQuantityTestData<Distance>
+public class DistanceTests : BaseQuantityCompoundFormattedTests<DistanceTests, Distance>, IQuantityCompoundFormattedTestData<Distance>
 {
     /// <inheritdoc/>
     public static QuantityTestData<Distance>[] TestDataTuples =>
