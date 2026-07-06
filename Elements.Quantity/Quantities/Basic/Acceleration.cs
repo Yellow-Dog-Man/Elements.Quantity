@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Acceleration : IQuantity<Acceleration>
+    public readonly struct Acceleration : IQuantity<Acceleration>,
+        IDivisionOperators<Acceleration, Ratio, Acceleration>,
+        IMultiplyOperators<Acceleration, Time, Velocity>
     {
         #region ESSENTIALS
 
@@ -54,28 +57,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Acceleration New(double baseVal) { return new Acceleration(baseVal); }
+        public static Acceleration Create(double baseValue) => new(baseValue);
 
-        public Acceleration Add(Acceleration q) { return new Acceleration(BaseValue + q.BaseValue); }
-        public Acceleration Subtract(Acceleration q) { return new Acceleration(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Acceleration Multiply(Acceleration a, Ratio r) => r * a;
 
-        public Acceleration Multiply(double n) { return new Acceleration(BaseValue * n); }
-        public Acceleration Multiply(Acceleration a, Ratio r) { return a * r.BaseValue; }
-        public Acceleration Multiply(Ratio r, Acceleration a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Acceleration Multiply(Ratio r, Acceleration a) => r * a;
 
-        public Acceleration Divide(double n) { return new Acceleration(BaseValue / n); }
-        public Ratio Divide(Acceleration q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Acceleration Parse(string str, Unit<Acceleration>? defaultUnit = null) => Unit<Acceleration>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Acceleration q, Unit<Acceleration>? defaultUnit = null) => Unit<Acceleration>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Acceleration Parse(string str, Unit<Acceleration>? defaultUnit = null) { return Unit<Acceleration>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Acceleration q, Unit<Acceleration>? defaultUnit = null) { return Unit<Acceleration>.TryParse(str, out q, defaultUnit); }
-
-        public static Acceleration operator +(Acceleration a, Acceleration b) { return a.Add(b); }
-        public static Acceleration operator -(Acceleration a, Acceleration b) { return a.Subtract(b); }
-        public static Acceleration operator *(Acceleration a, double n) { return a.Multiply(n); }
-        public static Acceleration operator /(Acceleration a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Acceleration a, Acceleration b) { return a.Divide(b); }
-        public static Acceleration operator -(Acceleration a) { return a.Multiply(-1); }
+        public static Acceleration operator +(Acceleration a, Acceleration b) => new(a.BaseValue + b.BaseValue);
+        public static Acceleration operator -(Acceleration a, Acceleration b) => new(a.BaseValue - b.BaseValue);
+        public static Acceleration operator *(Acceleration a, double n) => new(a.BaseValue * n);
+        public static Acceleration operator *(Acceleration a, Ratio r) => r * a;
+        public static Acceleration operator /(Acceleration a, double n) => new(a.BaseValue / n);
+        public static Acceleration operator /(Acceleration a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Acceleration a, Acceleration b) => new(a.BaseValue / b.BaseValue);
+        public static Acceleration operator -(Acceleration a) => a * -1;
+        public static Acceleration AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 

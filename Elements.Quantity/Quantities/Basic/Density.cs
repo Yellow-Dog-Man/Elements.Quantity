@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Density : IQuantity<Density>
+    public readonly struct Density : IQuantity<Density>,
+        IDivisionOperators<Density, Ratio, Density>
     {
         #region ESSENTIALS
 
@@ -17,12 +19,16 @@ namespace Elements.Quantity
 
         #endregion
 
+        /* *********************************************** */
+
         #region QUANTITY NAME DEFINITIONS
 
         public string[] GetShortBaseNames() { return new string[] { "" }; }
         public string[] GetLongBaseNames() { return new string[] { "" }; }
 
         #endregion
+
+        /* *********************************************** */
 
         #region UNITS
 
@@ -45,30 +51,44 @@ namespace Elements.Quantity
 
         #endregion
 
+        /* *********************************************** */
+
         #region OPERATORS
 
-        public Density New(double baseVal) { return new Density(baseVal); }
+        public static Density Create(double baseVal) => new(baseVal);
 
-        public Density Add(Density q) { return new Density(BaseValue + q.BaseValue); }
-        public Density Subtract(Density q) { return new Density(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Density Multiply(Density a, Ratio r) => r * a;
 
-        public Density Multiply(double n) { return new Density(BaseValue * n); }
-        public Density Multiply(Density a, Ratio r) { return a * r.BaseValue; }
-        public Density Multiply(Ratio r, Density a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Density Multiply(Ratio r, Density a) => r * a;
 
-        public Density Divide(double n) { return new Density(BaseValue / n); }
-        public Ratio Divide(Density q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Density Parse(string str, Unit<Density>? defaultUnit = null) => Unit<Density>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Density q, Unit<Density>? defaultUnit = null) => Unit<Density>.TryParse(str, out q, defaultUnit);
 
-        public static Density Parse(string str) { return Unit<Density>.Parse(str); }
-        public static bool TryParse(string str, out Density q) { return Unit<Density>.TryParse(str, out q); }
-
-        public static Density operator +(Density a, Density b) { return a.Add(b); }
-        public static Density operator -(Density a, Density b) { return a.Subtract(b); }
-        public static Density operator *(Density a, double n) { return a.Multiply(n); }
-        public static Density operator /(Density a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Density a, Density b) { return a.Divide(b); }
-        public static Density operator -(Density a) { return a.Multiply(-1); }
+        public static Density operator +(Density a, Density b) => new(a.BaseValue + b.BaseValue);
+        public static Density operator -(Density a, Density b) => new(a.BaseValue - b.BaseValue);
+        public static Density operator *(Density a, double n) => new(a.BaseValue * n);
+        public static Density operator *(Density a, Ratio r) => r * a;
+        public static Density operator /(Density a, double n) => new(a.BaseValue / n);
+        public static Density operator /(Density a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Density a, Density b) => new(a.BaseValue / b.BaseValue);
+        public static Density operator -(Density a) => a * -1;
+        public static Density AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
+
+        /* *********************************************** */
+
+        #region CONVERSIONS
+
+        // provide various operators to convert between quantities or adjust the quantity
+
+        #endregion
+
+        /* *********************************************** */
+
+        public override string ToString() => this.FormatAuto();
     }
 }

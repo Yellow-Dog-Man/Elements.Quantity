@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Distance : IQuantitySI<Distance>
+    public readonly struct Distance : IQuantitySI<Distance>,
+        IDivisionOperators<Distance, Ratio, Distance>,
+        IDivisionOperators<Distance, Time, Velocity>,
+        IDivisionOperators<Distance, Velocity, Time>
     {
         #region ESSENTIALS
 
@@ -140,8 +144,8 @@ namespace Elements.Quantity
         /// <seealso href="https://en.wikipedia.org/wiki/Rod_(unit)"/>Rods</seealso> are used in various niche applications such as surveying.
         /// </summary>
         public static readonly Unit<Distance> Rod = new Unit<Distance>(5.0292,
-            new UnitGroup[]  { UnitGroup.Surveying },
-            new string[] { " rd" }, new string[] { " rods", " rod" } );
+            new UnitGroup[] { UnitGroup.Surveying },
+            new string[] { " rd" }, new string[] { " rods", " rod" });
         #endregion
 
         /* *********************************************** */
@@ -160,28 +164,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Distance New(double baseVal) { return new Distance(baseVal); }
+        public static Distance Create(double baseVal) => new(baseVal);
 
-        public Distance Add(Distance q) { return new Distance(BaseValue + q.BaseValue); }
-        public Distance Subtract(Distance q) { return new Distance(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Distance Multiply(Distance a, Ratio r) => r * a;
 
-        public Distance Multiply(double n) { return new Distance(BaseValue * n); }
-        public Distance Multiply(Distance a, Ratio r) { return a * r.BaseValue; }
-        public Distance Multiply(Ratio r, Distance a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Distance Multiply(Ratio r, Distance a) => r * a;
 
-        public Distance Divide(double n) { return new Distance(BaseValue / n); }
-        public Ratio Divide(Distance q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Distance Parse(string str, Unit<Distance>? defaultUnit = null) => Unit<Distance>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Distance q, Unit<Distance>? defaultUnit = null) => Unit<Distance>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Distance Parse(string str, Unit<Distance>? defaultUnit = null) { return Unit<Distance>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Distance q, Unit<Distance>? defaultUnit = null) { return Unit<Distance>.TryParse(str, out q, defaultUnit); }
-
-        public static Distance operator +(Distance a, Distance b) { return a.Add(b); }
-        public static Distance operator -(Distance a, Distance b) { return a.Subtract(b); }
-        public static Distance operator *(Distance a, double n) { return a.Multiply(n); }
-        public static Distance operator /(Distance a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Distance a, Distance b) { return a.Divide(b); }
-        public static Distance operator -(Distance a) { return a.Multiply(-1); }
+        public static Distance operator +(Distance a, Distance b) => new(a.BaseValue + b.BaseValue);
+        public static Distance operator -(Distance a, Distance b) => new(a.BaseValue - b.BaseValue);
+        public static Distance operator *(Distance a, double n) => new(a.BaseValue * n);
+        public static Distance operator *(Distance a, Ratio r) => r * a;
+        public static Distance operator /(Distance a, double n) => new(a.BaseValue / n);
+        public static Distance operator /(Distance a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Distance a, Distance b) => new(a.BaseValue / b.BaseValue);
+        public static Distance operator -(Distance a) => a * -1;
+        public static Distance AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
@@ -191,8 +194,8 @@ namespace Elements.Quantity
 
         // provide various operators to convert between quantities or adjust the quantity
 
-        public static Velocity operator /(Distance l, Time t)
-        { return Velocity.MetersPerSecond * (l.BaseValue / t.BaseValue); }
+        public static Velocity operator /(Distance l, Time t) => Velocity.MetersPerSecond * (l.BaseValue /* m */ / t.BaseValue /* s */);
+        public static Time operator /(Distance l, Velocity v) => Time.Second * (l.BaseValue /* m */ / v.BaseValue /* m/s */);
 
         #endregion
 

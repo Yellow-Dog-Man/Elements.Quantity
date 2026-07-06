@@ -94,8 +94,8 @@ namespace Elements.Quantity
 
             if(remainder.BaseValue < 0)
             {
-                remainder = remainder.Multiply(-1);
-                str.Append("-");
+                remainder = -remainder;
+                str.Append('-');
             }
 
             bool writtenAnything = false;

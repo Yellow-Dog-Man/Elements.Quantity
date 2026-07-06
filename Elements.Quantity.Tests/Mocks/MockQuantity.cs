@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Numerics;
 
 namespace Elements.Quantity.Test.Mocks
 {
     [ExcludeFromCodeCoverage]
-    internal readonly struct MockQuantity : IQuantity<MockQuantity>
+    internal readonly struct MockQuantity : IQuantity<MockQuantity>,
+        IDivisionOperators<MockQuantity, Ratio, MockQuantity>
     {
         public readonly double BaseValue;
         double IQuantity.BaseValue => BaseValue;
@@ -21,35 +19,7 @@ namespace Elements.Quantity.Test.Mocks
         public bool Equals(MockQuantity other) { return BaseValue == other.BaseValue; }
         public int CompareTo(MockQuantity other) { return BaseValue.CompareTo(other.BaseValue); }
 
-        public MockQuantity New(double baseValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        public MockQuantity Add(MockQuantity q)
-        {
-            throw new NotImplementedException();
-        }
-
-        public MockQuantity Subtract(MockQuantity q)
-        {
-            throw new NotImplementedException();
-        }
-
-        public MockQuantity Multiply(double n)
-        {
-            throw new NotImplementedException();
-        }
-
-        public MockQuantity Divide(double n)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Ratio Divide(MockQuantity q)
-        {
-            throw new NotImplementedException();
-        }
+        public static MockQuantity Create(double baseValue) => throw new NotImplementedException();
 
         public string[] GetShortBaseNames() => ["u"];
 
@@ -64,5 +34,19 @@ namespace Elements.Quantity.Test.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public static MockQuantity Parse(string str, Unit<MockQuantity>? defaultUnit = null) => throw new NotImplementedException();
+        public static bool TryParse(string str, out MockQuantity q, Unit<MockQuantity>? defaultUnit = null) => throw new NotImplementedException();
+
+        public static MockQuantity operator +(MockQuantity left, MockQuantity right) => throw new NotImplementedException();
+        public static MockQuantity operator -(MockQuantity left, MockQuantity right) => throw new NotImplementedException();
+        public static MockQuantity operator *(MockQuantity left, double right) => throw new NotImplementedException();
+        public static MockQuantity operator *(MockQuantity left, Ratio right) => throw new NotImplementedException();
+        public static MockQuantity operator /(MockQuantity left, double right) => throw new NotImplementedException();
+        public static MockQuantity operator /(MockQuantity left, Ratio right) => throw new NotImplementedException();
+        public static Ratio operator /(MockQuantity left, MockQuantity right) => throw new NotImplementedException();
+        public static MockQuantity operator -(MockQuantity value) => throw new NotImplementedException();
+        public static MockQuantity AdditiveIdentity => throw new NotImplementedException();
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
     }
 }

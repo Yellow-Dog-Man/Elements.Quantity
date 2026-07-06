@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Velocity : IQuantity<Velocity>
+    public readonly struct Velocity : IQuantity<Velocity>,
+        IDivisionOperators<Velocity, Ratio, Velocity>,
+        IMultiplyOperators<Velocity, Time, Distance>,
+        IDivisionOperators<Velocity, Time, Acceleration>
     {
         #region ESSENTIALS
 
@@ -48,7 +52,7 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Common, UnitGroup.Metric },
             new string[] { " m/s", " mps" }, new string[] { " meters per second", " meter per second" });
 
-        public static readonly Unit<Velocity> KilometersPerHour = new Unit<Velocity>(1/3.6,
+        public static readonly Unit<Velocity> KilometersPerHour = new Unit<Velocity>(1 / 3.6,
             new UnitGroup[] { UnitGroup.Common, UnitGroup.Metric },
             new string[] { " km/h", " kmh" }, new string[] { " kilometers per hour", " kilometer per hour" });
 
@@ -70,28 +74,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Velocity New(double baseVal) { return new Velocity(baseVal); }
+        public static Velocity Create(double baseVal) => new(baseVal);
 
-        public Velocity Add(Velocity q) { return new Velocity(BaseValue + q.BaseValue); }
-        public Velocity Subtract(Velocity q) { return new Velocity(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Velocity Multiply(Velocity a, Ratio r) => r * a;
 
-        public Velocity Multiply(double n) { return new Velocity(BaseValue * n); }
-        public Velocity Multiply(Velocity a, Ratio r) { return a * r.BaseValue; }
-        public Velocity Multiply(Ratio r, Velocity a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Velocity Multiply(Ratio r, Velocity a) => r * a;
 
-        public Velocity Divide(double n) { return new Velocity(BaseValue / n); }
-        public Ratio Divide(Velocity q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Velocity Parse(string str, Unit<Velocity>? defaultUnit = null) => Unit<Velocity>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Velocity q, Unit<Velocity>? defaultUnit = null) => Unit<Velocity>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Velocity Parse(string str, Unit<Velocity>? defaultUnit = null) { return Unit<Velocity>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Velocity q, Unit<Velocity>? defaultUnit = null) { return Unit<Velocity>.TryParse(str, out q, defaultUnit); }
-
-        public static Velocity operator +(Velocity a, Velocity b) { return a.Add(b); }
-        public static Velocity operator -(Velocity a, Velocity b) { return a.Subtract(b); }
-        public static Velocity operator *(Velocity a, double n) { return a.Multiply(n); }
-        public static Velocity operator /(Velocity a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Velocity a, Velocity b) { return a.Divide(b); }
-        public static Velocity operator -(Velocity a) { return a.Multiply(-1); }
+        public static Velocity operator +(Velocity a, Velocity b) => new(a.BaseValue + b.BaseValue);
+        public static Velocity operator -(Velocity a, Velocity b) => new(a.BaseValue - b.BaseValue);
+        public static Velocity operator *(Velocity a, double n) => new(a.BaseValue * n);
+        public static Velocity operator *(Velocity a, Ratio r) => r * a;
+        public static Velocity operator /(Velocity a, double n) => new(a.BaseValue / n);
+        public static Velocity operator /(Velocity a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Velocity a, Velocity b) => new(a.BaseValue / b.BaseValue);
+        public static Velocity operator -(Velocity a) => a * -1;
+        public static Velocity AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
@@ -100,6 +103,9 @@ namespace Elements.Quantity
         #region CONVERSIONS
 
         // provide various operators to convert between quantities or adjust the quantity
+
+        public static Distance operator *(Velocity v, Time t) => Distance.Meter * (v.BaseValue /* m/s */ * t.BaseValue /* s */);
+        public static Acceleration operator /(Velocity v, Time t) => Acceleration.MetersPerSecondPerSecond * (v.BaseValue /* m/s */ / t.BaseValue /* s */);
 
         #endregion
 

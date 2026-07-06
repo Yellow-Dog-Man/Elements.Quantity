@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Mass : IQuantitySI<Mass>
+    public readonly struct Mass : IQuantitySI<Mass>,
+        IDivisionOperators<Mass, Ratio, Mass>
     {
         #region ESSENTIALS
 
@@ -133,28 +135,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Mass New(double baseVal) { return new Mass(baseVal); }
+        public static Mass Create(double baseVal) => new(baseVal);
 
-        public Mass Add(Mass q) { return new Mass(BaseValue + q.BaseValue); }
-        public Mass Subtract(Mass q) { return new Mass(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Mass Multiply(Mass a, Ratio r) => r * a;
 
-        public Mass Multiply(double n) { return new Mass(BaseValue * n); }
-        public Mass Multiply(Mass a, Ratio r) { return a * r.BaseValue; }
-        public Mass Multiply(Ratio r, Mass a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Mass Multiply(Ratio r, Mass a) => r * a;
 
-        public Mass Divide(double n) { return new Mass(BaseValue / n); }
-        public Ratio Divide(Mass q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Mass Parse(string str, Unit<Mass>? defaultUnit = null) => Unit<Mass>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Mass q, Unit<Mass>? defaultUnit = null) => Unit<Mass>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Mass Parse(string str, Unit<Mass>? defaultUnit = null) { return Unit<Mass>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Mass q, Unit<Mass>? defaultUnit = null) { return Unit<Mass>.TryParse(str, out q, defaultUnit); }
-
-        public static Mass operator +(Mass a, Mass b) { return a.Add(b); }
-        public static Mass operator -(Mass a, Mass b) { return a.Subtract(b); }
-        public static Mass operator *(Mass a, double n) { return a.Multiply(n); }
-        public static Mass operator /(Mass a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Mass a, Mass b) { return a.Divide(b); }
-        public static Mass operator -(Mass a) { return a.Multiply(-1); }
+        public static Mass operator +(Mass a, Mass b) => new(a.BaseValue + b.BaseValue);
+        public static Mass operator -(Mass a, Mass b) => new(a.BaseValue - b.BaseValue);
+        public static Mass operator *(Mass a, double n) => new(a.BaseValue * n);
+        public static Mass operator *(Mass a, Ratio r) => r * a;
+        public static Mass operator /(Mass a, double n) => new(a.BaseValue / n);
+        public static Mass operator /(Mass a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Mass a, Mass b) => new(a.BaseValue / b.BaseValue);
+        public static Mass operator -(Mass a) => a * -1;
+        public static Mass AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
