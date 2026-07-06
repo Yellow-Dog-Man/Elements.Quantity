@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Current : IQuantitySI<Current>
+    public readonly struct Current : IQuantitySI<Current>,
+        IDivisionOperators<Current, Ratio, Current>,
+        IMultiplyOperators<Current, Resistance, Voltage>
     {
         #region ESSENTIALS
 
@@ -100,28 +103,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Current New(double baseVal) { return new Current(baseVal); }
+        public static Current Create(double baseVal) => new(baseVal);
 
-        public Current Add(Current q) { return new Current(BaseValue + q.BaseValue); }
-        public Current Subtract(Current q) { return new Current(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Current Multiply(Current a, Ratio r) => r * a;
 
-        public Current Multiply(double n) { return new Current(BaseValue * n); }
-        public Current Multiply(Current a, Ratio r) { return a * r.BaseValue; }
-        public Current Multiply(Ratio r, Current a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Current Multiply(Ratio r, Current a) => r * a;
 
-        public Current Divide(double n) { return new Current(BaseValue / n); }
-        public Ratio Divide(Current q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Current Parse(string str, Unit<Current>? defaultUnit = null) => Unit<Current>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Current q, Unit<Current>? defaultUnit = null) => Unit<Current>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Current Parse(string str, Unit<Current>? defaultUnit = null) { return Unit<Current>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Current q, Unit<Current>? defaultUnit = null) { return Unit<Current>.TryParse(str, out q, defaultUnit); }
-
-        public static Current operator +(Current a, Current b) { return a.Add(b); }
-        public static Current operator -(Current a, Current b) { return a.Subtract(b); }
-        public static Current operator *(Current a, double n) { return a.Multiply(n); }
-        public static Current operator /(Current a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Current a, Current b) { return a.Divide(b); }
-        public static Current operator -(Current a) { return a.Multiply(-1); }
+        public static Current operator +(Current a, Current b) => new(a.BaseValue + b.BaseValue);
+        public static Current operator -(Current a, Current b) => new(a.BaseValue - b.BaseValue);
+        public static Current operator *(Current a, double n) => new(a.BaseValue * n);
+        public static Current operator *(Current a, Ratio r) => r * a;
+        public static Current operator /(Current a, double n) => new(a.BaseValue / n);
+        public static Current operator /(Current a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Current a, Current b) => new(a.BaseValue / b.BaseValue);
+        public static Current operator -(Current a) => a * -1;
+        public static Current AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
@@ -130,6 +132,8 @@ namespace Elements.Quantity
         #region CONVERSIONS
 
         // provide various operators to convert between quantities or adjust the quantity
+
+        public static Voltage operator *(Current i, Resistance r) => new(r.BaseValue * i.BaseValue);
 
         #endregion
 

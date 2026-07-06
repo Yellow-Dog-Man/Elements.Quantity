@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Luminance : IQuantity<Luminance>
+    public readonly struct Luminance : IQuantity<Luminance>,
+        IDivisionOperators<Luminance, Ratio, Luminance>
     {
         #region ESSENTIALS
 
@@ -17,12 +19,16 @@ namespace Elements.Quantity
 
         #endregion
 
+        /* *********************************************** */
+
         #region QUANTITY NAME DEFINITIONS
 
         public string[] GetShortBaseNames() { return new string[] { "" }; }
         public string[] GetLongBaseNames() { return new string[] { "" }; }
 
         #endregion
+
+        /* *********************************************** */
 
         #region UNITS
 
@@ -41,30 +47,44 @@ namespace Elements.Quantity
 
         #endregion
 
+        /* *********************************************** */
+
         #region OPERATORS
 
-        public Luminance New(double baseVal) { return new Luminance(baseVal); }
+        public static Luminance Create(double baseVal) => new(baseVal);
 
-        public Luminance Add(Luminance q) { return new Luminance(BaseValue + q.BaseValue); }
-        public Luminance Subtract(Luminance q) { return new Luminance(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Luminance Multiply(Luminance a, Ratio r) => r * a;
 
-        public Luminance Multiply(double n) { return new Luminance(BaseValue * n); }
-        public Luminance Multiply(Luminance a, Ratio r) { return a * r.BaseValue; }
-        public Luminance Multiply(Ratio r, Luminance a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Luminance Multiply(Ratio r, Luminance a) => r * a;
 
-        public Luminance Divide(double n) { return new Luminance(BaseValue / n); }
-        public Ratio Divide(Luminance q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Luminance Parse(string str, Unit<Luminance>? defaultUnit = null) => Unit<Luminance>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Luminance q, Unit<Luminance>? defaultUnit = null) => Unit<Luminance>.TryParse(str, out q, defaultUnit);
 
-        public static Luminance Parse(string str) { return Unit<Luminance>.Parse(str); }
-        public static bool TryParse(string str, out Luminance q) { return Unit<Luminance>.TryParse(str, out q); }
-
-        public static Luminance operator +(Luminance a, Luminance b) { return a.Add(b); }
-        public static Luminance operator -(Luminance a, Luminance b) { return a.Subtract(b); }
-        public static Luminance operator *(Luminance a, double n) { return a.Multiply(n); }
-        public static Luminance operator /(Luminance a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Luminance a, Luminance b) { return a.Divide(b); }
-        public static Luminance operator -(Luminance a) { return a.Multiply(-1); }
+        public static Luminance operator +(Luminance a, Luminance b) => new(a.BaseValue + b.BaseValue);
+        public static Luminance operator -(Luminance a, Luminance b) => new(a.BaseValue - b.BaseValue);
+        public static Luminance operator *(Luminance a, double n) => new(a.BaseValue * n);
+        public static Luminance operator *(Luminance a, Ratio r) => r * a;
+        public static Luminance operator /(Luminance a, double n) => new(a.BaseValue / n);
+        public static Luminance operator /(Luminance a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Luminance a, Luminance b) => new(a.BaseValue / b.BaseValue);
+        public static Luminance operator -(Luminance a) => a * -1;
+        public static Luminance AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
+
+        /* *********************************************** */
+
+        #region CONVERSIONS
+
+        // provide various operators to convert between quantities or adjust the quantity
+
+        #endregion
+
+        /* *********************************************** */
+
+        public override string ToString() => this.FormatAuto();
     }
 }

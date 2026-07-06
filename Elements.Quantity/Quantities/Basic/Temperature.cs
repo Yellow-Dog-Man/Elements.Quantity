@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Temperature : IQuantity<Temperature>
+    public readonly struct Temperature : IQuantity<Temperature>,
+        IDivisionOperators<Temperature, Ratio, Temperature>
     {
         #region ESSENTIALS
 
@@ -85,28 +87,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Temperature New(double baseVal) { return new Temperature(baseVal); }
+        public static Temperature Create(double baseVal) => new(baseVal);
 
-        public Temperature Add(Temperature q) { return new Temperature(BaseValue + q.BaseValue); }
-        public Temperature Subtract(Temperature q) { return new Temperature(BaseValue - q.BaseValue); }
-
-        public Temperature Multiply(double n) { return new Temperature(BaseValue * n); }
+        [Obsolete("Use System.Numerics interfaces")]
         public Temperature Multiply(Temperature a, Ratio r) { return a * r.BaseValue; }
+        
+        [Obsolete("Use System.Numerics interfaces")]
         public Temperature Multiply(Ratio r, Temperature a) { return a * r.BaseValue; }
 
-        public Temperature Divide(double n) { return new Temperature(BaseValue / n); }
-        public Ratio Divide(Temperature q) { return new Ratio(BaseValue / q.BaseValue); }
-
-        // these should be defined as convenience, but cannot be forced by interface
         public static Temperature Parse(string str, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.Parse(str, defaultUnit); }
         public static bool TryParse(string str, out Temperature q, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.TryParse(str, out q, defaultUnit); }
 
-        public static Temperature operator +(Temperature a, Temperature b) { return a.Add(b); }
-        public static Temperature operator -(Temperature a, Temperature b) { return a.Subtract(b); }
-        public static Temperature operator *(Temperature a, double n) { return a.Multiply(n); }
-        public static Temperature operator /(Temperature a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Temperature a, Temperature b) { return a.Divide(b); }
-        public static Temperature operator -(Temperature a) { return a.Multiply(-1); }
+        public static Temperature operator +(Temperature a, Temperature b) => new(a.BaseValue + b.BaseValue);
+        public static Temperature operator -(Temperature a, Temperature b) => new(a.BaseValue - b.BaseValue);
+        public static Temperature operator *(Temperature a, double n) => new(a.BaseValue * n);
+        public static Temperature operator *(Temperature a, Ratio r) => r * a;
+        public static Temperature operator /(Temperature a, double n) => new(a.BaseValue / n);
+        public static Temperature operator /(Temperature a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Temperature a, Temperature b) => new(a.BaseValue / b.BaseValue);
+        public static Temperature operator -(Temperature a) => a * -1;
+        public static Temperature AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 

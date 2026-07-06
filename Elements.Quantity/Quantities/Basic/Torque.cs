@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Torque : IQuantity<Torque>
+    public readonly struct Torque : IQuantity<Torque>,
+        IDivisionOperators<Torque, Ratio, Torque>
     {
         #region ESSENTIALS
 
@@ -43,28 +45,40 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Torque New(double baseVal) { return new Torque(baseVal); }
+        public static Torque Create(double baseVal) => new(baseVal);
 
-        public Torque Add(Torque q) { return new Torque(BaseValue + q.BaseValue); }
-        public Torque Subtract(Torque q) { return new Torque(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Torque Multiply(Torque a, Ratio r) => r * a;
 
-        public Torque Multiply(double n) { return new Torque(BaseValue * n); }
-        public Torque Multiply(Torque a, Ratio r) { return a * r.BaseValue; }
-        public Torque Multiply(Ratio r, Torque a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Torque Multiply(Ratio r, Torque a) => r * a;
 
-        public Torque Divide(double n) { return new Torque(BaseValue / n); }
-        public Ratio Divide(Torque q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Torque Parse(string str, Unit<Torque>? defaultUnit = null) { return Unit<Torque>.Parse(str, defaultUnit); }
+        public static bool TryParse(string str, out Torque q, Unit<Torque>? defaultUnit = null) { return Unit<Torque>.TryParse(str, out q, defaultUnit); }
 
-        public static Torque Parse(string str) { return Unit<Torque>.Parse(str); }
-        public static bool TryParse(string str, out Torque q) { return Unit<Torque>.TryParse(str, out q); }
-
-        public static Torque operator +(Torque a, Torque b) { return a.Add(b); }
-        public static Torque operator -(Torque a, Torque b) { return a.Subtract(b); }
-        public static Torque operator *(Torque a, double n) { return a.Multiply(n); }
-        public static Torque operator /(Torque a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Torque a, Torque b) { return a.Divide(b); }
-        public static Torque operator -(Torque a) { return a.Multiply(-1); }
+        public static Torque operator +(Torque a, Torque b) => new(a.BaseValue + b.BaseValue);
+        public static Torque operator -(Torque a, Torque b) => new(a.BaseValue - b.BaseValue);
+        public static Torque operator *(Torque a, double n) => new(a.BaseValue * n);
+        public static Torque operator *(Torque a, Ratio r) => r * a;
+        public static Torque operator /(Torque a, double n) => new(a.BaseValue / n);
+        public static Torque operator /(Torque a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Torque a, Torque b) => new(a.BaseValue / b.BaseValue);
+        public static Torque operator -(Torque a) => a * -1;
+        public static Torque AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
+
+        /* *********************************************** */
+
+        #region CONVERSIONS
+
+        // provide various operators to convert between quantities or adjust the quantity
+
+        #endregion
+
+        /* *********************************************** */
+
+        public override string ToString() => this.FormatAuto();
     }
 }

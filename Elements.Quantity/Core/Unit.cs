@@ -157,8 +157,8 @@ namespace Elements.Quantity
             // separate unit and number
             int splitIndex = IndexOfNumberEnd(str);
 
-            var valstr = str.Substring(0, splitIndex);
-            var unitstr = str.Substring(splitIndex);
+            var valstr = str[..splitIndex];
+            var unitstr = str[splitIndex..];
 
             bool noUnit = string.IsNullOrWhiteSpace(unitstr);
 
@@ -179,14 +179,12 @@ namespace Elements.Quantity
             }
             else
             {
-                unitstr.Trim();
+                unitstr = unitstr.Trim();
 
                 // find the right unit in the dictionary
-                Unit<T>? unit = GetUnitFromSubstring(unitstr, out int unitEndIndex) as Unit<T>;
-
-                if (unit == null)
+                if (GetUnitFromSubstring(unitstr, out int unitEndIndex) is not Unit<T> unit)
                 {
-                    if(throwOnFail)
+                    if (throwOnFail)
                         throw new UnitNameNotFoundException(unitstr);
 
                     quantity = default;
@@ -199,8 +197,8 @@ namespace Elements.Quantity
                 {
                     // parse the remainder recursively
 
-                    if (ParseIntern(unitstr.Substring(unitEndIndex), numberStyles, formatProvider, out T subQuantity, defaultUnit, throwOnFail))
-                        quantity = quantity.Add(subQuantity);
+                    if (ParseIntern(unitstr[unitEndIndex..], numberStyles, formatProvider, out T subQuantity, defaultUnit, throwOnFail))
+                        quantity += subQuantity;
                     else
                         return false;
                 }
@@ -215,7 +213,7 @@ namespace Elements.Quantity
 
             while(length > 0)
             {
-                var substr = str.Substring(0, length).Trim();
+                var substr = str[..length].Trim();
                 var unit = QuantityHelper.GetUnitByName<T>(substr);
 
                 if(unit != null)
