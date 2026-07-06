@@ -1,21 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using System.Text;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct QVector3<T> where T : unmanaged, IQuantity<T>
+    public readonly struct QVector3<T> :
+        IAdditionOperators<QVector3<T>, QVector3<T>, QVector3<T>>,
+        IAdditiveIdentity<QVector3<T>, QVector3<T>>,
+        ISubtractionOperators<QVector3<T>, QVector3<T>, QVector3<T>>,
+        IMultiplyOperators<QVector3<T>, double, QVector3<T>>,
+        IMultiplyOperators<QVector3<T>, Ratio, QVector3<T>>,
+        IMultiplyOperators<QVector3<T>, QVector3<Ratio>, QVector3<T>>,
+        IDivisionOperators<QVector3<T>, double, QVector3<T>>,
+        IDivisionOperators<QVector3<T>, Ratio, QVector3<T>>,
+        IDivisionOperators<QVector3<T>, QVector3<T>, QVector3<Ratio>>,
+        IMultiplicativeIdentity<QVector3<T>, QVector3<Ratio>>,
+        IMultiplicativeIdentity<QVector3<T>, Ratio>
+    where T : unmanaged, IQuantity<T>
     {
         public readonly T x, y, z;
 
         public QVector3(double x, double y, double z)
         {
-            var t = default(T);
-
-            this.x = t.New(x);
-            this.y = t.New(y);
-            this.z = t.New(z);
+            this.x = T.Create(x);
+            this.y = T.Create(y);
+            this.z = T.Create(z);
         }
 
         public QVector3(T x, T y, T z)
@@ -25,38 +34,21 @@ namespace Elements.Quantity
             this.z = z;
         }
 
-        public T SqrMagnitude
-        {
-            get
-            {
-                return default(T).New(x.BaseValue * x.BaseValue +
-                    y.BaseValue * y.BaseValue +
-                    z.BaseValue * z.BaseValue);
-            }
-        }
+        public T SqrMagnitude => T.Create(
+            x.BaseValue * x.BaseValue +
+            y.BaseValue * y.BaseValue +
+            z.BaseValue * z.BaseValue);
 
-        public T Magnitude
-        {
-            get
-            {
-                return default(T).New(Math.Sqrt(SqrMagnitude.BaseValue));
-            }
-        }
+        public T Magnitude => T.Create(Math.Sqrt(SqrMagnitude.BaseValue));
 
-        public QVector3<T> Normalized
-        {
-            get
-            {
-                return this / Magnitude.BaseValue;
-            }
-        }
+        public QVector3<T> Normalized => this / Magnitude.BaseValue;
 
         // indexed access - for use in loops and such
         public T this[int axis]
         {
             get
             {
-                switch(axis)
+                switch (axis)
                 {
                     case 0: return x;
                     case 1: return y;
@@ -84,27 +76,39 @@ namespace Elements.Quantity
                 + z.FormatAuto(formatNum, longName, unitGroups) + "]";
         }
 
-        public static QVector3<T> Zero { get { return new QVector3<T>(0, 0, 0); } }
-        public static QVector3<T> One { get  { return new QVector3<T>(1, 1, 1); } }
+        public static QVector3<T> Zero => new(0, 0, 0);
+        public static QVector3<T> One => new(1, 1, 1);
 
-        public static QVector3<T> operator+(QVector3<T> a, QVector3<T> b)
+        public static QVector3<T> AdditiveIdentity
         {
-            return new QVector3<T>(a.x.Add(b.x), a.y.Add(b.y), a.z.Add(b.z));
+            get
+            {
+                var ident = T.AdditiveIdentity;
+                return new(ident, ident, ident);
+            }
         }
 
-        public static QVector3<T> operator -(QVector3<T> a, QVector3<T> b)
+        static QVector3<Ratio> IMultiplicativeIdentity<QVector3<T>, QVector3<Ratio>>.MultiplicativeIdentity
         {
-            return new QVector3<T>(a.x.Subtract(b.x), a.y.Subtract(b.y), a.z.Subtract(b.z));
+            get
+            {
+                var ident = T.MultiplicativeIdentity;
+                return new(ident, ident, ident);
+            }
         }
 
-        public static QVector3<T> operator*(QVector3<T> v, double n)
-        {
-            return new QVector3<T>(v.x.Multiply(n), v.y.Multiply(n), v.z.Multiply(n));
-        }
+        static Ratio IMultiplicativeIdentity<QVector3<T>, Ratio>.MultiplicativeIdentity => T.MultiplicativeIdentity;
 
-        public static QVector3<T> operator /(QVector3<T> v, double n)
-        {
-            return new QVector3<T>(v.x.Divide(n), v.y.Divide(n), v.z.Divide(n));
-        }
+        // Component-wise operations
+        public static QVector3<T> operator +(QVector3<T> a, QVector3<T> b) => new(a.x + b.x, a.y + b.y, a.z + b.z);
+        public static QVector3<T> operator -(QVector3<T> a, QVector3<T> b) => new(a.x - b.x, a.y - b.y, a.z - b.z);
+        public static QVector3<T> operator *(QVector3<T> a, QVector3<Ratio> b) => new(a.x * b.x, a.y * b.y, a.z * b.z);
+        public static QVector3<Ratio> operator /(QVector3<T> a, QVector3<T> b) => new(a.x / b.x, a.y / b.y, a.z / b.z);
+
+        // Scalar operations
+        public static QVector3<T> operator *(QVector3<T> v, double n) => new(v.x * n, v.y * n, v.z * n);
+        public static QVector3<T> operator /(QVector3<T> v, double n) => new(v.x / n, v.y / n, v.z / n);
+        public static QVector3<T> operator *(QVector3<T> v, Ratio r) => v * r.BaseValue;
+        public static QVector3<T> operator /(QVector3<T> v, Ratio r) => v / r.BaseValue;
     }
 }

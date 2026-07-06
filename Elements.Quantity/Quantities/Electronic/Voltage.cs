@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Voltage : IQuantitySI<Voltage>
+    public readonly struct Voltage : IQuantitySI<Voltage>,
+        IDivisionOperators<Voltage, Ratio, Voltage>,
+        IDivisionOperators<Voltage, Resistance, Current>,
+        IDivisionOperators<Voltage, Current, Resistance>
     {
         #region ESSENTIALS
 
@@ -100,28 +104,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Voltage New(double baseVal) { return new Voltage(baseVal); }
+        public static Voltage Create(double baseVal) => new(baseVal);
 
-        public Voltage Add(Voltage q) { return new Voltage(BaseValue + q.BaseValue); }
-        public Voltage Subtract(Voltage q) { return new Voltage(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Voltage Multiply(Voltage a, Ratio r) => r * a;
 
-        public Voltage Multiply(double n) { return new Voltage(BaseValue * n); }
-        public Voltage Multiply(Voltage a, Ratio r) { return a * r.BaseValue; }
-        public Voltage Multiply(Ratio r, Voltage a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Voltage Multiply(Ratio r, Voltage a) => r * a;
 
-        public Voltage Divide(double n) { return new Voltage(BaseValue / n); }
-        public Ratio Divide(Voltage q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Voltage Parse(string str, Unit<Voltage>? defaultUnit = null) => Unit<Voltage>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Voltage q, Unit<Voltage>? defaultUnit = null) => Unit<Voltage>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Voltage Parse(string str, Unit<Voltage>? defaultUnit = null) { return Unit<Voltage>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Voltage q, Unit<Voltage>? defaultUnit = null) { return Unit<Voltage>.TryParse(str, out q, defaultUnit); }
-
-        public static Voltage operator +(Voltage a, Voltage b) { return a.Add(b); }
-        public static Voltage operator -(Voltage a, Voltage b) { return a.Subtract(b); }
-        public static Voltage operator *(Voltage a, double n) { return a.Multiply(n); }
-        public static Voltage operator /(Voltage a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Voltage a, Voltage b) { return a.Divide(b); }
-        public static Voltage operator -(Voltage a) { return a.Multiply(-1); }
+        public static Voltage operator +(Voltage a, Voltage b) => new(a.BaseValue + b.BaseValue);
+        public static Voltage operator -(Voltage a, Voltage b) => new(a.BaseValue - b.BaseValue);
+        public static Voltage operator *(Voltage a, double n) => new(a.BaseValue * n);
+        public static Voltage operator *(Voltage a, Ratio r) => r * a;
+        public static Voltage operator /(Voltage a, double n) => new(a.BaseValue / n);
+        public static Voltage operator /(Voltage a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Voltage a, Voltage b) => new(a.BaseValue / b.BaseValue);
+        public static Voltage operator -(Voltage a) => a * -1;
+        public static Voltage AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
@@ -131,8 +134,8 @@ namespace Elements.Quantity
 
         // provide various operators to convert between quantities or adjust the quantity
 
-        public static Current operator /(Voltage v, Resistance r) { return new Current(v.BaseValue / r.BaseValue); }
-        public static Resistance operator /(Voltage v, Current c) { return new Resistance(v.BaseValue / c.BaseValue); }
+        public static Current operator /(Voltage v, Resistance r) => new(v.BaseValue / r.BaseValue);
+        public static Resistance operator /(Voltage v, Current c) => new(v.BaseValue / c.BaseValue);
 
         #endregion
 

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Pressure : IQuantitySI<Pressure>
+    public readonly struct Pressure : IQuantitySI<Pressure>,
+        IDivisionOperators<Pressure, Ratio, Pressure>
     {
         #region ESSENTIALS
 
@@ -103,25 +104,21 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Pressure New(double baseVal) { return new Pressure(baseVal); }
+        public static Pressure Create(double baseVal) => new(baseVal);
 
-        public Pressure Add(Pressure q) { return new Pressure(BaseValue + q.BaseValue); }
-        public Pressure Subtract(Pressure q) { return new Pressure(BaseValue - q.BaseValue); }
+        public static Pressure Parse(string str, Unit<Pressure>? defaultUnit = null) => Unit<Pressure>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Pressure q, Unit<Pressure>? defaultUnit = null) => Unit<Pressure>.TryParse(str, out q, defaultUnit);
 
-        public Pressure Multiply(double n) { return new Pressure(BaseValue * n); }
-
-        public Pressure Divide(double n) { return new Pressure(BaseValue / n); }
-        public Ratio Divide(Pressure q) { return new Ratio(BaseValue / q.BaseValue); }
-
-        public static Pressure Parse(string str, Unit<Pressure>? defaultUnit = null) { return Unit<Pressure>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Pressure q, Unit<Pressure>? defaultUnit = null) { return Unit<Pressure>.TryParse(str, out q, defaultUnit); }
-
-        public static Pressure operator +(Pressure a, Pressure b) { return a.Add(b); }
-        public static Pressure operator -(Pressure a, Pressure b) { return a.Subtract(b); }
-        public static Pressure operator *(Pressure a, double n) { return a.Multiply(n); }
-        public static Pressure operator /(Pressure a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Pressure a, Pressure b) { return a.Divide(b); }
-        public static Pressure operator -(Pressure a) { return a.Multiply(-1); }
+        public static Pressure operator +(Pressure a, Pressure b) => new(a.BaseValue + b.BaseValue);
+        public static Pressure operator -(Pressure a, Pressure b) => new(a.BaseValue - b.BaseValue);
+        public static Pressure operator *(Pressure a, double n) => new(a.BaseValue * n);
+        public static Pressure operator *(Pressure a, Ratio r) => r * a;
+        public static Pressure operator /(Pressure a, double n) => new(a.BaseValue / n);
+        public static Pressure operator /(Pressure a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Pressure a, Pressure b) => new(a.BaseValue / b.BaseValue);
+        public static Pressure operator -(Pressure a) => a * -1;
+        public static Pressure AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
@@ -129,7 +126,7 @@ namespace Elements.Quantity
 
         #region CONVERSIONS
 
-        // ...any necessary conversions
+        // provide various operators to convert between quantities or adjust the quantity
 
         #endregion
 

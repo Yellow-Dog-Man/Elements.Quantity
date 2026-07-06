@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Resistance : IQuantitySI<Resistance>
+    public readonly struct Resistance : IQuantitySI<Resistance>,
+        IDivisionOperators<Resistance, Ratio, Resistance>,
+        IMultiplyOperators<Resistance, Current, Voltage>
     {
         #region ESSENTIALS
 
@@ -100,28 +103,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Resistance New(double baseVal) { return new Resistance(baseVal); }
+        public static Resistance Create(double baseVal) => new(baseVal);
 
-        public Resistance Add(Resistance q) { return new Resistance(BaseValue + q.BaseValue); }
-        public Resistance Subtract(Resistance q) { return new Resistance(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Resistance Multiply(Resistance a, Ratio r) => r * a;
 
-        public Resistance Multiply(double n) { return new Resistance(BaseValue * n); }
-        public Resistance Multiply(Resistance a, Ratio r) { return a * r.BaseValue; }
-        public Resistance Multiply(Ratio r, Resistance a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Resistance Multiply(Ratio r, Resistance a) => r * a;
 
-        public Resistance Divide(double n) { return new Resistance(BaseValue / n); }
-        public Ratio Divide(Resistance q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Resistance Parse(string str, Unit<Resistance>? defaultUnit = null) => Unit<Resistance>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Resistance q, Unit<Resistance>? defaultUnit = null) => Unit<Resistance>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Resistance Parse(string str, Unit<Resistance>? defaultUnit = null) { return Unit<Resistance>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Resistance q, Unit<Resistance>? defaultUnit = null) { return Unit<Resistance>.TryParse(str, out q, defaultUnit); }
-
-        public static Resistance operator +(Resistance a, Resistance b) { return a.Add(b); }
-        public static Resistance operator -(Resistance a, Resistance b) { return a.Subtract(b); }
-        public static Resistance operator *(Resistance a, double n) { return a.Multiply(n); }
-        public static Resistance operator /(Resistance a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Resistance a, Resistance b) { return a.Divide(b); }
-        public static Resistance operator -(Resistance a) { return a.Multiply(-1); }
+        public static Resistance operator +(Resistance a, Resistance b) => new(a.BaseValue + b.BaseValue);
+        public static Resistance operator -(Resistance a, Resistance b) => new(a.BaseValue - b.BaseValue);
+        public static Resistance operator *(Resistance a, double n) => new(a.BaseValue * n);
+        public static Resistance operator *(Resistance a, Ratio r) => r * a;
+        public static Resistance operator /(Resistance a, double n) => new(a.BaseValue / n);
+        public static Resistance operator /(Resistance a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Resistance a, Resistance b) => new(a.BaseValue / b.BaseValue);
+        public static Resistance operator -(Resistance a) => a * -1;
+        public static Resistance AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
@@ -131,8 +133,7 @@ namespace Elements.Quantity
 
         // provide various operators to convert between quantities or adjust the quantity
 
-        public static Voltage operator *(Resistance r, Current i) { return new Voltage(r.BaseValue * i.BaseValue); }
-        public static Voltage operator *(Current i, Resistance r) { return new Voltage(r.BaseValue * i.BaseValue); }
+        public static Voltage operator *(Resistance r, Current i) => new(r.BaseValue * i.BaseValue);
 
         #endregion
 

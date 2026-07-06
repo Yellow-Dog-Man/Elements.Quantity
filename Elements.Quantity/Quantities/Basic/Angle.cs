@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Angle : IQuantitySI<Angle>
+    public readonly struct Angle : IQuantitySI<Angle>,
+        IDivisionOperators<Angle, Ratio, Angle>
     {
         #region ESSENTIALS
 
@@ -13,7 +15,7 @@ namespace Elements.Quantity
         double IQuantity.BaseValue => BaseValue;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="baseValue">Base value, using <see cref="DefaultUnit"/>'s value as the unit.</param>
         public Angle(double baseValue = 0) : this() { BaseValue = baseValue; }
@@ -78,15 +80,15 @@ namespace Elements.Quantity
 
         public static readonly Unit<Angle> Radian = new UnitSI<Angle>(0, "", "");
 
-        public static readonly Unit<Angle> Degree = new Unit<Angle>(Math.PI/180.0,
+        public static readonly Unit<Angle> Degree = new Unit<Angle>(Math.PI / 180.0,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { "°" }, new string[] { " degrees", " degree", " deg" });
 
-        public static readonly Unit<Angle> ArcMinute = new Unit<Angle>((Math.PI/180.0)/60.0,
+        public static readonly Unit<Angle> ArcMinute = new Unit<Angle>((Math.PI / 180.0) / 60.0,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { "′" }, new string[] { " arcminutes", " arcminute", " arcmin", " amin" });
 
-        public static readonly Unit<Angle> ArcSecond = new Unit<Angle>((Math.PI/180.0)/(60.0*60.0),
+        public static readonly Unit<Angle> ArcSecond = new Unit<Angle>((Math.PI / 180.0) / (60.0 * 60.0),
             new UnitGroup[] { UnitGroup.Common },
             new string[] { "″" }, new string[] { " arcseconds", " arcsecond", " arcsec", " asec" });
 
@@ -111,28 +113,27 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Angle New(double baseVal) { return new Angle(baseVal); }
+        public static Angle Create(double baseValue) => new(baseValue);
 
-        public Angle Add(Angle q) { return new Angle(BaseValue + q.BaseValue); }
-        public Angle Subtract(Angle q) { return new Angle(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Angle Multiply(Angle a, Ratio r) => r * a;
 
-        public Angle Multiply(double n) { return new Angle(BaseValue * n); }
-        public Angle Multiply(Angle a, Ratio r) { return a * r.BaseValue; }
-        public Angle Multiply(Ratio r, Angle a) { return a * r.BaseValue; }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Angle Multiply(Ratio r, Angle a) => r * a;
 
-        public Angle Divide(double n) { return new Angle(BaseValue / n); }
-        public Ratio Divide(Angle q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Angle Parse(string str, Unit<Angle>? defaultUnit = null) => Unit<Angle>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Angle q, Unit<Angle>? defaultUnit = null) => Unit<Angle>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Angle Parse(string str, Unit<Angle>? defaultUnit = null) { return Unit<Angle>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Angle q, Unit<Angle>? defaultUnit = null) { return Unit<Angle>.TryParse(str, out q, defaultUnit); }
-
-        public static Angle operator +(Angle a, Angle b) { return a.Add(b); }
-        public static Angle operator -(Angle a, Angle b) { return a.Subtract(b); }
-        public static Angle operator *(Angle a, double n) { return a.Multiply(n); }
-        public static Angle operator /(Angle a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Angle a, Angle b) { return a.Divide(b); }
-        public static Angle operator -(Angle a) { return a.Multiply(-1); }
+        public static Angle operator +(Angle a, Angle b) => new(a.BaseValue + b.BaseValue);
+        public static Angle operator -(Angle a, Angle b) => new(a.BaseValue - b.BaseValue);
+        public static Angle operator *(Angle a, double n) => new(a.BaseValue * n);
+        public static Angle operator *(Angle a, Ratio r) => r * a;
+        public static Angle operator /(Angle a, double n) => new(a.BaseValue / n);
+        public static Angle operator /(Angle a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Angle a, Angle b) => new(a.BaseValue / b.BaseValue);
+        public static Angle operator -(Angle a) => a * -1;
+        public static Angle AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
