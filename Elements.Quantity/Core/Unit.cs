@@ -7,7 +7,7 @@ using Elements.Quantity.Core.Internal;
 
 namespace Elements.Quantity
 {
-    public interface IUnit : IComparable<IUnit>
+    public interface IUnit : IComparable<IUnit>, IEquatable<IUnit>
     {
         double Ratio { get; }
         Type ValueType { get; }
@@ -21,6 +21,10 @@ namespace Elements.Quantity
         string UnitKey { get; }
 
         ICollection<string> GetUnitNames();
+
+        bool Equals(object? obj);
+
+        int GetHashCode();
     }
 
     public class Unit<T> : IUnit where T : unmanaged, IQuantity<T>
@@ -184,7 +188,7 @@ namespace Elements.Quantity
                 // find the right unit in the dictionary
                 Unit<T>? unit = GetUnitFromSubstring(unitstr, out int unitEndIndex) as Unit<T>;
 
-                if (unit == null)
+                if (unit is null)
                 {
                     if(throwOnFail)
                         throw new UnitNameNotFoundException(unitstr);
@@ -331,18 +335,15 @@ namespace Elements.Quantity
 
         public override string ToString() => UnitKey;
 
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || obj is not Unit<T>)
-            {
-                return false;
-            }
+        public override bool Equals(object? obj) => Equals(obj as Unit<T>);
 
-            var otherUnit = (Unit<T>)obj;
-
-            return otherUnit.UnitKey == UnitKey;
-        }
+        public bool Equals(IUnit? other) => other is not null && other.UnitKey == UnitKey;
 
         public override int GetHashCode() => UnitKey.GetHashCode();
+
+        public static bool operator ==(Unit<T> a, IUnit? b) => a.Equals(b);
+
+        public static bool operator !=(Unit<T> a, IUnit? b) => !a.Equals(b);
+
     }
 }

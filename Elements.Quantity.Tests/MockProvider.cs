@@ -9,6 +9,10 @@ namespace Elements.Quantity.Test;
 
 internal static class MockProvider
 {
+    internal static readonly string[] MockUnitShortNames = [" u"];
+
+    internal static readonly string[] MockUnitLongNames = [" units", " unit"];
+
     internal static readonly Unit<MockQuantity> MockUnit =
-        new (1, null, [" u"], [" units", " unit"]);
+        new (1, null, MockUnitShortNames, MockUnitLongNames);
 }
