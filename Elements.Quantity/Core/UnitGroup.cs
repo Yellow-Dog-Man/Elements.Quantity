@@ -10,13 +10,6 @@ namespace Elements.Quantity
     {
         #region UNIT_GROUPS
 
-        static UnitGroup()
-        {
-            DefaultUnitGroups.Add(Common);
-        }
-
-        public static List<UnitGroup> DefaultUnitGroups = new List<UnitGroup>();
-
         public static readonly UnitGroup Common = new UnitGroup();
         public static readonly UnitGroup Metric = new UnitGroup();
         public static readonly UnitGroup MetricThousands = new UnitGroup();
@@ -32,6 +25,8 @@ namespace Elements.Quantity
 
         public static readonly UnitGroup Imperial = new UnitGroup();
         public static readonly UnitGroup Surveying = new UnitGroup();
+
+        public static readonly List<UnitGroup> DefaultUnitGroups = [Common];
 
         private object _lock = new object();
 
