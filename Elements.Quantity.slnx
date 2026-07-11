@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/.github_workflows/">
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/release.yml" />
+    <File Path=".github/workflows/test.yml" />
+  </Folder>
+  <Project Path="Elements.Quantity.Tests/Elements.Quantity.Tests.csproj" />
+  <Project Path="Elements.Quantity/Elements.Quantity.csproj" />
+</Solution>

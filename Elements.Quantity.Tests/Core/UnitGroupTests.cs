@@ -29,6 +29,16 @@ public class UnitGroupTests
     ];
 
     /// <summary>
+    /// Verifies that the default unit groups are available when being referenced.
+    /// </summary>
+    [TestMethod]
+    public void CheckDefaultUnitGroups_ProvidedCollectionMatches_ReturnsTrue()
+    {
+        var expectedDefaultUnitGroups = new UnitGroup[] { UnitGroup.Common };
+        CollectionAssert.AreEquivalent(expectedDefaultUnitGroups, UnitGroup.DefaultUnitGroups);
+    }
+
+    /// <summary>
     /// Verifies that the mockUnit mockGroup can register units.
     /// </summary>
     [TestMethod]
