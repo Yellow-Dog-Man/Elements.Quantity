@@ -1,115 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Elements.Quantity.Test.Quantities.Basic;
 
-using TemperatureTestData = QuantityTestData<Temperature>;
-using TemperatureUnitKeyTestData = (Unit<Temperature> unit, string unitKey);
-
 [TestClass]
 [ExcludeFromCodeCoverage]
-public class TemperatureTests
+public class TemperatureTests : BaseQuantityTests<TemperatureTests, Temperature>, IQuantityTestData<Temperature>
 {
-    /// <summary>
-    /// An array of test data tuples representing different temperature units and their display formats. Each
-    /// element in the array contains information about a temperature unit, the short name, the singular
-    /// long name, plural long name, and unit key.
-    /// </summary>
-    /// <remarks>
-    /// This property is intended for use in unit tests.
-    /// </remarks>
-    internal static TemperatureTestData[] TemperatureTestDataTuples =>
+    /// <inheritdoc/>
+    public static QuantityTestData<Temperature>[] TestDataTuples =>
     [
         new(Temperature.Kelvin, "{0} K", "1 Kelvin", "{0} Kelvins", "Quantity.Unit.Temperature.Kelvins"),
         new(Temperature.Celsius, "{0} °C", "1 degree Celsius", "{0} degrees Celsius", "Quantity.Unit.Temperature.Celsius"),
         new(Temperature.Fahrenheit, "{0} °F", "1 degree Fahrenheit", "{0} degrees Fahrenheit", "Quantity.Unit.Temperature.Fahrenheit"),
         new(Temperature.Rankine, "{0} °R", "1 degree Rankine", "{0} degrees Rankine", "Quantity.Unit.Temperature.Rankine")
     ];
-
-    internal static IEnumerable<object[]> TemperatureShortNameArgs
-    {
-        get => DataProvider.UnitQuantityShortNameNumberValues.SelectMany(numValue =>
-            TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[]
-            {
-                temperatureUnitArgs.unit, numValue, string.Format(temperatureUnitArgs.shortName, numValue)
-            }).ToArray()
-        );
-    }
-
-    internal static IEnumerable<object[]> TemperatureLongNameSingularFormArgs
-    {
-        get => TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[]
-        {
-            temperatureUnitArgs.unit, temperatureUnitArgs.longNameSingle
-        });
-    }
-
-    internal static IEnumerable<object[]> TemperatureLongNamePluralFormArgs
-    {
-        get => DataProvider.UnitQuantityPluralNumberValues.SelectMany(numValue =>
-            TemperatureTestDataTuples.Select(temperatureUnitArgs => new object[]
-            {
-                temperatureUnitArgs.unit, numValue, string.Format(temperatureUnitArgs.longNamePlural, numValue)
-            }).ToArray()
-        );
-    }
-
-    /// <summary>
-    /// A collection of test arguments for verifying the unit keys for temperature units.
-    /// </summary>
-    /// <remarks>
-    /// This property is intended for use in unit tests.
-    /// </remarks>
-    internal static IEnumerable<TemperatureUnitKeyTestData> TemperatureUnitKeyArgs =>
-        TemperatureTestDataTuples.Select(unitArgs => new TemperatureUnitKeyTestData(unitArgs.unit, unitArgs.unitKey));
-
-    [TestMethod]
-    [DynamicData(nameof(TemperatureShortNameArgs))]
-    public void TemperatureUnit_QuantityProvidedFormatAsShortName_FormatsWithDefaultShortName(
-        Unit<Temperature> temperatureUnit, double temperatureValue, string expectedStr)
-    {
-        var temperature = temperatureUnit.ConvertFrom(temperatureValue);
-        var resultStr = temperature.FormatAs(temperatureUnit, formatNum: "0.#");
-
-        Assert.AreEqual(expectedStr, resultStr);
-    }
-
-    [TestMethod]
-    [DynamicData(nameof(TemperatureLongNameSingularFormArgs))]
-    public void TemperatureUnit_QuantitySingleValueFormatAsLongName_FormatsWithDefaultLongNameSingularForm(
-        Unit<Temperature> temperatureUnit, string expectedStr)
-    {
-        var temperature = temperatureUnit.ConvertFrom(1);
-        var resultStr = temperature.FormatAs(temperatureUnit, longName: true, formatNum: "0.#");
-
-        Assert.AreEqual(expectedStr, resultStr);
-    }
-
-    [TestMethod]
-    [DynamicData(nameof(TemperatureLongNamePluralFormArgs))]
-    public void TemperatureUnit_QuantityPluralValueFormatAsLongName_FormatsWithDefaultLongNamePluralForm(
-        Unit<Temperature> temperatureUnit, double temperatureValue, string expectedStr)
-    {
-        var temperature = temperatureUnit.ConvertFrom(temperatureValue);
-        var resultStr = temperature.FormatAs(temperatureUnit, longName: true, formatNum: "0.#");
-
-        Assert.AreEqual(expectedStr, resultStr);
-    }
-
-    /// <summary>
-    /// Verifies that getting a unit key from an Temperature unit will return the expected unit key.
-    /// </summary>
-    /// <param name="temperatureUnit">The temperature unit to use when getting the unit key.</param>
-    /// <param name="expectedUnitKey">The expected unit key that this unit should return.</param>
-    [TestMethod]
-    [DynamicData(nameof(TemperatureUnitKeyArgs))]
-    public void GetTemperatureUnitKey_ValidUnit_ReturnsUnitKey(Unit<Temperature> temperatureUnit,
-        string expectedUnitKey)
-    {
-        Assert.AreEqual(expectedUnitKey, temperatureUnit.UnitKey);
-    }
 
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]
