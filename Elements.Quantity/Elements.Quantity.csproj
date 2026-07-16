@@ -13,6 +13,7 @@
     <RepositoryUrl>https://github.com/Yellow-Dog-Man/Elements.Quantity</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://yellowdogman.com/</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>quantities units conversion</PackageTags>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
   </PropertyGroup>
@@ -20,5 +21,6 @@
     <Content Include="Quantities\QuantitySITemplate.txt" Pack="false" CopyToOutput="false" />
     <Content Include="Quantities\QuantityTemplate.txt" Pack="false" CopyToOutput="false" />
     <None Include="Images\icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
