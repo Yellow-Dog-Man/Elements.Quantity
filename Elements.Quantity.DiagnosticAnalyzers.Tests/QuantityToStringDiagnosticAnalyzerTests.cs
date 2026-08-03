@@ -1,10 +1,9 @@
-﻿using Elements.Quantity.DiagnosticAnalyzers;
-using Microsoft.CodeAnalysis.CSharp.Testing;
+﻿using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace Elements.Quantity.Tests.DiagnosticAnalyzers;
+namespace Elements.Quantity.DiagnosticAnalyzers.Tests;
 
 [TestClass]
 public sealed class QuantityToStringDiagnosticAnalyzerTests
