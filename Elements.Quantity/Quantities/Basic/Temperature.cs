@@ -37,7 +37,10 @@ namespace Elements.Quantity
         #region UNITS
 
         // provide a default unit for the quantity - used when no explicit unit specified
-        public Unit<Temperature> DefaultUnit { get { return Kelvin; } }
+        [Obsolete("Use 'Unit<Temperature>.DefaultUnitDefinition' instead.")]
+        public Unit<Temperature> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Temperature> DefaultUnitDefinition => Kelvin;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

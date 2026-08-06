@@ -62,4 +62,7 @@ public class DistanceTests : BaseQuantityCompoundFormattedTests<DistanceTests, D
         new(Distance.FeetInches, .3048d, "1'"),
         new(Distance.FeetInches, .3302d, "1'1\""),
     ];
+
+    /// <inheritdoc/>
+    public sealed override Unit<Distance> ExpectedDefaultUnit => Distance.Meter;
 }

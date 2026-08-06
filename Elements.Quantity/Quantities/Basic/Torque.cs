@@ -26,7 +26,10 @@ namespace Elements.Quantity
 
         #region UNITS
 
-        public Unit<Torque> DefaultUnit { get { return NewtonMeter; } }
+        [Obsolete("Use 'Unit<Torque>.DefaultUnitDefinition' instead.")]
+        public Unit<Torque> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Torque> DefaultUnitDefinition => NewtonMeter;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

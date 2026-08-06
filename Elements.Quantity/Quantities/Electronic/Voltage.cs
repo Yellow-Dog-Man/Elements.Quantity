@@ -84,7 +84,10 @@ namespace Elements.Quantity
         #region UNITS
 
         // provide a default unit for the quantity - used when no explicit unit specified
-        public Unit<Voltage> DefaultUnit { get { return Volt; } }
+        [Obsolete("Use 'Unit<Voltage>.DefaultUnitDefinition' instead.")]
+        public Unit<Voltage> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Voltage> DefaultUnitDefinition => Volt;
 
         /// <inheritdoc/>
         public string QuantityFamily => "Electronic";

@@ -50,4 +50,7 @@ public class MassTests : BaseQuantityTests<MassTests, Mass>, IQuantityTestData<M
         new(SI<Mass>.Ronna, "{0} Rg", "1 ronnagram", "{0} ronnagrams", "Quantity.Unit.Mass.Ronnagrams"),
         new(SI<Mass>.Quetta, "{0} Qg", "1 quettagram", "{0} quettagrams", "Quantity.Unit.Mass.Quettagrams")
     ];
+
+    /// <inheritdoc/>
+    public sealed override Unit<Mass> ExpectedDefaultUnit => SI<Mass>.Kilo;
 }

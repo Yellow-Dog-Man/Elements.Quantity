@@ -58,6 +58,9 @@ public sealed class AngleTests : BaseQuantityCompoundFormattedTests<AngleTests, 
         new(Angle.DegreeMinSec, Math.PI/180d + Math.PI/10800d + Math.PI/648000d, "1°1′1″"),
     ];
 
+    /// <inheritdoc/>
+    public sealed override Unit<Angle> ExpectedDefaultUnit => Angle.Radian;
+
     [DataRow(Math.PI / 2, 90d)]
     [DataRow(Math.PI / 4, 45d)]
     [DataRow(Math.PI, 180d)]

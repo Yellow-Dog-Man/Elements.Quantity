@@ -12,4 +12,7 @@ public sealed class AccelerationTests : BaseQuantityTests<AccelerationTests, Acc
     [
         new(Acceleration.MetersPerSecondPerSecond, "{0} m/s^2", "1 meter per second squared", "{0} meters per second squared", "Quantity.Unit.Acceleration.MetersPerSecondSquared")
     ];
+
+    /// <inheritdoc/>
+    public sealed override Unit<Acceleration> ExpectedDefaultUnit => Acceleration.MetersPerSecondPerSecond;
 }

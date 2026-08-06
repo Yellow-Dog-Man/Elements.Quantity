@@ -17,4 +17,7 @@ public class VelocityTests : BaseQuantityTests<VelocityTests, Velocity>, IQuanti
         new(Velocity.FeetPerSecond, "{0} ft/s", "1 foot per second", "{0} feet per second", "Quantity.Unit.Velocity.FeetPerSecond"),
         new(Velocity.Knots, "{0} kn", "1 knot", "{0} knots", "Quantity.Unit.Velocity.Knots")
     ];
+
+    /// <inheritdoc/>
+    public sealed override Unit<Velocity> ExpectedDefaultUnit => Velocity.MetersPerSecond;
 }

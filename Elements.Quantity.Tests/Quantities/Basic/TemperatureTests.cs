@@ -16,6 +16,9 @@ public class TemperatureTests : BaseQuantityTests<TemperatureTests, Temperature>
         new(Temperature.Rankine, "{0} °R", "1 degree Rankine", "{0} degrees Rankine", "Quantity.Unit.Temperature.Rankine")
     ];
 
+    /// <inheritdoc/>
+    public sealed override Unit<Temperature> ExpectedDefaultUnit => Temperature.Kelvin;
+
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]
     [DataRow(373.1, 100)]//Boiling point of water

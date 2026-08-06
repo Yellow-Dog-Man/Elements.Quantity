@@ -37,7 +37,10 @@ namespace Elements.Quantity
         #region UNITS
 
         // provide a default unit for the quantity - used when no explicit unit specified
-        public Unit<Time> DefaultUnit { get { return Second; } }
+        [Obsolete("Use 'Unit<Time>.DefaultUnitDefinition' instead.")]
+        public Unit<Time> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Time> DefaultUnitDefinition => Second;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

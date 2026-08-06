@@ -26,7 +26,10 @@ namespace Elements.Quantity
 
         #region UNITS
 
-        public Unit<Density> DefaultUnit { get { return KilogramPerCubicMeter; } }
+        [Obsolete("Use 'Unit<Density>.DefaultUnitDefinition' instead.")]
+        public Unit<Density> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Density> DefaultUnitDefinition => KilogramPerCubicMeter;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

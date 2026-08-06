@@ -75,7 +75,10 @@ namespace Elements.Quantity
 
         #region UNITS
 
-        public Unit<Pressure> DefaultUnit { get { return Pascal; } }
+        [Obsolete("Use 'Unit<Pressure>.DefaultUnitDefinition' instead.")]
+        public Unit<Pressure> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Pressure> DefaultUnitDefinition => Pascal;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

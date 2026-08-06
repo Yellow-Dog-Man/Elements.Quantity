@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -13,6 +13,11 @@ where TData : IQuantityTestData<TQuantity>
 where TQuantity : unmanaged, IQuantity<TQuantity>
 {
     private static QuantityTestData<TQuantity>[] TestDataTuples => TData.TestDataTuples;
+
+    /// <summary>
+    /// The expected default unit for the given quantity type.
+    /// </summary>
+    public abstract Unit<TQuantity> ExpectedDefaultUnit { get; }
 
     /// <summary>
     /// A collection of test data containing the <typeparamref name="TQuantity"/> unit, the numeric value, and the expected
@@ -70,8 +75,8 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
         TestDataTuples.Select(unitArgs => (unitArgs.unit, unitArgs.unitKey));
 
     /// <summary>
-    /// Verifies that formatting a <typeparamref name="TQuantity"/> quantity using the specified unit and the default short name produces the
-    /// expected string representation.
+    /// Verifies that formatting a <typeparamref name="TQuantity"/> quantity using the specified unit and the default short
+    /// name produces the expected string representation.
     /// </summary>
     /// <remarks>
     /// This test ensures that the FormatAs method correctly applies the unit's default short name
@@ -121,8 +126,8 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
     /// the expected plural long name string for plural values.
     /// </summary>
     /// <remarks>
-    /// This test ensures that the FormatAs method correctly applies the plural form of the
-    /// unit's long name when formatting <typeparamref name="TQuantity"/> values.
+    /// This test ensures that the FormatAs method correctly applies the plural form of the unit's long name
+    /// when formatting <typeparamref name="TQuantity"/> values.
     /// </remarks>
     /// <param name="unit">The quantity unit to use when formatting the value.</param>
     /// <param name="value">The numeric value to be formatted.</param>
@@ -136,6 +141,59 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
         var resultStr = quantity.FormatAs(unit, longName: true, formatNum: "0.#");
 
         Assert.AreEqual(expectedStr, resultStr);
+    }
+
+    /// <summary>
+    /// Verifies that auto formatting a <typeparamref name="TQuantity"/> whose base value is zero returns the
+    /// expected string representation.
+    /// </summary>
+    /// <remarks>
+    /// This test ensures that the default unit's short name and long name are correctly used when formatting a
+    /// <typeparamref name="TQuantity"/> with a base value of zero.
+    /// </remarks>
+    /// <param name="useLongName">Indicates whether or not to use the long name of the default unit.</param>
+    /// <param name="failureMessage">The message to display if the test fails.</param>
+    [TestMethod(UnfoldingStrategy = TestDataSourceUnfoldingStrategy.Unfold)]
+    [DataRow(false, "The auto formatted string should use the default unit's short name.")]
+    [DataRow(true, "The auto formatted string should use the default unit's long name.")]
+    public void FormatAutoQuantity_BaseValueZero_FormatsWithDefaultName(bool useLongName, string failureMessage)
+    {
+        var defaultName = useLongName
+            ? ExpectedDefaultUnit.DefaultLongUnitNamePluralForm
+            : ExpectedDefaultUnit.DefaultShortUnitName;
+
+        var expectedValue = $"0{defaultName}";
+
+        var quantity = default(TQuantity);
+        var actualValue = quantity.FormatAuto(longName: useLongName);
+
+        Assert.AreEqual(expectedValue, actualValue, failureMessage);
+    }
+
+    /// <summary>
+    /// Verifies that the default unit definition for a <typeparamref name="TQuantity"/> returns the expected unit.
+    /// </summary>
+    [TestMethod]
+    public void DefaultUnitDefinition_WhenAccessed_ReturnsExpectedUnit()
+    {
+        Assert.AreSame(ExpectedDefaultUnit, TQuantity.DefaultUnitDefinition);
+    }
+
+    /// <summary>
+    /// Verifies that the default unit on an instance of a <typeparamref name="TQuantity"/> returns the expected unit.
+    /// </summary>
+    /// <remarks>
+    /// This property is currently marked as obsolete. Once <see cref="IQuantity{TQuantity}.DefaultUnit"/> is removed,
+    /// this test should be removed as well.
+    /// </remarks>
+    [TestMethod]
+    public void DefaultUnitOnInstance_WhenAccessed_ReturnsExpectedUnit()
+    {
+#pragma warning disable CS0618 // Type or member is obsolete
+        var actualDefaultUnit = default(TQuantity).DefaultUnit;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        Assert.AreSame(ExpectedDefaultUnit, actualDefaultUnit);
     }
 
     /// <summary>

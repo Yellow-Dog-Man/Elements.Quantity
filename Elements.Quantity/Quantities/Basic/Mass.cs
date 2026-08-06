@@ -69,7 +69,10 @@ namespace Elements.Quantity
         #region UNITS
 
         // provide a default unit for the quantity - used when no explicit unit specified
-        public Unit<Mass> DefaultUnit { get { return SI<Mass>.Kilo; } }
+        [Obsolete("Use 'Unit<Mass>.DefaultUnitDefinition' instead.")]
+        public Unit<Mass> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Mass> DefaultUnitDefinition => SI<Mass>.Kilo;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;
