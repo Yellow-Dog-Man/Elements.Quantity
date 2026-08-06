@@ -55,6 +55,12 @@ public class DistanceTests : BaseQuantityCompoundFormattedTests<DistanceTests, D
     ];
 
     /// <inheritdoc/>
+    public sealed override QFamily ExpectedFamily => QFamily.Basic;
+
+    /// <inheritdoc/>
+    public sealed override string ExpectedQuantityFamily => string.Empty;
+
+    /// <inheritdoc/>
     public static IEnumerable<QuantityFormatTestData<Distance>> CompoundFormatInfoDataTuples =>
     [
         new(Distance.FeetInches, 0d, ""),

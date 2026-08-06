@@ -43,6 +43,12 @@ public sealed class AngleTests : BaseQuantityCompoundFormattedTests<AngleTests, 
     ];
 
     /// <inheritdoc/>
+    public sealed override QFamily ExpectedFamily => QFamily.Basic;
+
+    /// <inheritdoc/>
+    public sealed override string ExpectedQuantityFamily => string.Empty;
+
+    /// <inheritdoc/>
     public static IEnumerable<QuantityFormatTestData<Angle>> CompoundFormatInfoDataTuples =>
     [
         new(Angle.DegreeMinSec, 0d, ""),

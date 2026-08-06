@@ -40,7 +40,11 @@ namespace Elements.Quantity
         public Unit<Acceleration> DefaultUnit { get { return MetersPerSecondPerSecond; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Acceleration.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         // define actual units for the quantity (excluding SI units which are automatic)
 

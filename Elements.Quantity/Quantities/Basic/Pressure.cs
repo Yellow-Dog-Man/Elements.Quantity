@@ -78,7 +78,11 @@ namespace Elements.Quantity
         public Unit<Pressure> DefaultUnit { get { return Pascal; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Pressure.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         public static readonly Unit<Pressure> Pascal = new UnitSI<Pressure>(0, "", "");
         public static readonly Unit<Pressure> Bar = new Unit<Pressure>(1e5,

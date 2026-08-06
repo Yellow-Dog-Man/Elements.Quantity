@@ -37,4 +37,10 @@ public class VoltageTests : BaseQuantityTests<VoltageTests, Voltage>, IQuantityT
         new(SI<Voltage>.Ronna, "{0} RV", "1 ronnavolt", "{0} ronnavolts", "Quantity.Unit.Electronic.Voltage.Ronnavolts"),
         new(SI<Voltage>.Quetta, "{0} QV", "1 quettavolt", "{0} quettavolts", "Quantity.Unit.Electronic.Voltage.Quettavolts")
     ];
+
+    /// <inheritdoc/>
+    public sealed override QFamily ExpectedFamily => QFamily.Electronic;
+
+    /// <inheritdoc/>
+    public sealed override string ExpectedQuantityFamily => QFamily.Electronic.ToString();
 }

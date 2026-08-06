@@ -67,7 +67,11 @@ namespace Elements.Quantity
         public Unit<Distance> DefaultUnit { get { return Meter; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Distance.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         public static readonly Unit<Distance> Meter = new UnitSI<Distance>(0, "", "");
 

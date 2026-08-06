@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -13,6 +13,20 @@ where TData : IQuantityTestData<TQuantity>
 where TQuantity : unmanaged, IQuantity<TQuantity>
 {
     private static QuantityTestData<TQuantity>[] TestDataTuples => TData.TestDataTuples;
+
+    /// <summary>
+    /// The expected quantity family for <typeparamref name="TQuantity"/>.
+    /// </summary>
+    public abstract QFamily ExpectedFamily { get; }
+
+    /// <summary>
+    /// The expected quantity family from an instance of <typeparamref name="TQuantity"/>.
+    /// </summary>
+    /// <remarks>
+    /// Once <see cref="IQuantity{T}.QuantityFamily"/> is removed, this member should be
+    /// removed as well.
+    /// </remarks>
+    public abstract string ExpectedQuantityFamily { get; }
 
     /// <summary>
     /// A collection of test data containing the <typeparamref name="TQuantity"/> unit, the numeric value, and the expected
@@ -136,6 +150,34 @@ where TQuantity : unmanaged, IQuantity<TQuantity>
         var resultStr = quantity.FormatAs(unit, longName: true, formatNum: "0.#");
 
         Assert.AreEqual(expectedStr, resultStr);
+    }
+
+    /// <summary>
+    /// Verifies that accessing <see cref="IQuantity{TQuantity}.Family"/> of a <typeparamref name="TQuantity"/> type returns
+    /// the expected quantity family from <see cref="QFamily"/>.
+    /// </summary>
+    [TestMethod]
+    public void Family_WhenAccessed_ReturnsExpectedQuantityFamily()
+    {
+        Assert.AreEqual(ExpectedFamily, TQuantity.Family);
+    }
+
+    /// <summary>
+    /// Verifies that accessing <see cref="IQuantity{T}.QuantityFamily"/> of a <typeparamref name="TQuantity"/> value returns
+    /// the expected quantity family value.
+    /// </summary>
+    /// <remarks>
+    /// This property is currently marked as obsolete. Once <see cref="IQuantity{TQuantity}.QuantityFamily"/> is removed,
+    /// this test should be removed as well.
+    /// </remarks>
+    [TestMethod]
+    public void QuantityFamily_WhenAccessed_ReturnsExpectedQuantityFamily()
+    {
+#pragma warning disable CS0618 // Type or member is obsolete
+        var actualQuantityFamily = default(TQuantity).QuantityFamily;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        Assert.AreEqual(ExpectedQuantityFamily, actualQuantityFamily);
     }
 
     /// <summary>

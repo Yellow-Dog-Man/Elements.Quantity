@@ -13,4 +13,10 @@ public class RatioTests : BaseQuantityTests<RatioTests, Ratio>, IQuantityTestDat
         new(Ratio.RatioValue, "{0}", "1", "{0}", "Quantity.Unit.Ratio"),
         new(Ratio.Percent, "{0} %", "1 percent", "{0} percent", "Quantity.Unit.Ratio.Percent")
     ];
+
+    /// <inheritdoc/>
+    public sealed override QFamily ExpectedFamily => QFamily.Basic;
+
+    /// <inheritdoc/>
+    public sealed override string ExpectedQuantityFamily => string.Empty;
 }

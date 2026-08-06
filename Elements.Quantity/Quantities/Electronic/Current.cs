@@ -87,7 +87,11 @@ namespace Elements.Quantity
         public Unit<Current> DefaultUnit { get { return Ampere; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Current.Family' instead.")]
         public string QuantityFamily => "Electronic";
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Electronic;
 
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:

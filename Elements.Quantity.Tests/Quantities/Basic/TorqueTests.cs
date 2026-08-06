@@ -13,4 +13,10 @@ public class TorqueTests : BaseQuantityTests<TorqueTests, Torque>, IQuantityTest
         new(Torque.NewtonMeter, "{0} N m", "1 newton meter", "{0} newton meters", "Quantity.Unit.Torque.NewtonMeters"),
         new(Torque.PoundFoot, "{0} lb·ft", "1 pound-foot", "{0} pound-feet", "Quantity.Unit.Torque.Pound-feet")
     ];
+
+    /// <inheritdoc/>
+    public sealed override QFamily ExpectedFamily => QFamily.Basic;
+
+    /// <inheritdoc/>
+    public sealed override string ExpectedQuantityFamily => string.Empty;
 }

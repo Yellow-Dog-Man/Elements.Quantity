@@ -40,7 +40,11 @@ namespace Elements.Quantity
         public Unit<Time> DefaultUnit { get { return Second; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Time.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         public static readonly Unit<Time> Millisecond = new Unit<Time>(1.0 / 1000.0,
             new UnitGroup[] { UnitGroup.Common },

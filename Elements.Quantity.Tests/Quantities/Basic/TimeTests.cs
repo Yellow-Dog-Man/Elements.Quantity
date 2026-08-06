@@ -20,6 +20,12 @@ public class TimeTests : BaseQuantityCompoundFormattedTests<TimeTests, Time>, IQ
     ];
 
     /// <inheritdoc/>
+    public sealed override QFamily ExpectedFamily => QFamily.Basic;
+
+    /// <inheritdoc/>
+    public sealed override string ExpectedQuantityFamily => string.Empty;
+
+    /// <inheritdoc/>
     public static IEnumerable<QuantityFormatTestData<Time>> CompoundFormatInfoDataTuples => [
         new(Time.MinuteSecond, 0d, "00:00"),
         new(Time.MinuteSecond, 30d, "00:30"),

@@ -17,6 +17,8 @@ namespace Elements.Quantity.Test.Mocks
 
         public string QuantityFamily => "Mock";
 
+        public static QFamily Family => QFamily.Basic;
+
         public MockQuantity(double baseValue = 0) : this() { BaseValue = baseValue; }
         public bool Equals(MockQuantity other) { return BaseValue == other.BaseValue; }
         public int CompareTo(MockQuantity other) { return BaseValue.CompareTo(other.BaseValue); }

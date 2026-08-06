@@ -36,4 +36,10 @@ public class ResistanceTests : BaseQuantityTests<ResistanceTests, Resistance>, I
         new(SI<Resistance>.Ronna, "{0} RΩ", "1 ronnaohm", "{0} ronnaohms", "Quantity.Unit.Electronic.Resistance.Ronnaohms"),
         new(SI<Resistance>.Quetta, "{0} QΩ", "1 quettaohm", "{0} quettaohms", "Quantity.Unit.Electronic.Resistance.Quettaohms")
     ];
+
+    /// <inheritdoc/>
+    public sealed override QFamily ExpectedFamily => QFamily.Electronic;
+
+    /// <inheritdoc/>
+    public sealed override string ExpectedQuantityFamily => QFamily.Electronic.ToString();
 }

@@ -87,7 +87,11 @@ namespace Elements.Quantity
         public Unit<Voltage> DefaultUnit { get { return Volt; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Voltage.Family' instead.")]
         public string QuantityFamily => "Electronic";
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Electronic;
 
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:

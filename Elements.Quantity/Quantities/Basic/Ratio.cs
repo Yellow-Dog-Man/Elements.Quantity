@@ -40,7 +40,11 @@ namespace Elements.Quantity
         public Unit<Ratio> DefaultUnit { get { return RatioValue; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Ratio.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         // define actual units for the quantity (excluding SI units which are automatic)
 

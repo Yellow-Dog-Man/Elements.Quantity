@@ -99,9 +99,17 @@ namespace Elements.Quantity
                 .Select(str => str.Trim().ToPascalCase())
                 .Join();
 
-            UnitKey = new string[] {"Quantity", "Unit", default(T).QuantityFamily, typeof(T).Name, unitNameKey }
-                .Where(str => !string.IsNullOrWhiteSpace(str))
-                .Join(".");
+            var family = T.Family != QFamily.Basic ? T.Family.ToString() : string.Empty;
+            string[] keySegments =
+            [
+                "Quantity",
+                "Unit",
+                family,
+                typeof(T).Name,
+                unitNameKey
+            ];
+
+            UnitKey = keySegments.Where(k => !string.IsNullOrWhiteSpace(k)).Join('.');
 
             if (unitGroups != null)
                 foreach (var unitGroup in unitGroups)
