@@ -23,7 +23,7 @@ namespace Elements.Quantity
         ICollection<string> GetUnitNames();
     }
 
-    public class Unit<T> : IUnit where T : unmanaged, IQuantity<T>
+    public class Unit<T> : IUnit, IEquatable<Unit<T>> where T : unmanaged, IQuantity<T>
     {
         private const byte DEFAULT_SHORT_UNIT_NAME_INDEX = 0;
         private const byte DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX = 0;
@@ -329,20 +329,16 @@ namespace Elements.Quantity
             return unit.ConvertFrom(n);
         }
 
+        public override bool Equals(object? obj) => obj is Unit<T> unit && Equals(unit);
+
+        public bool Equals(Unit<T>? other) => other is not null && UnitKey == other.UnitKey && Ratio == other.Ratio;
+
+        public override int GetHashCode() => HashCode.Combine(UnitKey, Ratio);
+
+        public static bool operator ==(Unit<T>? a, Unit<T>? b) => a is null ? b is null : a.Equals(b);
+
+        public static bool operator !=(Unit<T>? a, Unit<T>? b) => !(a == b);
+
         public override string ToString() => UnitKey;
-
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || obj is not Unit<T>)
-            {
-                return false;
-            }
-
-            var otherUnit = (Unit<T>)obj;
-
-            return otherUnit.UnitKey == UnitKey;
-        }
-
-        public override int GetHashCode() => UnitKey.GetHashCode();
     }
 }
