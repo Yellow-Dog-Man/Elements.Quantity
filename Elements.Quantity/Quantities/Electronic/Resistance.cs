@@ -84,7 +84,10 @@ namespace Elements.Quantity
         #region UNITS
 
         // provide a default unit for the quantity - used when no explicit unit specified
-        public Unit<Resistance> DefaultUnit { get { return Ohm; } }
+        [Obsolete("Use 'Unit<Resistance>.DefaultUnitDefinition' instead.")]
+        public Unit<Resistance> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Resistance> DefaultUnitDefinition => Ohm;
 
         /// <inheritdoc/>
         public string QuantityFamily => "Electronic";

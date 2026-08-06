@@ -173,7 +173,7 @@ namespace Elements.Quantity
 
             if (noUnit)
             {
-                var unit = defaultUnit ?? default(T).DefaultUnit;
+                var unit = defaultUnit ?? T.DefaultUnitDefinition;
                 quantity = unit.ConvertFrom(val);
                 return true;
             }

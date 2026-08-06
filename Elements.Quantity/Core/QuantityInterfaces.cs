@@ -27,7 +27,10 @@ namespace Elements.Quantity
         T Divide(double n);
         Ratio Divide(T q);
 
+        [Obsolete("Use 'Unit<T>.DefaultUnitDefinition' instead.")]
         Unit<T> DefaultUnit { get; }
+
+        static abstract Unit<T> DefaultUnitDefinition { get; }
 
         /// <summary>
         /// The quantity family that this quantity type belongs to.

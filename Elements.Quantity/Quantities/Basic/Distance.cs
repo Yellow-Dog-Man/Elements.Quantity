@@ -64,7 +64,10 @@ namespace Elements.Quantity
 
         #region UNITS
 
-        public Unit<Distance> DefaultUnit { get { return Meter; } }
+        [Obsolete("Use 'Unit<Distance>.DefaultUnitDefinition' instead.")]
+        public Unit<Distance> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Distance> DefaultUnitDefinition => Meter;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

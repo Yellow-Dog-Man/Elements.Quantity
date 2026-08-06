@@ -37,7 +37,10 @@ namespace Elements.Quantity
         #region UNITS
 
         // provide a default unit for the quantity - used when no explicit unit specified
-        public Unit<Acceleration> DefaultUnit { get { return MetersPerSecondPerSecond; } }
+        [Obsolete("Use 'Unit<Acceleration>.DefaultUnitDefinition' instead.")]
+        public Unit<Acceleration> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Acceleration> DefaultUnitDefinition => MetersPerSecondPerSecond;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

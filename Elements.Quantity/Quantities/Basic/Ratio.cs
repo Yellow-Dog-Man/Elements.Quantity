@@ -37,7 +37,10 @@ namespace Elements.Quantity
         #region UNITS
 
         // provide a default unit for the quantity - used when no explicit unit specified
-        public Unit<Ratio> DefaultUnit { get { return RatioValue; } }
+        [Obsolete("Use 'Unit<Ratio>.DefaultUnitDefinition' instead.")]
+        public Unit<Ratio> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Ratio> DefaultUnitDefinition => RatioValue;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

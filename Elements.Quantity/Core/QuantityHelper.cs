@@ -61,7 +61,7 @@ namespace Elements.Quantity
             Unit<T>? selectedUnit = null;
 
             if (q.BaseValue == 0)
-                selectedUnit = defaultUnit ?? q.DefaultUnit;
+                selectedUnit = defaultUnit ?? T.DefaultUnitDefinition;
             else
                 selectedUnit = SelectBestUnit(q, groups ?? UnitGroup.DefaultUnitGroups);
 

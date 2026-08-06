@@ -68,7 +68,10 @@ namespace Elements.Quantity
         #region UNITS
 
         // provide a default unit for the quantity - used when no explicit unit specified
-        public Unit<Angle> DefaultUnit { get { return Radian; } }
+        [Obsolete("Use 'Unit<Angle>.DefaultUnitDefinition' instead.")]
+        public Unit<Angle> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Angle> DefaultUnitDefinition => Radian;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

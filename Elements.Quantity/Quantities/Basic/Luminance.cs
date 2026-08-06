@@ -26,7 +26,10 @@ namespace Elements.Quantity
 
         #region UNITS
 
-        public Unit<Luminance> DefaultUnit { get { return CandelaPerSquareMeter; } }
+        [Obsolete("Use 'Unit<Luminance>.DefaultUnitDefinition' instead.")]
+        public Unit<Luminance> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<Luminance> DefaultUnitDefinition => CandelaPerSquareMeter;
 
         /// <inheritdoc/>
         public string QuantityFamily => string.Empty;

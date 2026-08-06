@@ -13,18 +13,20 @@ namespace Elements.Quantity.Test.Mocks
         public readonly double BaseValue;
         double IQuantity.BaseValue => BaseValue;
 
-        public Unit<MockQuantity> DefaultUnit => throw new NotImplementedException();
+        [Obsolete("Use 'Unit<MockQuantity>.DefaultUnitDefinition' instead.")]
+        public Unit<MockQuantity> DefaultUnit => DefaultUnitDefinition;
+
+        public static Unit<MockQuantity> DefaultUnitDefinition => MockUnit;
 
         public string QuantityFamily => "Mock";
+
+        public static readonly Unit<MockQuantity> MockUnit = MockProvider.MockUnit;
 
         public MockQuantity(double baseValue = 0) : this() { BaseValue = baseValue; }
         public bool Equals(MockQuantity other) { return BaseValue == other.BaseValue; }
         public int CompareTo(MockQuantity other) { return BaseValue.CompareTo(other.BaseValue); }
 
-        public MockQuantity New(double baseValue)
-        {
-            throw new NotImplementedException();
-        }
+        public MockQuantity New(double baseValue) => new MockQuantity(baseValue);
 
         public MockQuantity Add(MockQuantity q)
         {
