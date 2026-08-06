@@ -29,7 +29,11 @@ namespace Elements.Quantity
         public Unit<Torque> DefaultUnit { get { return NewtonMeter; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Torque.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         public static readonly Unit<Torque> NewtonMeter = new Unit<Torque>(1,
             new UnitGroup[] { UnitGroup.Common },

@@ -13,5 +13,8 @@ namespace Elements.Quantity.Core.Internal
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string Join(this IEnumerable<string> strings, string separator = "") => string.Join(separator, strings);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string Join(this IEnumerable<string> strings, char separator) => string.Join(separator, strings);
     }
 }

@@ -71,7 +71,11 @@ namespace Elements.Quantity
         public Unit<Angle> DefaultUnit { get { return Radian; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Angle.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:

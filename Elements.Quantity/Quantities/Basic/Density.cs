@@ -29,7 +29,11 @@ namespace Elements.Quantity
         public Unit<Density> DefaultUnit { get { return KilogramPerCubicMeter; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Density.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         public static readonly Unit<Density> KilogramPerCubicMeter = new Unit<Density>(1,
             new UnitGroup[] { UnitGroup.Common },

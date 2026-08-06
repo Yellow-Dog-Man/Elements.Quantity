@@ -29,7 +29,11 @@ namespace Elements.Quantity
         public Unit<Luminance> DefaultUnit { get { return CandelaPerSquareMeter; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Luminance.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         public static readonly Unit<Luminance> CandelaPerSquareMeter = new Unit<Luminance>(1,
             new UnitGroup[] { UnitGroup.Common },

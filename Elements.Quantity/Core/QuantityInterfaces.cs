@@ -30,13 +30,22 @@ namespace Elements.Quantity
         Unit<T> DefaultUnit { get; }
 
         /// <summary>
-        /// The quantity family that this quantity type belongs to.
+        /// The overarching family that this quantity type belongs to.
         /// </summary>
         /// <remarks>
-        /// This is used to generate the value for <see cref="Unit{T}.UnitKey"/>. For quantity
-        /// types that fall under the 'Basic' family, an empty string should always be returned.
+        /// This member should eventually be removed in the future in favor of
+        /// <see cref="IQuantity{T}.Family"/> before a major library release.
         /// </remarks>
+        [Obsolete("Use 'IQuantity<T>.Family' instead.")]
         string QuantityFamily { get; }
+
+        /// <summary>
+        /// The overarching family that this quantity type belongs to.
+        /// </summary>
+        /// <remarks>
+        /// This can be used to generate a value for <see cref="IUnit.UnitKey"/>.
+        /// </remarks>
+        static abstract QFamily Family { get; }
     }
 
     public interface IQuantitySI

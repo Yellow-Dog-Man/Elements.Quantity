@@ -72,7 +72,11 @@ namespace Elements.Quantity
         public Unit<Mass> DefaultUnit { get { return SI<Mass>.Kilo; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Mass.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:

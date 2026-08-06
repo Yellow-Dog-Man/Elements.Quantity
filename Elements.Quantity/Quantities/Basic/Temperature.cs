@@ -40,7 +40,11 @@ namespace Elements.Quantity
         public Unit<Temperature> DefaultUnit { get { return Kelvin; } }
 
         /// <inheritdoc/>
+        [Obsolete("Use 'Temperature.Family' instead.")]
         public string QuantityFamily => string.Empty;
+
+        /// <inheritdoc/>
+        public static QFamily Family => QFamily.Basic;
 
         // define actual units for the quantity (excluding SI units which are automatic)
         // Parameters:
