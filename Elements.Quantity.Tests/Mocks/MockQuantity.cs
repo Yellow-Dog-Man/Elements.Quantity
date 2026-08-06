@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Elements.Quantity.Test.Mocks
 {
     [ExcludeFromCodeCoverage]
-    internal readonly struct MockQuantity : IQuantity<MockQuantity>
+    public readonly struct MockQuantity : IQuantity<MockQuantity>
     {
         public readonly double BaseValue;
         double IQuantity.BaseValue => BaseValue;

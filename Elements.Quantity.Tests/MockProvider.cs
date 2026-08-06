@@ -9,6 +9,14 @@ namespace Elements.Quantity.Test;
 
 internal static class MockProvider
 {
+    internal const double MockUnitBaseRatio = 1.0;
+
+    internal static readonly string[] MockUnitShortNames = [" u"];
+
+    internal static readonly string[] MockUnitLongNames = [" units", " unit"];
+
+    internal const string MockUnitNameKeyOverride = "MockUnitNameKeyOverride";
+
     internal static readonly Unit<MockQuantity> MockUnit =
-        new (1, null, [" u"], [" units", " unit"]);
+        new (MockUnitBaseRatio, null, MockUnitShortNames, MockUnitLongNames);
 }

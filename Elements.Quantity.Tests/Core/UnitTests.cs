@@ -17,7 +17,7 @@ public class UnitTests
         .Select(argsData => new [] { argsData.formatNum, argsData.expectedValue });
 
     /// <summary>
-    /// Tests that the <see cref="Unit{T}.FormatAs(T, string, bool, string)"/> method correctly formats a
+    /// Verifies that the <see cref="Unit{T}.FormatAs(T, string, bool, string)"/> method correctly formats a
     /// unit's value using the specified string format.
     /// </summary>
     /// <param name="formatNum">The string format to apply to the unit's value.</param>
@@ -26,11 +26,67 @@ public class UnitTests
     [DynamicData(nameof(ValueFormatArgs))]
     public void UnitFormatAs_ProvidedStringFormatIsValid_FormatsUnitNumberInFormat(string formatNum, string expectedValue)
     {
-        var unit = MockProvider.MockUnit;
-        var quantity = new MockQuantity(unit.Ratio);
+        var quantity = new MockQuantity(MockProvider.MockUnitBaseRatio);
 
-        var formattedValue = unit.FormatAs(quantity, formatNum);
+        var formattedValue = MockProvider.MockUnit.FormatAs(quantity, formatNum);
         Assert.AreEqual(expectedValue, formattedValue);
+    }
+
+    /// <summary>
+    /// Verifies that <see cref="UnitComparer.Compare(IUnit?, IUnit?)"/> correctly returns 0
+    /// when the given unit has the same values as the other unit.
+    /// </summary>
+    [TestMethod]
+    public void CompareTo_UnitHasSameValues_ReturnsZero()
+    {
+        Unit<MockQuantity> mockUnitB = new(MockProvider.MockUnitBaseRatio, null, MockProvider.MockUnitShortNames, MockProvider.MockUnitLongNames);
+
+        var actualResult = MockProvider.MockUnit.CompareTo(mockUnitB);
+        Assert.AreEqual(0, actualResult);
+    }
+
+    /// <summary>
+    /// Verifies that <see cref="UnitComparer.Compare(IUnit?, IUnit?)"/> correctly returns the
+    /// expected value when the given unit has a greater value or a lesser value than the other
+    /// unit.
+    /// </summary>
+    /// <param name="ratio">The ratio of the unit to compare to.</param>
+    /// <param name="unitKeyOverride">The key override of the unit to compare to.</param>
+    /// <param name="expectedValue">The expected comparison result.</param>
+    /// <param name="failureMessage">The message to display if the test fails.</param>
+    [TestMethod]
+    [DataRow(MockProvider.MockUnitBaseRatio + 1, null, -1, "A value of -1 should be returned due to the unit having a higher ratio.")]
+    [DataRow(MockProvider.MockUnitBaseRatio - 1, null, 1, "A value of 1 should be returned due to the unit having a lower ratio.")]
+    [DataRow(MockProvider.MockUnitBaseRatio, $"a{MockProvider.MockUnitNameKeyOverride}", 1, "A value of 1 should be returned due to the unit having a key that comes first alphabetically.")]
+    [DataRow(MockProvider.MockUnitBaseRatio, $"z{MockProvider.MockUnitNameKeyOverride}", -1, "A value of -1 should be returned due to the unit having a key that comes last alphabetically.")]
+    public void CompareTo_UnitHasDifferentValues_ReturnsExpectedValue(double ratio, string? unitKeyOverride, int expectedValue, string failureMessage)
+    {
+        var mockUnitB = new Unit<MockQuantity>(ratio, null, MockProvider.MockUnitShortNames, MockProvider.MockUnitLongNames, unitKeyOverride);
+
+        var actualResult = MockProvider.MockUnit.CompareTo(mockUnitB);
+        Assert.AreEqual(expectedValue, actualResult, failureMessage);
+    }
+
+    /// <summary>
+    /// Verifies that <see cref="UnitComparer.Compare(IUnit?, IUnit?)"/> correctly returns 0
+    /// when both units are the same reference.
+    /// </summary>
+    [TestMethod]
+    public void CompareTo_UnitIsSameReference_ReturnsZero()
+    {
+        var actualResult = MockProvider.MockUnit.CompareTo(MockProvider.MockUnit);
+        Assert.AreEqual(0, actualResult);
+    }
+
+    /// <summary>
+    /// Verifies that <see cref="UnitComparer.Compare(IUnit?, IUnit?)"/> correctly returns 1
+    /// when the given unit is null.
+    /// </summary>
+    [TestMethod]
+    public void CompareTo_NullUnit_ReturnsOne()
+    {
+        var actualResult = MockProvider.MockUnit.CompareTo(null);
+        Assert.AreEqual(1, actualResult);
     }
 
     /// <summary>
