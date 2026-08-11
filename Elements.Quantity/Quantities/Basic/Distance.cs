@@ -83,7 +83,7 @@ namespace Elements.Quantity
         // IAU 2012 Resolution B2
         public static readonly Unit<Distance> AU = new Unit<Distance>(149597870700,
             new UnitGroup[] { UnitGroup.Astronomical, UnitGroup.Common },
-            new string[] { " AU" }, new string[] { " Astronomical Units", " Astronomical Unit", });
+            new string[] { " au", " AU" }, new string[] { " Astronomical Units", " Astronomical Unit", });
 
         public static readonly Unit<Distance> Lightyear = new Unit<Distance>(9.4607304725808e15,
             new UnitGroup[] { UnitGroup.Astronomical, UnitGroup.Common },
