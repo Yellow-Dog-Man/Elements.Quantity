@@ -292,7 +292,7 @@ namespace Elements.Quantity
                                     units.Add(unit);
                             }
 
-                    units.Sort();
+                    units.Sort(UnitComparer.Instance);
 
                     // generate name cache
                     var names = new Dictionary<string, IUnit>();

@@ -23,7 +23,7 @@ namespace Elements.Quantity
         ICollection<string> GetUnitNames();
     }
 
-    public class Unit<T> : IUnit where T : unmanaged, IQuantity<T>
+    public class Unit<T> : IUnit, IEquatable<Unit<T>> where T : unmanaged, IQuantity<T>
     {
         private const byte DEFAULT_SHORT_UNIT_NAME_INDEX = 0;
         private const byte DEFAULT_LONG_UNIT_NAME_PLURAL_FORM_INDEX = 0;
@@ -42,7 +42,32 @@ namespace Elements.Quantity
 
         public Type ValueType => typeof(T);
 
-        public int CompareTo(IUnit? other) => other == null ? 1 : Ratio.CompareTo(other.Ratio);
+        /// <summary>
+        /// Performs a comparison of this and an <see cref="IUnit"/> instance that returns a
+        /// value indicating whether one instance is less than, equal to, or greater than the
+        /// other.
+        /// </summary>
+        /// <param name="other">The other <see cref="IUnit"/> instance to compare to.</param>
+        /// <returns>
+        /// A signed integer that indicates the relative values of this and <paramref name="other"/>,
+        /// as shown in the following list.
+        /// <list type="bullet">
+        ///   <item><b>Value</b> - Meaning</item>
+        ///   <item><b>Less than zero</b> - this is less than <paramref name="other"/>.</item>
+        ///   <item><b>Zero</b> - this equals <paramref name="other"/>.</item>
+        ///   <item><b>Greater than zero</b> - this is greater than <paramref name="other"/>.</item>
+        /// </list>
+        /// </returns>
+        public int CompareTo(IUnit? other)
+        {
+            if (other is null)
+            {
+                return 1;
+            }
+
+            var ratioCompareResult = Ratio.CompareTo(other.Ratio);
+            return ratioCompareResult != 0 ? ratioCompareResult : UnitKey.CompareTo(other.UnitKey); 
+        }
 
         public ICollection<string> GetUnitNames() => ShortUnitNames.Union(LongUnitNames).ToArray();
 
@@ -319,6 +344,16 @@ namespace Elements.Quantity
         {
             return unit.ConvertFrom(n);
         }
+
+        public override bool Equals(object? obj) => obj is Unit<T> unit && Equals(unit);
+
+        public bool Equals(Unit<T>? other) => other is not null && UnitKey == other.UnitKey && Ratio == other.Ratio;
+
+        public override int GetHashCode() => HashCode.Combine(UnitKey, Ratio);
+
+        public static bool operator ==(Unit<T>? a, Unit<T>? b) => a is null ? b is null : a.Equals(b);
+
+        public static bool operator !=(Unit<T>? a, Unit<T>? b) => !(a == b);
 
         public override string ToString() => UnitKey;
     }

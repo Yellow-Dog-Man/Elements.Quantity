@@ -70,5 +70,7 @@ namespace Elements.Quantity
         public static Density operator -(Density a) { return a.Multiply(-1); }
 
         #endregion
+
+        public override string ToString() => this.FormatAuto();
     }
 }

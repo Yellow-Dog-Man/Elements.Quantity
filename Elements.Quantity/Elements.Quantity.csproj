@@ -1,18 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
     <Company>Yellow Dog Man Studios</Company>
     <Authors>Yellow Dog Man Studios</Authors>
     <PackageId>YellowDogMan.Elements.Quantity</PackageId>
     <Description>This library facilitates the manipulation of quantities associated with units, such as temperature, weight, and distance, by offering various utilities for working with them.</Description>
-    <Copyright>Copyright (c) Yellow Dog Man Studios s.r.o. 2023</Copyright>
+    <Copyright>Copyright (c) Yellow Dog Man Studios s.r.o.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Yellow-Dog-Man/Elements.Quantity</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://yellowdogman.com/</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>quantities units conversion</PackageTags>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
   </PropertyGroup>
@@ -20,5 +18,9 @@
     <Content Include="Quantities\QuantitySITemplate.txt" Pack="false" CopyToOutput="false" />
     <Content Include="Quantities\QuantityTemplate.txt" Pack="false" CopyToOutput="false" />
     <None Include="Images\icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Elements.Quantity.DiagnosticAnalyzers\Elements.Quantity.DiagnosticAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" />
   </ItemGroup>
 </Project>

@@ -80,9 +80,10 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Astronomical },
             new string[] { " R☉" }, new string[] { " Solar radii", " Solar radius" });
 
-        public static readonly Unit<Distance> AU = new Unit<Distance>(149597871464,
+        // IAU 2012 Resolution B2
+        public static readonly Unit<Distance> AU = new Unit<Distance>(149597870700,
             new UnitGroup[] { UnitGroup.Astronomical, UnitGroup.Common },
-            new string[] { " AU" }, new string[] { " Astronomical Units", " Astronomical Unit", });
+            new string[] { " au", " AU" }, new string[] { " Astronomical Units", " Astronomical Unit", });
 
         public static readonly Unit<Distance> Lightyear = new Unit<Distance>(9.4607304725808e15,
             new UnitGroup[] { UnitGroup.Astronomical, UnitGroup.Common },
@@ -91,8 +92,8 @@ namespace Elements.Quantity
         public static readonly Unit<Distance> Lightsecond = new Unit<Distance>(299792458,
             new UnitGroup[] { UnitGroup.Astronomical },
             new string[] { " ls" }, new string[] { " lightseconds", " lightsecond" });
-
-        public static readonly Unit<Distance> Parsec = new Unit<Distance>(3.0857e16,
+        // IAU 2015 Resolution B2 (footnote 4)
+        public static readonly Unit<Distance> Parsec = new Unit<Distance>(3.085677581e16,
             new UnitGroup[] { UnitGroup.Astronomical },
             new string[] { " pc" }, new string[] { " parsecs", " parsec" });
 
@@ -126,6 +127,22 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Imperial },
             new string[] { " ftm" }, new string[] { " fathoms", " fathom" });
 
+
+        //Surveying
+
+        /// <summary>
+        /// <seealso href="https://en.wikipedia.org/wiki/Chain_(unit)"/>Chains</seealso> are used in various niche applications like tires and surveying.
+        /// </summary>
+        public static readonly Unit<Distance> Chain = new Unit<Distance>(20.1168,
+            new UnitGroup[] { UnitGroup.Surveying },
+            new string[] { " ch" }, new string[] { " chains", " chain" });
+
+        /// <summary>
+        /// <seealso href="https://en.wikipedia.org/wiki/Rod_(unit)"/>Rods</seealso> are used in various niche applications such as surveying.
+        /// </summary>
+        public static readonly Unit<Distance> Rod = new Unit<Distance>(5.0292,
+            new UnitGroup[]  { UnitGroup.Surveying },
+            new string[] { " rd" }, new string[] { " rods", " rod" } );
         #endregion
 
         /* *********************************************** */

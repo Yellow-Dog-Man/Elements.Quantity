@@ -23,7 +23,7 @@ public class DistanceTests
     /// </remarks>
     internal static DistanceTestData[] DistanceTestDataTuples =>
     [
-        new (Distance.AU, "{0} AU", "1 Astronomical Unit", "{0} Astronomical Units", "Quantity.Unit.Distance.AstronomicalUnits"),
+        new (Distance.AU, "{0} au", "1 Astronomical Unit", "{0} Astronomical Units", "Quantity.Unit.Distance.AstronomicalUnits"),
         new (Distance.Angstrom, "{0} Å", "1 ångström", "{0} ångströms", "Quantity.Unit.Distance.Ångströms"),
         new (Distance.Foot, "{0} ft", "1 foot", "{0} feet", "Quantity.Unit.Distance.Feet"),
         new (Distance.Inch, "{0} in", "1 inch", "{0} inches", "Quantity.Unit.Distance.Inches"),
@@ -37,6 +37,8 @@ public class DistanceTests
         new (Distance.Yard, "{0} yd", "1 yard", "{0} yards", "Quantity.Unit.Distance.Yards"),
         new (Distance.NauticalMile, "{0} NM", "1 nautical mile", "{0} nautical miles", "Quantity.Unit.Distance.NauticalMiles"),
         new (Distance.Fathom, "{0} ftm", "1 fathom", "{0} fathoms", "Quantity.Unit.Distance.Fathoms"),
+        new (Distance.Chain, "{0} ch", "1 chain", "{0} chains", "Quantity.Unit.Distance.Chains"),
+        new (Distance.Rod, "{0} rd", "1 rod", "{0} rods", "Quantity.Unit.Distance.Rods"),
         new (SI<Distance>.Quecto, "{0} qm", "1 quectometer", "{0} quectometers", "Quantity.Unit.Distance.Quectometers"),
         new (SI<Distance>.Ronto, "{0} rm", "1 rontometer", "{0} rontometers", "Quantity.Unit.Distance.Rontometers"),
         new (SI<Distance>.Yocto, "{0} ym", "1 yoctometer", "{0} yoctometers", "Quantity.Unit.Distance.Yoctometers"),

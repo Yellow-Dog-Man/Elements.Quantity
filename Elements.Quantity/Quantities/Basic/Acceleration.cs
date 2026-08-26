@@ -46,7 +46,7 @@ namespace Elements.Quantity
 
         public static readonly Unit<Acceleration> MetersPerSecondPerSecond = new Unit<Acceleration>(1,
             new UnitGroup[] { UnitGroup.Common, UnitGroup.Metric },
-            new string[] { " m/s^2", " m/s/s" }, new string[] { " meters per second squared", " meter per second squared", " meters per second per second", " meter per second per second" });
+            new string[] { " m/s²", " m/s^2", " m/s/s" }, new string[] { " meters per second squared", " meter per second squared", " meters per second per second", " meter per second per second" });
 
         #endregion
 
