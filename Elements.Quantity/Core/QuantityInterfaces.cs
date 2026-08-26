@@ -21,23 +21,6 @@ public interface IQuantity<T> : IQuantity, IComparable<T>, IEquatable<T>,
 {
     static abstract T Create(double baseValue);
 
-    T New(double baseValue) => T.Create(baseValue);
-
-    [Obsolete("Use System.Numerics interfaces")]
-    T Add(T q) => T.Create(BaseValue) + q;
-
-    [Obsolete("Use System.Numerics interfaces")]
-    T Subtract(T q) => T.Create(BaseValue) - q;
-
-    [Obsolete("Use System.Numerics interfaces")]
-    T Multiply(double n) => T.Create(BaseValue) * n;
-
-    [Obsolete("Use System.Numerics interfaces")]
-    T Divide(double n) => T.Create(BaseValue) / n;
-
-    [Obsolete("Use System.Numerics interfaces")]
-    Ratio Divide(T q) => T.Create(BaseValue) / q;
-
     Unit<T> DefaultUnit { get; }
 
     static abstract T Parse(string str, Unit<T>? defaultUnit = null);
