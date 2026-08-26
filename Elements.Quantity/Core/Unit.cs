@@ -136,7 +136,7 @@ namespace Elements.Quantity
 
         public virtual T ConvertFrom(double val)
         {
-            return default(T).New(val * Ratio);
+            return T.Create(val * Ratio);
         }
 
         public static T Parse(string str, NumberStyles numberStyles, IFormatProvider formatProvider, Unit<T>? defaultUnit = null)
