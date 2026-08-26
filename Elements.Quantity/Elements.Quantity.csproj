@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Company>Yellow Dog Man Studios</Company>
     <Authors>Yellow Dog Man Studios</Authors>
@@ -19,5 +19,8 @@
     <Content Include="Quantities\QuantityTemplate.txt" Pack="false" CopyToOutput="false" />
     <None Include="Images\icon.png" Pack="true" PackagePath="\" />
     <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Elements.Quantity.DiagnosticAnalyzers\Elements.Quantity.DiagnosticAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" />
   </ItemGroup>
 </Project>
