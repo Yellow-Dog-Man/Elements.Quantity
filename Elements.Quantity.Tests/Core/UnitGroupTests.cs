@@ -223,8 +223,11 @@ public class UnitGroupTests
         mockGroup.RegisterUnit(Velocity.MetersPerSecond);
         mockGroup.RegisterUnit(MockProvider.MockUnit);
         mockGroup.RegisterUnit(Density.GramPerCubicCentimeter);
+        mockGroup.RegisterUnit(Pressure.Millibar);
         mockGroup.RegisterUnit(Velocity.Knots);
+        mockGroup.RegisterUnit(Pressure.Bar);
         mockGroup.RegisterUnit(Density.KilogramPerCubicMeter);
+        mockGroup.RegisterUnit(SI<Pressure>.Hecto);
 
         var expectedOrder = new IUnit[]
         {
@@ -233,7 +236,10 @@ public class UnitGroupTests
             Velocity.MetersPerSecond,
             MockProvider.MockUnit,
             Density.KilogramPerCubicMeter,
-            Density.GramPerCubicCentimeter
+            Density.GramPerCubicCentimeter,
+            SI<Pressure>.Hecto,
+            Pressure.Millibar,
+            Pressure.Bar
         };
 
         var actualOrder = new List<IUnit>();

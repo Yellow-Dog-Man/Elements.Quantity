@@ -88,7 +88,7 @@ public partial class QuantityHelperTests
     public void GetAllUnits_UniqueUnits_ReturnsUniqueUnits()
     {
         var units = QuantityHelper.GetAllUnits();
-        var sortedSet = new SortedSet<IUnit>();
+        var sortedSet = new SortedSet<IUnit>(UnitComparer.Instance);
 
         foreach(var unit in units)
         {

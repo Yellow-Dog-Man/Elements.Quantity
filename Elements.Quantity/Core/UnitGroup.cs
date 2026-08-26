@@ -116,7 +116,7 @@ namespace Elements.Quantity
                 return set;
             }
 
-            set = [];
+            set = new SortedSet<IUnit>(UnitComparer.Instance);
             units.Add(type, set);
             return set;
         }
