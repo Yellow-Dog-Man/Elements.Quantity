@@ -80,9 +80,10 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Astronomical },
             new string[] { " R☉" }, new string[] { " Solar radii", " Solar radius" });
 
-        public static readonly Unit<Distance> AU = new Unit<Distance>(149597871464,
+        // IAU 2012 Resolution B2
+        public static readonly Unit<Distance> AU = new Unit<Distance>(149597870700,
             new UnitGroup[] { UnitGroup.Astronomical, UnitGroup.Common },
-            new string[] { " AU" }, new string[] { " Astronomical Units", " Astronomical Unit", });
+            new string[] { " au", " AU" }, new string[] { " Astronomical Units", " Astronomical Unit", });
 
         public static readonly Unit<Distance> Lightyear = new Unit<Distance>(9.4607304725808e15,
             new UnitGroup[] { UnitGroup.Astronomical, UnitGroup.Common },
@@ -91,8 +92,8 @@ namespace Elements.Quantity
         public static readonly Unit<Distance> Lightsecond = new Unit<Distance>(299792458,
             new UnitGroup[] { UnitGroup.Astronomical },
             new string[] { " ls" }, new string[] { " lightseconds", " lightsecond" });
-
-        public static readonly Unit<Distance> Parsec = new Unit<Distance>(3.0857e16,
+        // IAU 2015 Resolution B2 (footnote 4)
+        public static readonly Unit<Distance> Parsec = new Unit<Distance>(3.085677581e16,
             new UnitGroup[] { UnitGroup.Astronomical },
             new string[] { " pc" }, new string[] { " parsecs", " parsec" });
 

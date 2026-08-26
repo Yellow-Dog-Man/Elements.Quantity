@@ -23,7 +23,7 @@ public class DistanceTests
     /// </remarks>
     internal static DistanceTestData[] DistanceTestDataTuples =>
     [
-        new (Distance.AU, "{0} AU", "1 Astronomical Unit", "{0} Astronomical Units", "Quantity.Unit.Distance.AstronomicalUnits"),
+        new (Distance.AU, "{0} au", "1 Astronomical Unit", "{0} Astronomical Units", "Quantity.Unit.Distance.AstronomicalUnits"),
         new (Distance.Angstrom, "{0} Å", "1 ångström", "{0} ångströms", "Quantity.Unit.Distance.Ångströms"),
         new (Distance.Foot, "{0} ft", "1 foot", "{0} feet", "Quantity.Unit.Distance.Feet"),
         new (Distance.Inch, "{0} in", "1 inch", "{0} inches", "Quantity.Unit.Distance.Inches"),
