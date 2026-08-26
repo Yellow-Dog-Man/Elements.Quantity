@@ -23,7 +23,7 @@ public class AccelerationTests
     /// </remarks>
     internal static AccelerationTestData[] AccelerationTestDataTuples =>
     [
-        new (Acceleration.MetersPerSecondPerSecond, "{0} m/s^2", "1 meter per second squared", "{0} meters per second squared", "Quantity.Unit.Acceleration.MetersPerSecondSquared")
+        new (Acceleration.MetersPerSecondPerSecond, "{0} m/s²", "1 meter per second squared", "{0} meters per second squared", "Quantity.Unit.Acceleration.MetersPerSecondSquared")
     ];
 
     internal static IEnumerable<object[]> AccelerationShortNameArgs
