@@ -115,19 +115,19 @@ public class TemperatureTests
 
     [DataRow(1, -272.15)]
     [DataRow(0, -273.15)]
-    [DataRow(373.1, 100)]//Boiling point of water
+    [DataRow(373.15, 100)]//Boiling point of water
     [DataRow(273.15, 0)]
     [DataRow(273.15 * 2, 273.15)]
     [TestMethod]
     public void KelvinToCelsius(double kelvin, double expectedCelsius)
     {
         var temperature = new Temperature(kelvin);
-        Assert.AreEqual(expectedCelius, temperature.ConvertTo(Temperature.Celsius), TEMPERATURE_EPSILION);
+        Assert.AreEqual(expectedCelsius, temperature.ConvertTo(Temperature.Celsius), TEMPERATURE_EPSILION);
     }
 
     [DataRow(1, -457.87)]
     [DataRow(0, -459.67)]
-    [DataRow(373.1, 212)]//boiling point of water
+    [DataRow(373.15, 212)]//boiling point of water
     [DataRow(273.15, 32)]
     [DataRow(273.15 * 2, 523.67)]
     [TestMethod]
@@ -162,7 +162,7 @@ public class TemperatureTests
 
     [DataRow(1, 1.8)]
     [DataRow(0, 0)]
-    [DataRow(373.1, 671.67)]//boiling point of water
+    [DataRow(373.15, 671.67)]//boiling point of water
     [DataRow(256, 460.8)]
     [DataRow(256 * 2, 921.6)]
     [TestMethod]
