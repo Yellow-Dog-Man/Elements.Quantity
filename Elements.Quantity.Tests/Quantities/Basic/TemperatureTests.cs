@@ -122,7 +122,7 @@ public class TemperatureTests
     public void KelvinToCelsius(double kelvin, double expectedCelsius)
     {
         var temperature = new Temperature(kelvin);
-        Assert.AreEqual(expectedCelius, temperature.ConvertTo(Temperature.Celsius), TEMPERATURE_EPSILION);
+        Assert.AreEqual(expectedCelsius, temperature.ConvertTo(Temperature.Celsius), TEMPERATURE_EPSILION);
     }
 
     [DataRow(1, -457.87)]
