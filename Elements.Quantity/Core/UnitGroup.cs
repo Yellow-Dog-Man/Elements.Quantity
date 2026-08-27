@@ -10,34 +10,29 @@ namespace Elements.Quantity
     {
         #region UNIT_GROUPS
 
-        static UnitGroup()
-        {
-            DefaultUnitGroups.Add(Common);
-        }
+        public static readonly UnitGroup Common = [];
+        public static readonly UnitGroup Metric = [];
+        public static readonly UnitGroup MetricThousands = [];
+        public static readonly UnitGroup CommonMetric = [];
 
-        public static List<UnitGroup> DefaultUnitGroups = new List<UnitGroup>();
+        public static readonly UnitGroup Scientific = [];
 
-        public static readonly UnitGroup Common = new UnitGroup();
-        public static readonly UnitGroup Metric = new UnitGroup();
-        public static readonly UnitGroup MetricThousands = new UnitGroup();
-        public static readonly UnitGroup CommonMetric = new UnitGroup();
+        public static readonly UnitGroup Astronomical = [];
+        public static readonly UnitGroup Molecular = [];
+        public static readonly UnitGroup Meteorological = [];
+        public static readonly UnitGroup Aviation = [];
+        public static readonly UnitGroup Maritime = [];
 
-        public static readonly UnitGroup Scientific = new UnitGroup();
+        public static readonly UnitGroup Imperial = [];
+        public static readonly UnitGroup Surveying = [];
 
-        public static readonly UnitGroup Astronomical = new UnitGroup();
-        public static readonly UnitGroup Molecular = new UnitGroup();
-        public static readonly UnitGroup Meteorological = new UnitGroup();
-        public static readonly UnitGroup Aviation = new UnitGroup();
-        public static readonly UnitGroup Maritime = new UnitGroup();
-
-        public static readonly UnitGroup Imperial = new UnitGroup();
-        public static readonly UnitGroup Surveying = new UnitGroup();
-
-        private object _lock = new object();
+        public static readonly List<UnitGroup> DefaultUnitGroups = [Common];
 
         #endregion
 
-        Dictionary<Type, SortedSet<IUnit>> units = new Dictionary<Type, SortedSet<IUnit>>();
+        private readonly object _lock = new();
+
+        private readonly Dictionary<Type, SortedSet<IUnit>> units = [];
 
         /// <inheritdoc/>
         public int Count => units.Sum(u => u.Value.Count);
