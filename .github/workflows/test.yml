@@ -1,4 +1,4 @@
-﻿name: Test Library
+﻿name: Test Elements.Quantity Library
 
 on:
   workflow_dispatch:
@@ -7,6 +7,9 @@ on:
       - '**.cs'
       - '**.csproj'
       - '**.props'
+      - '**/testconfig.json'
+      - 'global.json'
+      - '**/test.yml'
     branches:
       - main
   pull_request:
@@ -14,6 +17,9 @@ on:
       - '**.cs'
       - '**.csproj'
       - '**.props'
+      - '**/testconfig.json'
+      - 'global.json'
+      - '**/test.yml'
     branches:
       - main
 
@@ -22,29 +28,34 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup .NET 10
-        uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7 # v5.2.0
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: 10.0.x
 
-      - name: Install Dependencies
-        run: dotnet restore
+      - name: Run Build
+        run: dotnet build --configuration Release
 
       - name: Run Test
-        run: dotnet test --configuration Release --no-restore --logger "trx;LogFileName=test-results.trx" || true
+        run: dotnet test --configuration Release --no-restore --no-build --logger "trx;LogFileName=test-results.trx" || true
 
       - name: Generate Test Report
+        if: ${{ !cancelled() }}
         uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # V3.0.0
-        if: success() || failure()
         with:
-          name: Elements.Quantity.Test
-          path: '**/test-results.trx'
+          name: .Net Tests
+          path: '**/TestResults/**/*.trx'
           reporter: dotnet-trx
           fail-on-error: true
