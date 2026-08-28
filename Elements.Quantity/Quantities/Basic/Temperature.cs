@@ -98,6 +98,8 @@ namespace Elements.Quantity
         public static Temperature Parse(string str, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.Parse(str, defaultUnit); }
         public static bool TryParse(string str, out Temperature q, Unit<Temperature>? defaultUnit = null) { return Unit<Temperature>.TryParse(str, out q, defaultUnit); }
 
+        public static implicit operator double(Temperature t) => t.BaseValue;
+
         public static Temperature operator +(Temperature a, Temperature b) => new(a.BaseValue + b.BaseValue);
         public static Temperature operator -(Temperature a, Temperature b) => new(a.BaseValue - b.BaseValue);
         public static Temperature operator *(Temperature a, double n) => new(a.BaseValue * n);
