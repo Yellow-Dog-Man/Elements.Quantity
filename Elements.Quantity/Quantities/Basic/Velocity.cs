@@ -5,8 +5,7 @@ namespace Elements.Quantity
 {
     public readonly partial struct Velocity : IQuantity<Velocity>,
         IDivisionOperators<Velocity, Ratio, Velocity>,
-        IMultiplyOperators<Velocity, Time, Distance>,
-        IDivisionOperators<Velocity, Time, Acceleration>
+        IMultiplyOperators<Velocity, Time, Distance>
     {
         #region ESSENTIALS
 
@@ -105,7 +104,6 @@ namespace Elements.Quantity
         // provide various operators to convert between quantities or adjust the quantity
 
         public static Distance operator *(Velocity v, Time t) => Distance.Meter * (v.BaseValue /* m/s */ * t.BaseValue /* s */);
-        public static Acceleration operator /(Velocity v, Time t) => Acceleration.MetersPerSecondPerSecond * (v.BaseValue /* m/s */ / t.BaseValue /* s */);
 
         #endregion
 
