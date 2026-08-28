@@ -91,7 +91,7 @@ namespace Elements.Quantity
         // Imperial
         public static readonly Unit<Mass> Grain = new Unit<Mass>(0.06479891,
             new UnitGroup[] { UnitGroup.Imperial },
-            new string[] { " gr" }, new string[] { " grains", " grain" } );
+            new string[] { " gr" }, new string[] { " grains", " grain" });
 
         public static readonly Unit<Mass> Drachm = new Unit<Mass>(1.7718451953125,
             new UnitGroup[] { UnitGroup.Imperial },
@@ -170,5 +170,10 @@ namespace Elements.Quantity
         /* *********************************************** */
 
         public override string ToString() => this.FormatAuto();
+    }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Mass, Mass>
+    {
+        public static Mass operator *(Ratio r, Mass a) => a * r.BaseValue;
     }
 }

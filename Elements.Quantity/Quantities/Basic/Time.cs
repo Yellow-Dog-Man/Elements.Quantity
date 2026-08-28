@@ -55,7 +55,7 @@ namespace Elements.Quantity
         public static readonly Unit<Time> Minute = new Unit<Time>(60,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " m" }, new string[] { " minutes", " minute" });
-        public static readonly Unit<Time> Hour = new Unit<Time>(60*60,
+        public static readonly Unit<Time> Hour = new Unit<Time>(60 * 60,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " h" }, new string[] { " hours", " hour" });
 
@@ -140,7 +140,7 @@ namespace Elements.Quantity
 
         [Obsolete("Use System.Numerics interfaces")]
         public Time Multiply(Time a, Ratio r) { return a * r.BaseValue; }
-        
+
         [Obsolete("Use System.Numerics interfaces")]
         public Time Multiply(Ratio r, Time a) { return a * r.BaseValue; }
 
@@ -174,5 +174,10 @@ namespace Elements.Quantity
         /* *********************************************** */
 
         public override string ToString() => this.FormatAuto();
+    }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Time, Time>
+    {
+        public static Time operator *(Ratio r, Time a) => a * r.BaseValue;
     }
 }

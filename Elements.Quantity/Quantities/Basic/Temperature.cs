@@ -58,7 +58,7 @@ namespace Elements.Quantity
         /// <seealso href="https://en.wikipedia.org/wiki/Celsius">Celsius</seealso> is a unit of temperature where 0 degrees celsius is the freezing point of water, and 100 degrees is the boiling point of water.
         /// </summary>
         public static readonly Unit<Temperature> Celsius = new UnitNonLinear<Temperature>(
-            (K)=>(K - 273.15), (C)=>(C + 273.15),
+            (K) => (K - 273.15), (C) => (C + 273.15),
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " °C" }, new string[] { " degrees Celsius", " degree Celsius", " Celsius" },
             "Celsius");
@@ -67,7 +67,7 @@ namespace Elements.Quantity
         /// <seealso href="https://en.wikipedia.org/wiki/Fahrenheit">Fahrenheit</seealso> is a unit of temperature that has no known original basis other than "how cold can i make something", water freezes at 32 degrees and boils at 212 degrees.
         /// </summary>
         public static readonly Unit<Temperature> Fahrenheit = new UnitNonLinear<Temperature>(
-            (K) => (K * (9.0 / 5.0) - 459.67), (F) => ((F + 459.67)*(5.0 / 9.0)),
+            (K) => (K * (9.0 / 5.0) - 459.67), (F) => ((F + 459.67) * (5.0 / 9.0)),
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " °F" }, new string[] { " degrees Fahrenheit", " degree Fahrenheit", " Fahrenheit" },
             "Fahrenheit");
@@ -91,7 +91,7 @@ namespace Elements.Quantity
 
         [Obsolete("Use System.Numerics interfaces")]
         public Temperature Multiply(Temperature a, Ratio r) { return a * r.BaseValue; }
-        
+
         [Obsolete("Use System.Numerics interfaces")]
         public Temperature Multiply(Ratio r, Temperature a) { return a * r.BaseValue; }
 
@@ -134,5 +134,10 @@ namespace Elements.Quantity
         /* *********************************************** */
 
         public override string ToString() => this.FormatAuto();
+    }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Temperature, Temperature>
+    {
+        public static Temperature operator *(Ratio r, Temperature a) => a * r.BaseValue;
     }
 }

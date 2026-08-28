@@ -81,4 +81,9 @@ namespace Elements.Quantity
 
         public override string ToString() => this.FormatAuto();
     }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Torque, Torque>
+    {
+        public static Torque operator *(Ratio r, Torque a) => a * r.BaseValue;
+    }
 }

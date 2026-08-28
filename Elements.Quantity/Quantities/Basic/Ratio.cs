@@ -3,22 +3,8 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Ratio : IQuantity<Ratio>,
-        IMultiplyOperators<Ratio, Ratio, Ratio>,
-        IMultiplyOperators<Ratio, Acceleration, Acceleration>,
-        IMultiplyOperators<Ratio, Angle, Angle>,
-        IMultiplyOperators<Ratio, Density, Density>,
-        IMultiplyOperators<Ratio, Distance, Distance>,
-        IMultiplyOperators<Ratio, Luminance, Luminance>,
-        IMultiplyOperators<Ratio, Mass, Mass>,
-        IMultiplyOperators<Ratio, Pressure, Pressure>,
-        IMultiplyOperators<Ratio, Temperature, Temperature>,
-        IMultiplyOperators<Ratio, Time, Time>,
-        IMultiplyOperators<Ratio, Torque, Torque>,
-        IMultiplyOperators<Ratio, Velocity, Velocity>,
-        IMultiplyOperators<Ratio, Current, Current>,
-        IMultiplyOperators<Ratio, Resistance, Resistance>,
-        IMultiplyOperators<Ratio, Voltage, Voltage>
+    public readonly partial struct Ratio : IQuantity<Ratio>,
+        IMultiplyOperators<Ratio, Ratio, Ratio>
     {
         #region ESSENTIALS
 
@@ -99,24 +85,6 @@ namespace Elements.Quantity
         #region CONVERSIONS
 
         // provide various operators to convert between quantities or adjust the quantity
-
-        // Basic
-        public static Acceleration operator *(Ratio r, Acceleration a) => a * r.BaseValue;
-        public static Angle operator *(Ratio r, Angle a) => a * r.BaseValue;
-        public static Density operator *(Ratio r, Density a) => a * r.BaseValue;
-        public static Distance operator *(Ratio r, Distance a) => a * r.BaseValue;
-        public static Luminance operator *(Ratio r, Luminance a) => a * r.BaseValue;
-        public static Mass operator *(Ratio r, Mass a) => a * r.BaseValue;
-        public static Pressure operator *(Ratio r, Pressure a) => a * r.BaseValue;
-        public static Temperature operator *(Ratio r, Temperature a) => a * r.BaseValue;
-        public static Time operator *(Ratio r, Time a) => a * r.BaseValue;
-        public static Torque operator *(Ratio r, Torque a) => a * r.BaseValue;
-        public static Velocity operator *(Ratio r, Velocity a) => a * r.BaseValue;
-
-        // Electronic
-        public static Current operator *(Ratio r, Current a) => a * r.BaseValue;
-        public static Resistance operator *(Ratio r, Resistance a) => a * r.BaseValue;
-        public static Voltage operator *(Ratio r, Voltage a) => a * r.BaseValue;
 
         #endregion
 

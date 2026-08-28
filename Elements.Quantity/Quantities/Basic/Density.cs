@@ -91,4 +91,9 @@ namespace Elements.Quantity
 
         public override string ToString() => this.FormatAuto();
     }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Density, Density>
+    {
+        public static Density operator *(Ratio r, Density a) => a * r.BaseValue;
+    }
 }

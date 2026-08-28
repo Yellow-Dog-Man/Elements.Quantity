@@ -204,4 +204,9 @@ namespace Elements.Quantity
 
         public override string ToString() => this.FormatAuto();
     }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Distance, Distance>
+    {
+        public static Distance operator *(Ratio r, Distance a) => a * r.BaseValue;
+    }
 }

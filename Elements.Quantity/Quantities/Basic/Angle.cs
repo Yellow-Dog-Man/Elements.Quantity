@@ -149,4 +149,9 @@ namespace Elements.Quantity
 
         public override string ToString() => this.FormatAuto();
     }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Angle, Angle>
+    {
+        public static Angle operator *(Ratio r, Angle a) => a * r.BaseValue;
+    }
 }

@@ -87,4 +87,9 @@ namespace Elements.Quantity
 
         public override string ToString() => this.FormatAuto();
     }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Luminance, Luminance>
+    {
+        public static Luminance operator *(Ratio r, Luminance a) => a * r.BaseValue;
+    }
 }

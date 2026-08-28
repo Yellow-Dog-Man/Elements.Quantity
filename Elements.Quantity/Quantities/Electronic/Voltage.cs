@@ -143,4 +143,9 @@ namespace Elements.Quantity
 
         public override string ToString() => this.FormatAuto();
     }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Voltage, Voltage>
+    {
+        public static Voltage operator *(Ratio r, Voltage a) => a * r.BaseValue;
+    }
 }
