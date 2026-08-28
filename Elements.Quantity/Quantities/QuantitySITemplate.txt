@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct QuantityName : IQuantitySI<QuantityName>,
+    public readonly partial struct QuantityName : IQuantitySI<QuantityName>,
         IDivisionOperators<QuantityName, Ratio, QuantityName>
     {
         #region ESSENTIALS
@@ -64,9 +64,10 @@ namespace Elements.Quantity
         // provide a default unit for the quantity - used when no explicit unit specified
         public Unit<QuantityName> DefaultUnit { get {  } }
 
-        // define actual units for the quantity (excluding SI units which are automatic)
-        // Parameters:
+        /// <inheritdoc/>
+        public string QuantityFamily => string.Empty;
 
+        // define actual units for the quantity (excluding SI units which are automatic)
         public static readonly Unit<QuantityName> BaseUnit = new UnitSI<QuantityName>(0, "", "");
 
         public static readonly Unit<QuantityName> SomeUnit = new Unit<QuantityName>(1,
@@ -89,10 +90,16 @@ namespace Elements.Quantity
         #endregion
 
         /* *********************************************** */
-
+        
         #region OPERATORS
 
-        public static QuantityName Create(double baseVal) => new(baseVal);
+        public static QuantityName Create(double baseValue) => new(baseValue);
+
+        [Obsolete("Use System.Numerics interfaces")]
+        public QuantityName Multiply(QuantityName a, Ratio r) => r * a;
+
+        [Obsolete("Use System.Numerics interfaces")]
+        public QuantityName Multiply(Ratio r, QuantityName a) => r * a;
 
         public static QuantityName Parse(string str, Unit<QuantityName>? defaultUnit = null) => Unit<QuantityName>.Parse(str, defaultUnit);
         public static bool TryParse(string str, out QuantityName q, Unit<QuantityName>? defaultUnit = null) => Unit<QuantityName>.TryParse(str, out q, defaultUnit);
@@ -112,12 +119,11 @@ namespace Elements.Quantity
 
         /* *********************************************** */
 
-        #region CONVERSIONS
+        public override string ToString() => this.FormatAuto();
+    }
 
-        // provide various operators to convert between quantities or adjust the quantity
-
-        #endregion
-
-        /* *********************************************** */
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, QuantityName, QuantityName>
+    {
+        public static QuantityName operator *(Ratio r, QuantityName a) => a * r.BaseValue;
     }
 }
