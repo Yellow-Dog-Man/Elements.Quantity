@@ -4,8 +4,7 @@ using System.Numerics;
 namespace Elements.Quantity
 {
     public readonly partial struct Current : IQuantitySI<Current>,
-        IDivisionOperators<Current, Ratio, Current>,
-        IMultiplyOperators<Current, Resistance, Voltage>
+        IDivisionOperators<Current, Ratio, Current>
     {
         #region ESSENTIALS
 
@@ -124,16 +123,6 @@ namespace Elements.Quantity
         public static Current operator -(Current a) => a * -1;
         public static Current AdditiveIdentity => new(0);
         public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
-
-        #endregion
-
-        /* *********************************************** */
-
-        #region CONVERSIONS
-
-        // provide various operators to convert between quantities or adjust the quantity
-
-        public static Voltage operator *(Current i, Resistance r) => new(r.BaseValue * i.BaseValue);
 
         #endregion
 

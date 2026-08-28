@@ -4,9 +4,7 @@ using System.Numerics;
 namespace Elements.Quantity
 {
     public readonly partial struct Voltage : IQuantitySI<Voltage>,
-        IDivisionOperators<Voltage, Ratio, Voltage>,
-        IDivisionOperators<Voltage, Resistance, Current>,
-        IDivisionOperators<Voltage, Current, Resistance>
+        IDivisionOperators<Voltage, Ratio, Voltage>
     {
         #region ESSENTIALS
 
@@ -125,17 +123,6 @@ namespace Elements.Quantity
         public static Voltage operator -(Voltage a) => a * -1;
         public static Voltage AdditiveIdentity => new(0);
         public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
-
-        #endregion
-
-        /* *********************************************** */
-
-        #region CONVERSIONS
-
-        // provide various operators to convert between quantities or adjust the quantity
-
-        public static Current operator /(Voltage v, Resistance r) => new(v.BaseValue / r.BaseValue);
-        public static Resistance operator /(Voltage v, Current c) => new(v.BaseValue / c.BaseValue);
 
         #endregion
 
