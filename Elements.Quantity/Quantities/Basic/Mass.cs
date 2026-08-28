@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Mass : IQuantitySI<Mass>,
+    public readonly partial struct Mass : IQuantitySI<Mass>,
         IDivisionOperators<Mass, Ratio, Mass>
     {
         #region ESSENTIALS

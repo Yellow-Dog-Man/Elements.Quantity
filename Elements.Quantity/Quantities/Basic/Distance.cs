@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Distance : IQuantitySI<Distance>,
+    public readonly partial struct Distance : IQuantitySI<Distance>,
         IDivisionOperators<Distance, Ratio, Distance>,
         IDivisionOperators<Distance, Time, Velocity>,
         IDivisionOperators<Distance, Velocity, Time>

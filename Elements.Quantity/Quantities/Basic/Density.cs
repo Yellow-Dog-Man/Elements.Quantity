@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Density : IQuantity<Density>,
+    public readonly partial struct Density : IQuantity<Density>,
         IDivisionOperators<Density, Ratio, Density>
     {
         #region ESSENTIALS

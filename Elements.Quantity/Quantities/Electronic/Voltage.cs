@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Voltage : IQuantitySI<Voltage>,
+    public readonly partial struct Voltage : IQuantitySI<Voltage>,
         IDivisionOperators<Voltage, Ratio, Voltage>,
         IDivisionOperators<Voltage, Resistance, Current>,
         IDivisionOperators<Voltage, Current, Resistance>

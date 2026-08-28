@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Temperature : IQuantity<Temperature>,
+    public readonly partial struct Temperature : IQuantity<Temperature>,
         IDivisionOperators<Temperature, Ratio, Temperature>
     {
         #region ESSENTIALS

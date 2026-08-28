@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Angle : IQuantitySI<Angle>,
+    public readonly partial struct Angle : IQuantitySI<Angle>,
         IDivisionOperators<Angle, Ratio, Angle>
     {
         #region ESSENTIALS

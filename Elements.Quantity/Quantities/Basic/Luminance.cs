@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Luminance : IQuantity<Luminance>,
+    public readonly partial struct Luminance : IQuantity<Luminance>,
         IDivisionOperators<Luminance, Ratio, Luminance>
     {
         #region ESSENTIALS

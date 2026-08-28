@@ -2,7 +2,7 @@
 
 namespace Elements.Quantity
 {
-    public readonly struct Pressure : IQuantitySI<Pressure>,
+    public readonly partial struct Pressure : IQuantitySI<Pressure>,
         IDivisionOperators<Pressure, Ratio, Pressure>
     {
         #region ESSENTIALS

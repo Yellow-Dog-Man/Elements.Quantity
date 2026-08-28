@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Current : IQuantitySI<Current>,
+    public readonly partial struct Current : IQuantitySI<Current>,
         IDivisionOperators<Current, Ratio, Current>,
         IMultiplyOperators<Current, Resistance, Voltage>
     {

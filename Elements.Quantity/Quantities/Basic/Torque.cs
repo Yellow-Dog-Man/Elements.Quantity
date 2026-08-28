@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Torque : IQuantity<Torque>,
+    public readonly partial struct Torque : IQuantity<Torque>,
         IDivisionOperators<Torque, Ratio, Torque>
     {
         #region ESSENTIALS
