@@ -161,14 +161,6 @@ namespace Elements.Quantity
 
         /* *********************************************** */
 
-        #region CONVERSIONS
-
-        // provide various operators to convert between quantities or adjust the quantity
-
-        #endregion
-
-        /* *********************************************** */
-
         public override string ToString() => this.FormatAuto();
     }
 
