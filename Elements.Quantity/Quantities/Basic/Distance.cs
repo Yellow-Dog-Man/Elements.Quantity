@@ -4,9 +4,7 @@ using System.Numerics;
 namespace Elements.Quantity
 {
     public readonly partial struct Distance : IQuantitySI<Distance>,
-        IDivisionOperators<Distance, Ratio, Distance>,
-        IDivisionOperators<Distance, Time, Velocity>,
-        IDivisionOperators<Distance, Velocity, Time>
+        IDivisionOperators<Distance, Ratio, Distance>
     {
         #region ESSENTIALS
 
@@ -186,17 +184,6 @@ namespace Elements.Quantity
         public static Distance operator -(Distance a) => a * -1;
         public static Distance AdditiveIdentity => new(0);
         public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
-
-        #endregion
-
-        /* *********************************************** */
-
-        #region CONVERSIONS
-
-        // provide various operators to convert between quantities or adjust the quantity
-
-        public static Velocity operator /(Distance l, Time t) => Velocity.MetersPerSecond * (l.BaseValue /* m */ / t.BaseValue /* s */);
-        public static Time operator /(Distance l, Velocity v) => Time.Second * (l.BaseValue /* m */ / v.BaseValue /* m/s */);
 
         #endregion
 
