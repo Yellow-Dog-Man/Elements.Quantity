@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Time : IQuantity<Time>
+    public readonly partial struct Time : IQuantity<Time>,
+        IDivisionOperators<Time, Ratio, Time>
     {
         #region ESSENTIALS
 
@@ -51,7 +53,7 @@ namespace Elements.Quantity
         public static readonly Unit<Time> Minute = new Unit<Time>(60,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " m" }, new string[] { " minutes", " minute" });
-        public static readonly Unit<Time> Hour = new Unit<Time>(60*60,
+        public static readonly Unit<Time> Hour = new Unit<Time>(60 * 60,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " h" }, new string[] { " hours", " hour" });
 
@@ -132,41 +134,37 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Time New(double baseVal) { return new Time(baseVal); }
+        public static Time Create(double baseVal) => new(baseVal);
 
-        public Time Add(Time q) { return new Time(BaseValue + q.BaseValue); }
-        public Time Subtract(Time q) { return new Time(BaseValue - q.BaseValue); }
-
-        public Time Multiply(double n) { return new Time(BaseValue * n); }
+        [Obsolete("Use System.Numerics interfaces")]
         public Time Multiply(Time a, Ratio r) { return a * r.BaseValue; }
+
+        [Obsolete("Use System.Numerics interfaces")]
         public Time Multiply(Ratio r, Time a) { return a * r.BaseValue; }
 
-        public Time Divide(double n) { return new Time(BaseValue / n); }
-        public Ratio Divide(Time q) { return new Ratio(BaseValue / q.BaseValue); }
+        public static Time Parse(string str, Unit<Time>? defaultUnit = null) => Unit<Time>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Time q, Unit<Time>? defaultUnit = null) => Unit<Time>.TryParse(str, out q, defaultUnit);
 
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Time Parse(string str, Unit<Time>? defaultUnit = null) { return Unit<Time>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Time q, Unit<Time>? defaultUnit = null) { return Unit<Time>.TryParse(str, out q, defaultUnit); }
-
-        public static Time operator +(Time a, Time b) { return a.Add(b); }
-        public static Time operator -(Time a, Time b) { return a.Subtract(b); }
-        public static Time operator *(Time a, double n) { return a.Multiply(n); }
-        public static Time operator /(Time a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Time a, Time b) { return a.Divide(b); }
-        public static Time operator -(Time a) { return a.Multiply(-1); }
-
-        #endregion
-
-        /* *********************************************** */
-
-        #region CONVERSIONS
-
-        // provide various operators to convert between quantities or adjust the quantity
+        public static Time operator +(Time a, Time b) => new(a.BaseValue + b.BaseValue);
+        public static Time operator -(Time a, Time b) => new(a.BaseValue - b.BaseValue);
+        public static Time operator *(Time a, double n) => new(a.BaseValue * n);
+        public static Time operator *(Time a, Ratio r) => r * a;
+        public static Time operator /(Time a, double n) => new(a.BaseValue / n);
+        public static Time operator /(Time a, Ratio r) => a / r.BaseValue;
+        public static Ratio operator /(Time a, Time b) => new(a.BaseValue / b.BaseValue);
+        public static Time operator -(Time a) => a * -1;
+        public static Time AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => Ratio.MultiplicativeIdentity;
 
         #endregion
 
         /* *********************************************** */
 
         public override string ToString() => this.FormatAuto();
+    }
+
+    public readonly partial struct Ratio : IMultiplyOperators<Ratio, Time, Time>
+    {
+        public static Time operator *(Ratio r, Time a) => a * r.BaseValue;
     }
 }

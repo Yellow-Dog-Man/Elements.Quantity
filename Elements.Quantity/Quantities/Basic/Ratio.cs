@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace Elements.Quantity
 {
-    public readonly struct Ratio : IQuantity<Ratio>
+    public readonly partial struct Ratio : IQuantity<Ratio>,
+        IMultiplyOperators<Ratio, Ratio, Ratio>
     {
         #region ESSENTIALS
 
@@ -48,7 +50,7 @@ namespace Elements.Quantity
             new UnitGroup[] { UnitGroup.Common },
             new string[] { "" }, new string[] { "" });
 
-        public static readonly Unit<Ratio> Percent = new Unit<Ratio>(1.0/100.0,
+        public static readonly Unit<Ratio> Percent = new Unit<Ratio>(1.0 / 100.0,
             new UnitGroup[] { UnitGroup.Common },
             new string[] { " %" }, new string[] { " percent" });
 
@@ -58,35 +60,23 @@ namespace Elements.Quantity
 
         #region OPERATORS
 
-        public Ratio New(double baseVal) { return new Ratio(baseVal); }
+        public static Ratio Create(double baseVal) => new(baseVal);
 
-        public Ratio Add(Ratio q) { return new Ratio(BaseValue + q.BaseValue); }
-        public Ratio Subtract(Ratio q) { return new Ratio(BaseValue - q.BaseValue); }
+        [Obsolete("Use System.Numerics interfaces")]
+        public Ratio Multiply(Ratio a, Ratio r) => a * r;
 
-        public Ratio Multiply(double n) { return new Ratio(BaseValue * n); }
-        public Ratio Multiply(Ratio a, Ratio r) { return a * r.BaseValue; }
+        public static Ratio Parse(string str, Unit<Ratio>? defaultUnit = null) => Unit<Ratio>.Parse(str, defaultUnit);
+        public static bool TryParse(string str, out Ratio q, Unit<Ratio>? defaultUnit = null) => Unit<Ratio>.TryParse(str, out q, defaultUnit);
 
-        public Ratio Divide(double n) { return new Ratio(BaseValue / n); }
-        public Ratio Divide(Ratio q) { return new Ratio(BaseValue / q.BaseValue); }
-
-        // these should be defined as convenience, but cannot be forced by interface
-        public static Ratio Parse(string str, Unit<Ratio>? defaultUnit = null) { return Unit<Ratio>.Parse(str, defaultUnit); }
-        public static bool TryParse(string str, out Ratio q, Unit<Ratio>? defaultUnit = null) { return Unit<Ratio>.TryParse(str, out q, defaultUnit); }
-
-        public static Ratio operator +(Ratio a, Ratio b) { return a.Add(b); }
-        public static Ratio operator -(Ratio a, Ratio b) { return a.Subtract(b); }
-        public static Ratio operator *(Ratio a, double n) { return a.Multiply(n); }
-        public static Ratio operator /(Ratio a, double n) { return a.Divide(n); }
-        public static Ratio operator /(Ratio a, Ratio b) { return a.Divide(b); }
-        public static Ratio operator -(Ratio a) { return a.Multiply(-1); }
-
-        #endregion
-
-        /* *********************************************** */
-
-        #region CONVERSIONS
-
-        // provide various operators to convert between quantities or adjust the quantity
+        public static Ratio operator +(Ratio a, Ratio b) => new(a.BaseValue + b.BaseValue);
+        public static Ratio operator -(Ratio a, Ratio b) => new(a.BaseValue - b.BaseValue);
+        public static Ratio operator *(Ratio a, double n) => new(a.BaseValue * n);
+        public static Ratio operator *(Ratio a, Ratio b) => new(a.BaseValue * b.BaseValue);
+        public static Ratio operator /(Ratio a, double n) => new(a.BaseValue / n);
+        public static Ratio operator /(Ratio a, Ratio b) => new(a.BaseValue / b.BaseValue);
+        public static Ratio operator -(Ratio a) => a * -1;
+        public static Ratio AdditiveIdentity => new(0);
+        public static Ratio MultiplicativeIdentity => new(1);
 
         #endregion
 

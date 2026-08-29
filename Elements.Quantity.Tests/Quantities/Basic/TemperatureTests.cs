@@ -153,7 +153,7 @@ public class TemperatureTests
     {
         const double kelvin = 273;
         var t = new Temperature(kelvin);
-        var x = t.New(kelvin);
+        var x = Temperature.Create(kelvin);
 
         Assert.AreEqual(kelvin, t, TEMPERATURE_EPSILION);
         Assert.AreEqual(kelvin, x, TEMPERATURE_EPSILION);

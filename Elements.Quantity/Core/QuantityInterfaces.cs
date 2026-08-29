@@ -1,53 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Numerics;
 
-using System.Text;
+namespace Elements.Quantity;
 
-
-namespace Elements.Quantity
+public interface IQuantity
 {
-    public interface IQuantity
-    {
-        double BaseValue { get; }
+    double BaseValue { get; }
 
-        string[] GetShortBaseNames();
-        string[] GetLongBaseNames();
-    }
+    string[] GetShortBaseNames();
+    string[] GetLongBaseNames();
+}
 
-    public interface IQuantity<T> : IQuantity, IComparable<T>, IEquatable<T>
-        where T : unmanaged, IQuantity<T>
-    {
-        T New(double baseValue);
+public interface IQuantity<T> : IQuantity, IComparable<T>, IEquatable<T>,
+    IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>,
+    IMultiplyOperators<T, double, T>, IMultiplyOperators<T, Ratio, T>,
+    IDivisionOperators<T, double, T>, IDivisionOperators<T, T, Ratio>,
+    IUnaryNegationOperators<T, T>,
+    IAdditiveIdentity<T, T>, IMultiplicativeIdentity<T, Ratio>
+    where T : unmanaged, IQuantity<T>
+{
+    static abstract T Create(double baseValue);
 
-        T Add(T q);
-        T Subtract(T q);
+    Unit<T> DefaultUnit { get; }
 
-        T Multiply(double n);
+    static abstract T Parse(string str, Unit<T>? defaultUnit = null);
+    static abstract bool TryParse(string str, out T q, Unit<T>? defaultUnit = null);
 
-        T Divide(double n);
-        Ratio Divide(T q);
+    /// <summary>
+    /// The quantity family that this quantity type belongs to.
+    /// </summary>
+    /// <remarks>
+    /// This is used to generate the value for <see cref="Unit{T}.UnitKey"/>. For quantity
+    /// types that fall under the 'Basic' family, an empty string should always be returned.
+    /// </remarks>
+    string QuantityFamily { get; }
+}
 
-        Unit<T> DefaultUnit { get; }
+public interface IQuantitySI
+{
+    double SIPower { get; }
+    IUnit[] GetCommonSIUnits();
+    IUnit[] GetExludedSIUnits();
+}
 
-        /// <summary>
-        /// The quantity family that this quantity type belongs to.
-        /// </summary>
-        /// <remarks>
-        /// This is used to generate the value for <see cref="Unit{T}.UnitKey"/>. For quantity
-        /// types that fall under the 'Basic' family, an empty string should always be returned.
-        /// </remarks>
-        string QuantityFamily { get; }
-    }
+public interface IQuantitySI<T> : IQuantitySI, IQuantity<T> where T : unmanaged, IQuantity<T>
+{
 
-    public interface IQuantitySI
-    {
-        double SIPower { get; }
-        IUnit[] GetCommonSIUnits();
-        IUnit[] GetExludedSIUnits();
-    }
-
-    public interface IQuantitySI<T> : IQuantitySI, IQuantity<T> where T : unmanaged, IQuantity<T>
-    {
-
-    }
 }

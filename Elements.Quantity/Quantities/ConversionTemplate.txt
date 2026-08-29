@@ -1,0 +1,27 @@
+using System.Numerics;
+
+namespace Elements.Quantity;
+
+// formula: QuantityC = QuantityB * QuantityA
+
+public readonly partial struct QuantityA : IMultiplyOperators<QuantityA, QuantityB, QuantityC>
+{
+    public static QuantityC operator *(QuantityA a, QuantityB b) => b * a;
+}
+
+public readonly partial struct QuantityB : IMultiplyOperators<QuantityB, QuantityA, QuantityC>
+{
+    public static QuantityC operator *(QuantityB b, QuantityA a)
+        => QuantityC.MyUnit * (b.BaseValue * a.BaseValue);
+}
+
+public readonly partial struct QuantityC :
+    IDivisionOperators<QuantityC, QuantityA, QuantityB>,
+    IDivisionOperators<QuantityC, QuantityB, QuantityA>
+{
+    public static QuantityB operator /(QuantityC c, QuantityA a)
+        => QuantityB.MyUnit * (c.BaseValue / a.BaseValue);
+
+    public static QuantityA operator /(QuantityC c, QuantityB b)
+        => QuantityA.MyUnit * (c.BaseValue / b.BaseValue);
+}
