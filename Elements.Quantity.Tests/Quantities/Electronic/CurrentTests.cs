@@ -1,27 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 
 namespace Elements.Quantity.Test.Quantities.Electronic;
 
-using CurrentTestData = QuantityTestData<Current>;
-using CurrentUnitKeyTestData = (Unit<Current> unit, string unitKey);
-
 [TestClass]
 [ExcludeFromCodeCoverage]
-public class CurrentTests
+public class CurrentTests : BaseQuantityTests<CurrentTests, Current>, IQuantityTestData<Current>
 {
-    /// <summary>
-    /// An array of test data tuples representing different current units and their display formats. Each
-    /// element in the array contains information about a current unit, the short name, the singular
-    /// long name, plural long name, and unit key.
-    /// </summary>
-    /// <remarks>
-    /// This property is intended for use in unit tests.
-    /// </remarks>
-    internal static CurrentTestData[] CurrentTestDataTuples =>
+    /// <inheritdoc/>
+    public static QuantityTestData<Current>[] TestDataTuples =>
     [
         new(Current.Ampere, "{0} A", "1 ampere", "{0} amperes", "Quantity.Unit.Electronic.Current.Amperes"),
         new(SI<Current>.Quecto, "{0} qA", "1 quectoampere", "{0} quectoamperes", "Quantity.Unit.Electronic.Current.Quectoamperes"),
@@ -49,80 +37,4 @@ public class CurrentTests
         new(SI<Current>.Ronna, "{0} RA", "1 ronnaampere", "{0} ronnaamperes", "Quantity.Unit.Electronic.Current.Ronnaamperes"),
         new(SI<Current>.Quetta, "{0} QA", "1 quettaampere", "{0} quettaamperes", "Quantity.Unit.Electronic.Current.Quettaamperes")
     ];
-
-    internal static IEnumerable<object[]> CurrentShortNameArgs
-    {
-        get => DataProvider.UnitQuantityShortNameNumberValues.SelectMany(numValue =>
-            CurrentTestDataTuples.Select(currentUnitArgs => new object[] {
-                currentUnitArgs.unit, numValue, string.Format(currentUnitArgs.shortName, numValue)
-            }).ToArray()
-        );
-    }
-
-    internal static IEnumerable<object[]> CurrentLongNameSingularFormArgs
-    {
-        get => CurrentTestDataTuples.Select(currentUnitArgs => new object[] {
-            currentUnitArgs.unit, currentUnitArgs.longNameSingle
-        });
-    }
-
-    internal static IEnumerable<object[]> CurrentLongNamePluralFormArgs
-    {
-        get => DataProvider.UnitQuantityPluralNumberValues.SelectMany(numValue =>
-            CurrentTestDataTuples.Select(currentUnitArgs => new object[] {
-                currentUnitArgs.unit, numValue, string.Format(currentUnitArgs.longNamePlural, numValue)
-            }).ToArray()
-        );
-    }
-
-    /// <summary>
-    /// A collection of test arguments for verifying the unit keys for current units.
-    /// </summary>
-    /// <remarks>
-    /// This property is intended for use in unit tests.
-    /// </remarks>
-    internal static IEnumerable<CurrentUnitKeyTestData> CurrentUnitKeyArgs =>
-        CurrentTestDataTuples.Select(unitArgs => new CurrentUnitKeyTestData(unitArgs.unit, unitArgs.unitKey));
-
-    [TestMethod]
-    [DynamicData(nameof(CurrentShortNameArgs))]
-    public void CurrentUnit_QuantityProvidedFormatAsShortName_FormatsWithDefaultShortName(Unit<Current> currentUnit, double currentValue, string expectedStr)
-    {
-        var current = new Current(currentValue * currentUnit.Ratio);
-        var resultStr = current.FormatAs(currentUnit, formatNum: "0.#");
-
-        Assert.AreEqual(expectedStr, resultStr);
-    }
-
-    [TestMethod]
-    [DynamicData(nameof(CurrentLongNameSingularFormArgs))]
-    public void CurrentUnit_QuantitySingleValueFormatAsLongName_FormatsWithDefaultLongNameSingularForm(Unit<Current> currentUnit, string expectedStr)
-    {
-        var current = new Current(currentUnit.Ratio);
-        var resultStr = current.FormatAs(currentUnit, longName: true, formatNum: "0.#");
-
-        Assert.AreEqual(expectedStr, resultStr);
-    }
-
-    [TestMethod]
-    [DynamicData(nameof(CurrentLongNamePluralFormArgs))]
-    public void CurrentUnit_QuantityPluralValueFormatAsLongName_FormatsWithDefaultLongNamePluralForm(Unit<Current> currentUnit, double currentValue, string expectedStr)
-    {
-        var current = new Current(currentValue * currentUnit.Ratio);
-        var resultStr = current.FormatAs(currentUnit, longName: true, formatNum: "0.#");
-
-        Assert.AreEqual(expectedStr, resultStr);
-    }
-
-    /// <summary>
-    /// Verifies that getting a unit key from an Current unit will return the expected unit key.
-    /// </summary>
-    /// <param name="currentUnit">The current unit to use when getting the unit key.</param>
-    /// <param name="expectedUnitKey">The expected unit key that this unit should return.</param>
-    [TestMethod]
-    [DynamicData(nameof(CurrentUnitKeyArgs))]
-    public void GetCurrentUnitKey_ValidUnit_ReturnsUnitKey(Unit<Current> currentUnit, string expectedUnitKey)
-    {
-        Assert.AreEqual(expectedUnitKey, currentUnit.UnitKey);
-    }
 }
